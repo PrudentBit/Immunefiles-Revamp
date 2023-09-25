@@ -12,7 +12,7 @@ Follow these steps to get the project up and running on your local machine:
 1. **Clone the Repository:** Begin by cloning this repository to your local machine using the following command:
 
    ```bash
-   git clone https://github.com/your-username/your-nextjs-project.git
+   git clone https://github.com/your-username/Immunefiles-Revamp.git
    ```
 
 2. **Install Dependencies:** Navigate to the project directory and install the required dependencies using npm or yarn:
