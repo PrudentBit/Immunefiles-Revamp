@@ -1,9 +1,9 @@
-import Image from 'next/image'
+import SearchBar from './components/SearchBar'
 
 export default function Home() {
   return (
-    <main>
-      Initial Setup
+    <main className='w-[100%]'>
+      <SearchBar/>
     </main>
   )
 }
