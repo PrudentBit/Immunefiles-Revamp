@@ -10,8 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         'primary_font': '#4B7BE5',
+        'secondary_font': '#28358B',
+        'bg_hover': '#EAEAFF',
         'primary_bg' : '#F4F4FF',
-        'seconday_font': '#28358B',
         'primary_border' :'#BBF'
       },
     },

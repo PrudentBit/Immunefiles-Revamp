@@ -2,7 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --primary: #4B7BE5;
-    --seconday: #28358B;
-  }

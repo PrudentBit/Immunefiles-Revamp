@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const SearchBar = () => {
     return (
-        <nav className='m-6 border-solid rounded-2xl border-2 border-primary_border px-8 py-2'>
+        <nav className='border-solid rounded-[1.2rem] border-2 border-primary_border px-8 py-2'>
             <form action="" className='flex items-center gap-4 w-full h-8 justify-between'>
             <button className='focus:outline-none'>
                 <Image src="/search.png" alt='search' width={30} height={30}/>
