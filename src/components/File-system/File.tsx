@@ -1,12 +1,11 @@
 import React from 'react'
 import Image from 'next/image'
-import { ItemProps } from '@/types/File'
 
-interface Props {
+type Props =  {
   file: ItemProps;
 }
 
-const File: React.FC<Props> = ({ file }) => {
+const File = ({ file }:Props) => {
 
   const extension = file.is_file ? file.name.split('.').pop() : '';
   const iconSrc = file.is_file ? `/FileIcons/${extension}.svg` : '/folder-icon-filled.svg';
@@ -25,3 +24,4 @@ const File: React.FC<Props> = ({ file }) => {
 }
 
 export default File;
+
