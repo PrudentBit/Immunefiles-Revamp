@@ -9,7 +9,7 @@ const AddFile = () => {
       initial={{ opacity: 0, scale: 0, x: 300 }}
       animate={{ opacity: 1, scale: 1, x: 0 }}
       exit={{ opacity: 0, scale: 0.8, x: 100 }}
-      transition={{ type: "spring", stiffness: 35 }}
+      transition={{ type: "spring", stiffness: 50 }}
     >
       <button className='flex gap-2 items-center'>
         <Image src='/add_file-icon.svg' width={18} height={18} alt='Add file icon'/>

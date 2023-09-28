@@ -26,7 +26,7 @@ const FileSection = (props: FileSectionProps) => {
 
       <div className="flex gap-4 flex-wrap">
         {subFiles.map((folder, index) => (
-          <File key={index} file={folder} />
+          <File key={index} file={folder} type={props.type}/>
         ))}
       </div>
     </section>

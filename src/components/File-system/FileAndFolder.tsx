@@ -5,14 +5,17 @@ import FileSection from '@/components/File-system/FileSection'
 import getFiles from '@/utils/api/getFiles'
 import { decryptData } from '@/utils/helper/decryptFiles'
 
-const FileAndFolder = () => {
+type Props = {
+  root: string;
+}
+
+const FileAndFolder = (props:Props) => {
   const [folderChildren, setFolderChildren] = React.useState([]);
   const [fileChildren, setFileChildren] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const hash = 'root';
-      const data = await getFiles(hash);
+      const data = await getFiles(props.root);
       const decryptedData = decryptData(data.ciphertext);
 
       setFolderChildren(decryptedData.children);
@@ -23,14 +26,19 @@ const FileAndFolder = () => {
     };
   
     fetchData();
-  }, []);
+  }, [props.root]);
 
   return (
     <div className="flex flex-col gap-8">
+      {folderChildren && folderChildren.length > 0 && (
         <FileSection subFiles={folderChildren} type={'folder'}/>
+      )}
 
+      {fileChildren && fileChildren.length > 0 && (
         <FileSection subFiles={fileChildren} type={'file'}/>
-      </div>
+      )}
+
+    </div>
   )
 }
 

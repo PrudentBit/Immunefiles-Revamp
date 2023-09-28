@@ -11,8 +11,9 @@ type ItemProps = {
   date_modified?: string;
   is_file?: boolean;
   is_folder?: boolean;
+  hash_path?: string[];
   name: string;
-  owner: string;
+  owner: SharedWith;
   shared_with: SharedWith[];
   size?: string;
   url?: string;

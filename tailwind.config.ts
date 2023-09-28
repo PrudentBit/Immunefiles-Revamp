@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 const config: Config = {
   content: [
@@ -14,6 +15,9 @@ const config: Config = {
         'bg_hover': '#EAEAFF',
         'primary_bg' : '#F4F4FF',
         'primary_border' :'#BBF'
+      },
+      fontFamily: {
+        sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
       },
     },
   },

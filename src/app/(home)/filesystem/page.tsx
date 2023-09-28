@@ -14,7 +14,7 @@ const FileSystem = () => {
 
       <FileOperations/>
 
-      <FileAndFolder/>
+      <FileAndFolder root='root'/>
     </div>
   );
 };

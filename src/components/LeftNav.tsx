@@ -47,7 +47,7 @@ const LeftNav = () => {
                         </div>
                     </Link>
 
-                    <Link href="/files">
+                    <Link href="/filesystem/root">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "filesystem" ? "bg-white" : 'hover:bg-bg_hover'}`}
                             onClick={()=>{setActiveTab("filesystem")}}
@@ -147,7 +147,7 @@ const LeftNav = () => {
                         </div>
                     </Link>
 
-                    <Link href="/files">
+                    <Link href="/filesystem/root">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "filesystem" ? "bg-white" : 'hover:bg-bg_hover'}`}
                             onClick={()=>{setActiveTab("filesystem")}}
