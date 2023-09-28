@@ -2,8 +2,13 @@ import React from "react";
 import Image from "next/image";
 import File from "@/components/File-system/File";
 
+type FileSectionProps = {
+  subFiles: any[];
+  type: string;
+}
+
 const FileSection = (props: FileSectionProps) => {
-  const { children } = props;
+  const { subFiles } = props;
   const type = props.type === "folder" ? "Folders" : "Files";
 
   return (
@@ -20,7 +25,7 @@ const FileSection = (props: FileSectionProps) => {
       </div>
 
       <div className="flex gap-4 flex-wrap">
-        {children.map((folder, index) => (
+        {subFiles.map((folder, index) => (
           <File key={index} file={folder} />
         ))}
       </div>

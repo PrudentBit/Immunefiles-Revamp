@@ -1,4 +1,4 @@
-interface SharedWith {
+type SharedWith = {
   can_add_delete_content: boolean;
   can_download_content: boolean;
   can_share_content: boolean;
@@ -6,7 +6,7 @@ interface SharedWith {
   is_proctored: boolean;
   username: string;
 }
-interface ItemProps {
+type ItemProps = {
   date_created: string;
   date_modified?: string;
   is_file?: boolean;

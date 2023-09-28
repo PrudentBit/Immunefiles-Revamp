@@ -1,6 +1,6 @@
-export default async function getFiles() {
+export default async function getFiles(hash: string) {
   const res = await fetch(
-    `https://api.immunefiles.com/api/api/content/folder_detail/root?tenant=${
+    `https://api.immunefiles.com/api/api/content/folder_detail/${hash}?tenant=${
       window.location.hostname.split(".")[0]
     }`,
     {
