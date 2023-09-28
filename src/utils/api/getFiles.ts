@@ -6,7 +6,7 @@ export default async function getFiles() {
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtpbGxvd2F0dHMiLCJlbWFpbCI6Imtlc2hhdi5tYWRoYXZAcHJ1ZGVudGJpdC5jb20iLCJleHAiOjE2OTU4OTI5NDB9.vLkDP5rXs73-oey7qAhTMSuLlcnHnfC6uZNsB7JTMPM`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtpbGxvd2F0dHMiLCJlbWFpbCI6Imtlc2hhdi5tYWRoYXZAcHJ1ZGVudGJpdC5jb20iLCJleHAiOjE2OTU5Nzk4NTJ9.Jr3rKUczAGOzu9ShJgqDiATx0O-CL93QERHlOVZdIHM`,
       },
     }
   );

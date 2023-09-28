@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBar from '@/components/SearchBar'
 
-const page = () => {
+const Integrations = () => {
   return (
     <div className='w-full h-[100vh] p-6 flex flex-col gap-6 overflow-auto'>
       <SearchBar/>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Integrations
