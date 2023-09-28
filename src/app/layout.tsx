@@ -1,4 +1,4 @@
-import { LeftNav } from './components'
+import  LeftNav  from '@/app/components/LeftNav'
 import './globals.css'
 import type { Metadata } from 'next'
 

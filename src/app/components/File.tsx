@@ -5,7 +5,7 @@ type Props = {}
 
 const File = (props: Props) => {
   return (
-    <div className='w-[13.5rem] h-12 bg-primary_bg cursor-pointer rounded-md flex justify-between p-3 items-center'>
+    <div className='w-[13.5rem] h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center'>
       <div className='flex gap-3'>
         <Image src='/folder-icon-filled.svg' width={24} height={24} alt='File icon'/>
         <p className='text-[#8E8EFF] pb-1 truncate w-[75%]'>File nameeeeeee</p>
