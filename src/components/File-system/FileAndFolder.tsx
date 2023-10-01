@@ -9,13 +9,13 @@ type Props = {
   root: string;
 }
 
-const FileAndFolder = (props:Props) => {
+const FileAndFolder = ({root}:Props) => {
   const [folderChildren, setFolderChildren] = React.useState([]);
   const [fileChildren, setFileChildren] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await getFiles(props.root);
+      const data = await getFiles(root);
       const decryptedData = decryptData(data.ciphertext);
 
       setFolderChildren(decryptedData.children);
@@ -26,7 +26,7 @@ const FileAndFolder = (props:Props) => {
     };
   
     fetchData();
-  }, [props.root]);
+  }, [root]);
 
   return (
     <div className="flex flex-col gap-8">

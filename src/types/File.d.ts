@@ -12,6 +12,7 @@ type ItemProps = {
   is_file?: boolean;
   is_folder?: boolean;
   hash_path?: string[];
+  path?: string[];
   name: string;
   owner: SharedWith;
   shared_with: SharedWith[];

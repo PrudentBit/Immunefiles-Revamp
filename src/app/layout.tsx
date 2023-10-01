@@ -1,6 +1,7 @@
 import LeftNav  from '@/components/LeftNav'
 import './globals.css'
 import type { Metadata } from 'next'
+import { ThemeProvider } from '@/components/theme-proivder';
 
 export const metadata: Metadata = {
   title: "Immunefiles",
@@ -15,8 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative flex">
-        <LeftNav />
-        {children}
+        <ThemeProvider 
+          attribute="class"
+          defaultTheme="light"
+        >
+          <LeftNav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

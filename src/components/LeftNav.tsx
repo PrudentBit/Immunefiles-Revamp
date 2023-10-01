@@ -121,7 +121,7 @@ const LeftNav = () => {
             </div>
         )
         :(
-            <div className='h-[100vh] w-[5rem] bg-[#F4F4FF]'>
+            <div className='h-[100vh] w-[5rem] bg-primary_bg'>
                 <div className='flex flex-col gap-5 w-full justify-between items-center py-6'>
                     <Image src='/logo.png' width={27} height={27} alt='Immunefile logo'/>
                     <button onClick={toggleMenu}>

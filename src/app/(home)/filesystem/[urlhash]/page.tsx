@@ -8,16 +8,16 @@ interface FileSystemProps {
   params: {urlhash: string}
 }
 
-const FileSystem: React.FC<FileSystemProps> = ({ params }) => {
+const FileSystem: React.FC<FileSystemProps> = ({ params: { urlhash } }) => {
   return (
     <div className="w-full h-[100vh] p-6 flex flex-col gap-6 overflow-auto">
       <SearchBar />
 
-      <FileNavigation root={params.urlhash}/>
+      <FileNavigation root={urlhash}/>
 
       <FileOperations/>
 
-      <FileAndFolder root={params.urlhash}/>
+      <FileAndFolder root={urlhash}/>
     </div>
   );
 };
