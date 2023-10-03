@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBar from '@/components/SearchBar'
-import FileOperations from '@/components/File-system/FileOperations'
+import FileOperations from '@/components/File-system/menus/FileOperations'
 import FileAndFolder from '@/components/File-system/FileAndFolder';
 import FileNavigation from '@/components/File-system/FileNavigation';
 

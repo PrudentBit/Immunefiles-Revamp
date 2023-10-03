@@ -32,14 +32,14 @@ const FileNavigation = ({root}: Props) => {
         return (
           <div key={index} className="flex gap-2 ml-2">
             <Link href={`/filesystem/${item}`}>
-              <p className="text-gray-700 font-semibold hover:bg-gray-200 rounded-full px-2">{item==='root' ? 'My home' : `${pathName[index]}`}</p>
+              <p className="text-gray-700 font-medium hover:bg-gray-200 rounded-full px-2">{item==='root' ? 'My home' : `${pathName[index]}`}</p>
             </Link>
             <p className="text-gray-700 font-bold">{'>'}</p>
           </div>
         )}
       )}
 
-      {!path && (<p className="text-gray-700 font-semibold">My home</p>)}
+      {!path && (<p className="text-gray-700 font-medium">My home {'>'}</p>)}
     </div>
   )
 }
