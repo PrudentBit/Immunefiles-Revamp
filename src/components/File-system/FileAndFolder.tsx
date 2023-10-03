@@ -1,7 +1,8 @@
 "use client"
 
 import React from 'react'
-import FileSection from '@/components/File-system/FileSection'
+import FileSection from '@/components/File-system/fileSection/FileSection'
+import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton'
 import getFiles from '@/utils/api/getFiles'
 import { decryptData } from '@/utils/helper/decryptFiles'
 
@@ -12,17 +13,17 @@ type Props = {
 const FileAndFolder = ({root}:Props) => {
   const [folderChildren, setFolderChildren] = React.useState([]);
   const [fileChildren, setFileChildren] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const data = await getFiles(root);
       const decryptedData = decryptData(data.ciphertext);
 
       setFolderChildren(decryptedData.children);
       setFileChildren(decryptedData.files);
-      console.log(decryptedData);
-      console.log(folderChildren);
-      console.log(fileChildren);
+      setLoading(false);
     };
   
     fetchData();
@@ -30,14 +31,19 @@ const FileAndFolder = ({root}:Props) => {
 
   return (
     <div className="flex flex-col gap-8">
-      {folderChildren && folderChildren.length > 0 && (
-        <FileSection subFiles={folderChildren} type={'folder'}/>
-      )}
+      {loading ? (
+        <FileSectionSkeleton />
+      ) : (
+        <>
+          {folderChildren && folderChildren.length > 0 && (
+            <FileSection subFiles={folderChildren} type={'folder'}/>
+          )}
 
-      {fileChildren && fileChildren.length > 0 && (
-        <FileSection subFiles={fileChildren} type={'file'}/>
+          {fileChildren && fileChildren.length > 0 && (
+            <FileSection subFiles={fileChildren} type={'file'}/>
+          )}
+        </>
       )}
-
     </div>
   )
 }

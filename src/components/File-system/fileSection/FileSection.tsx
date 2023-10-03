@@ -8,7 +8,7 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  const fileType = type === "folder" ? "Folders" : "Files";
+  const sectionType = type === "folder" ? "Folders" : "Files";
 
   return (
     <section className="flex flex-col gap-6">
@@ -20,10 +20,10 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
           alt={`${type} icon`}
           className="ml-[-2px]"
         />
-        <p className="text-primary_font font-medium text-lg">{fileType}</p>
+        <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{sectionType}</p>
       </div>
 
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex gap-3 flex-wrap">
         {subFiles.map((folder, index) => (
           <File key={index} file={folder} type={type}/>
         ))}
