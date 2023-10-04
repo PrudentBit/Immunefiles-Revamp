@@ -16,6 +16,7 @@ const LeftNav = () => {
         {isMenuOpen 
             ? (
             <div className='h-[100vh] w-[25rem] bg-primary_bg sticky'>
+
                 <div className='flex w-full justify-between pr-8 pl-4 py-8'>
                     <Image src='/dark_logo.svg' width={200} height={200} alt='Immunefile logo'/>
                     <button onClick={toggleMenu}>
@@ -129,7 +130,6 @@ const LeftNav = () => {
                     </button>
                 </div>
                 <div className='flex flex-col'>
-
                     <Link href="/dashboard">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "dashboard" ? "bg-white" : 'hover:bg-bg_hover'}`}
