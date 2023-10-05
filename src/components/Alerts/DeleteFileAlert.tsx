@@ -34,8 +34,8 @@ const DeleteFileAlert = (props: Props) => {
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter className='flex gap-4'>
-          <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]'>Delete</AlertDialogAction>
-          <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
+          <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={(e) => e.stopPropagation()}>Delete</AlertDialogAction>
+          <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black' onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
