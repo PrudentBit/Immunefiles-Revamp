@@ -27,6 +27,7 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
         {subFiles.map((folder, index) => (
           <File key={index} file={folder} type={type}/>
         ))}
+        
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
     DropdownMenu,
@@ -6,12 +7,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
+import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
+import FileDetailsAlert from '@/components/Alerts/FileDetailsAlert';
 
 type Props = {
-
+  file: ItemProps;
 }
 
-const ThreeDotsMenu = (props: Props) => {
+const ThreeDotsMenu = ({file}: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full hover:bg-button_hover cursor-pointer'>...</DropdownMenuTrigger>
@@ -26,7 +29,7 @@ const ThreeDotsMenu = (props: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/details-icon.svg' width={16} height={16} alt='Details icon'/>
-          Details
+          <FileDetailsAlert file={file}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/move-icon.svg' width={16} height={16} alt='Move icon'/>
@@ -36,9 +39,9 @@ const ThreeDotsMenu = (props: Props) => {
           <Image src='/copy-icon.svg' width={16} height={16} alt='Copy icon'/>
           Copy
         </DropdownMenuItem>
-        <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' >
-          <Image src='/delete-icon.svg' width={16} height={16} alt='Rename icon'/>
-          Delete
+        <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
+          <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
+          <DeleteFileAlert/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
