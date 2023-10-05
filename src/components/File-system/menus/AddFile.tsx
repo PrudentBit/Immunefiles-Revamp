@@ -6,9 +6,9 @@ const AddFile = () => {
   return (
     <motion.div
       className='flex gap-5 '
-      initial={{ opacity: 0, scale: 0, x: 300 }}
+      initial={{ opacity: 0, scale: 0, x: -300 }}
       animate={{ opacity: 1, scale: 1, x: 0 }}
-      exit={{ opacity: 0, scale: 0.8, x: 100 }}
+      exit={{ opacity: 0, scale: 0.8, x: -100 }}
       transition={{ type: "spring", stiffness: 50 }}
     >
       <button className='flex gap-2 items-center'>
