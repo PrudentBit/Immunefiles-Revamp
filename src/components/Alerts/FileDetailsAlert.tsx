@@ -18,6 +18,7 @@ type Props = {
 }
 
 const FileDetailsAlert = ({ file }: Props) => {
+  console.log(file)
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -29,7 +30,7 @@ const FileDetailsAlert = ({ file }: Props) => {
             <Image src="/details-icon.svg" width={20} height={20} className='rounded-full w-10 h-10 p-[0.6rem] bg-primary_bg' alt='details icon'/>
             <AlertDialogTitle className='font-medium text-lg text-primary_font pt-[0.3rem]'>Details</AlertDialogTitle>
           </div>
-          <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0'>
+          <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) => e.stopPropagation()}>
             <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full ' alt='close icon'/>
           </AlertDialogCancel>
         </AlertDialogHeader>
@@ -41,7 +42,7 @@ const FileDetailsAlert = ({ file }: Props) => {
             </div>
             <div className='flex flex-row justify-between'>
               <p className='w-[30%]'>Owner</p>
-              <p className='text-[#7A7AFF] w-[70%]'>{file.owner.username}</p>
+              <p className='text-[#7A7AFF] w-[70%]'>{file.owner}</p>
             </div>
             <div className='flex flex-row justify-between'>
               <p className='w-[30%]'>Created on</p>
@@ -54,11 +55,11 @@ const FileDetailsAlert = ({ file }: Props) => {
           </div>
         </AlertDialogDescription>
         <AlertDialogFooter className=''>
-          <AlertDialogAction className='rounded-full text-white gap-2 font-normal bg-primary_font'>
+          <AlertDialogAction className='rounded-full text-white gap-2 font-normal bg-primary_font hover:text-primary_font border-[1px] border-solid border-primary_font'>
             Rename
             <Image src="/rename-icon.svg" width={15} height={15} alt='rename icon'/>
           </AlertDialogAction>
-          <AlertDialogAction className='rounded-full text-white font-normal bg-primary_font_2'>Manage shared</AlertDialogAction>
+          <AlertDialogAction className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'>Manage shared</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

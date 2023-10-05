@@ -13,11 +13,11 @@ const AddFile = () => {
     >
       <button className='flex gap-2 items-center'>
         <Image src='/add_file-icon.svg' width={18} height={18} alt='Add file icon'/>
-        <p className=' text-secondary_font font-medium text-sm'>Add File</p>
+        <p className=' text-secondary_font font-medium text-sm'>Create File</p>
       </button>
       <button className='flex gap-2 items-center'>
         <Image src='/add_folder-icon.svg' width={18} height={18} alt='Add folder icon'/>
-        <p className=' text-secondary_font font-medium text-sm'>Add Folder</p>
+        <p className=' text-secondary_font font-medium text-sm'>Create Folder</p>
       </button>
       <button className='flex gap-2 items-center'>
         <Image src='/request-icon.svg' width={18} height={18} alt='Request icon'/>

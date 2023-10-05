@@ -1,15 +1,22 @@
 "use client"
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import {tabStore} from '@/utils/store/leftNavTabStore'
 
 const LeftNav = () => {
     const [activeTab, setActiveTab] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(true);
 
+    const [tab] = tabStore((state) => [state.tab,]);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     }
+
+    useEffect(() => {
+        setActiveTab(tab);
+    }, [tab]);
 
     return (
         <>
@@ -28,7 +35,6 @@ const LeftNav = () => {
                     <Link href="/dashboard">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "dashboard" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("dashboard")}}
                         >
                             {activeTab === "dashboard" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -51,7 +57,6 @@ const LeftNav = () => {
                     <Link href="/filesystem/root">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "filesystem" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("filesystem")}}
                         >
                             {activeTab === "filesystem" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -74,7 +79,6 @@ const LeftNav = () => {
                     <Link href="/groups">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "groups" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("groups")}}
                         >
                             {activeTab === "groups" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -99,7 +103,6 @@ const LeftNav = () => {
                     <Link href="/integrations">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "integrations" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("integrations")}}
                         >
                             {activeTab === "integrations" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -122,7 +125,6 @@ const LeftNav = () => {
                     <Link href="/shared">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "shared" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("shared")}}
                         >
                             {activeTab === "shared" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -156,7 +158,6 @@ const LeftNav = () => {
                     <Link href="/dashboard">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "dashboard" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("dashboard")}}
                         >
                             {activeTab === "dashboard" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -173,7 +174,6 @@ const LeftNav = () => {
                     <Link href="/filesystem/root">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "filesystem" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("filesystem")}}
                         >
                             {activeTab === "filesystem" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -190,7 +190,6 @@ const LeftNav = () => {
                     <Link href="/groups">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "groups" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("groups")}}
                         >
                             {activeTab === "groups" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -209,7 +208,6 @@ const LeftNav = () => {
                     <Link href="/integrations">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "integrations" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("integrations")}}
                         >
                             {activeTab === "integrations" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 
@@ -226,7 +224,6 @@ const LeftNav = () => {
                     <Link href="/sgared">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "shared" ? "bg-white" : 'hover:bg-bg_hover'}`}
-                            onClick={()=>{setActiveTab("shared")}}
                         >
                             {activeTab === "shared" 
                                 ? <div className='w-2 h-18 bg-primary_font'/> 

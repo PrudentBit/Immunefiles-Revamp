@@ -3,12 +3,13 @@
 import React from 'react'
 import Image from 'next/image'
 import AddFile from './AddFile'
-import FileSeselectOptions from './FileSelectOptions'
+import FileSelectOptions from './FileSelectOptions'
 import {AnimatePresence, motion, useAnimation} from 'framer-motion'
+import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 
 const FileOperations = () => {
   const [addFile, setAddFile] = React.useState(false);
-  const [fileSelect, setFileSelect] = React.useState(false);
+  const [files] = selectedFilesStore((state) => [state.files]);
   const controls = useAnimation(); 
 
   const toggleAddFile = () => {
@@ -36,7 +37,9 @@ const FileOperations = () => {
           </AnimatePresence>
         </div>
 
-        {fileSelect ? <FileSeselectOptions />: <div></div>}
+        <AnimatePresence>
+          {files.length > 0 && <FileSelectOptions/>}
+        </AnimatePresence>
       </div>
   )
 }

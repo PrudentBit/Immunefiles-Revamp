@@ -14,7 +14,7 @@ type ItemProps = {
   hash_path?: string[];
   path?: string[];
   name: string;
-  owner: SharedWith;
+  owner: string;
   shared_with: SharedWith[];
   size?: string;
   url?: string;

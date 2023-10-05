@@ -7,7 +7,7 @@ import FileNavigation from '@/components/File-system/FileNavigation';
 const FileSystem = () => {
   return (
     <div className="w-full h-[100vh] p-6 flex flex-col gap-6 overflow-auto">
-      <TopNav />
+      <TopNav currentTab='filesystem'/>
 
       <FileNavigation root={'My home'}/>
 

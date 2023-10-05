@@ -1,14 +1,24 @@
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 
 const FileSelectOptions = () => {
-  return (
-    <div className='flex items-center gap-4'>
-      <button className='rounded-full bg-[#F0F0F0] hover:bg-[#DADADA] flex justify-center items-center h-8 w-8'>
-              <Image src='/cross-icon.svg' width={12} height={12} alt='Cross icon'/>
-            </button>
+  const [files, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeAllFiles]);
 
-            <p> x Selected</p>
+  const handleRemoveAll = () => {
+    removeAllFiles();
+  };
+
+  return (
+    <motion.div
+      className='flex items-center gap-4'
+      initial={{ opacity: 0, scale: 0, x: 150 }}
+      animate={{ opacity: 1, scale: 1, x: 0 }}
+      exit={{ opacity: 0, scale: 0.8, x: 40}}
+      transition={{ type: "spring", stiffness: 50 }}
+    >
+      
       <div className='flex gap-4 items-center'>
         <button className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
           <Image src='/share-icon.svg' width={20} height={20} alt='Share icon'/>
@@ -26,7 +36,13 @@ const FileSelectOptions = () => {
           <Image src='/delete-icon.svg' width={20} height={20} alt='Delete icon'/>
         </button>
       </div>
-    </div>
+
+      <p> {files.length} Selected</p>
+
+      <button className='rounded-full bg-[#F0F0F0] hover:bg-[#DADADA] flex justify-center items-center h-8 w-8' onClick={handleRemoveAll}>
+        <Image src='/cross-icon.svg' width={12} height={12} alt='Cross icon'/>
+      </button>
+    </motion.div>
   )
 }
 

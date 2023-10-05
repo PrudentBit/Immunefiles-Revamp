@@ -11,7 +11,7 @@ interface FileSystemProps {
 const FileSystem: React.FC<FileSystemProps> = ({ params: { urlhash } }) => {
   return (
     <div className="w-full h-[100vh] p-6 flex flex-col gap-6 overflow-auto">
-      <TopNav />
+      <TopNav currentTab='filesystem'/>
 
       <FileNavigation root={urlhash}/>
 
