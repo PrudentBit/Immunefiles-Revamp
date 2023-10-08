@@ -3,7 +3,7 @@
 import React from 'react'
 import FileSection from '@/components/File-system/fileSection/FileSection'
 import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton'
-import getFiles from '@/utils/api/getFiles'
+import getFiles from '@/utils/api/getFilesAPI'
 import { decryptData } from '@/utils/helper/decryptFiles'
 
 type Props = {

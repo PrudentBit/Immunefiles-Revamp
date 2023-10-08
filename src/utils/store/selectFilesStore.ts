@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
-
-type File = ItemProps;
+type File = FileOrFolderType;
 
 type State = {
   files: File[];

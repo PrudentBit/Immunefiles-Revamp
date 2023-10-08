@@ -11,7 +11,7 @@ import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
 import FileDetailsAlert from '@/components/Alerts/FileDetailsAlert';
 
 type Props = {
-  file: ItemProps;
+  file: FileOrFolderType;
 }
 
 const ThreeDotsMenu = ({file}: Props) => {
@@ -41,7 +41,7 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert/>
+          <DeleteFileAlert file={file}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>

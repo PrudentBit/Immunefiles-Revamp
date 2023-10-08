@@ -7,7 +7,7 @@ import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 
 type Props =  {
-  file: ItemProps;
+  file: FileOrFolderType;
   type: string;
 }
 
@@ -54,7 +54,7 @@ const File = ({ file }:Props) => {
       {!file.is_file
         ? (
           <Link href={`/filesystem/${file.urlhash}`}>
-            <div onClick={removeAllFiles} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center ${isSelected && 'border-solid border-primary border-[1px]'}`}>
+            <div onClick={removeAllFiles} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}>
               <div className='flex gap-3'>
                 <Image src={iconSrc} width={24} height={24} alt='File icon'/>
                 <p className='text-primary_font_2 pb-1 truncate w-[8rem] mt-1 font-[500]'>{file.name}</p>
@@ -65,7 +65,7 @@ const File = ({ file }:Props) => {
           </Link>
         )
         : (
-          <div onClick={handleSelect} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center ${isSelected && 'border-solid border-primary border-[1px]'}`}>
+          <div onClick={handleSelect} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}>
             <div className='flex gap-3'>
               <Image src={iconSrc} width={24} height={24} alt='File icon'/>
               <p className='text-primary_font_2 pb-1 truncate w-[8rem] mt-1 font-[550]'>{file.name}</p>

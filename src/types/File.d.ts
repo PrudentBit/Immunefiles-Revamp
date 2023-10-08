@@ -6,7 +6,7 @@ type SharedWith = {
   is_proctored: boolean;
   username: string;
 }
-type ItemProps = {
+type FileOrFolderType = {
   date_created: string;
   date_modified?: string;
   is_file?: boolean;

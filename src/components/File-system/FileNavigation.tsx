@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import getFiles from '@/utils/api/getFiles'
+import getFiles from '@/utils/api/getFilesAPI'
 import { decryptData } from '@/utils/helper/decryptFiles'
 import Link from 'next/link'
 import Image from 'next/image'

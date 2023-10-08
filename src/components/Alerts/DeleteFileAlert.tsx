@@ -12,12 +12,33 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
+import deleteFiles from '@/utils/api/deleteFileAPI'
 
 type Props = {
-
+  file: FileOrFolderType;
 }
 
-const DeleteFileAlert = (props: Props) => {
+const DeleteFileAlert = ({ file }: Props) => {
+
+  const deleteSelected = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    console.log('delete');
+    if( file.is_file ){
+      const result = await deleteFiles([file.urlhash], []);
+      console.log(result);
+      if(result.message === 'success'){
+        window.location.reload();
+      }
+    }
+    else{
+      const result = await deleteFiles([], [file.urlhash]);
+      console.log(result);
+      if(result.message === 'success'){
+        window.location.reload();
+      }
+    }
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -34,7 +55,7 @@ const DeleteFileAlert = (props: Props) => {
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter className='flex gap-4'>
-          <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={(e) => e.stopPropagation()}>Delete</AlertDialogAction>
+          <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={(e)=>deleteSelected(e)}>Delete</AlertDialogAction>
           <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black' onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

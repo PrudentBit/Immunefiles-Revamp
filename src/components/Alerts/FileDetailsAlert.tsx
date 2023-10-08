@@ -14,7 +14,7 @@ import {
 import Image from 'next/image'
 
 type Props = {
-  file: ItemProps;
+  file: FileOrFolderType;
 }
 
 const FileDetailsAlert = ({ file }: Props) => {
