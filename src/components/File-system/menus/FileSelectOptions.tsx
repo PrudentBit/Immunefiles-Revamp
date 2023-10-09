@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
+import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
 
 const FileSelectOptions = () => {
   const [files, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeAllFiles]);
@@ -20,7 +21,7 @@ const FileSelectOptions = () => {
     >
       
       <div className='flex gap-4 items-center'>
-        <button className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
+        <button title='Share' className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
           <Image src='/share-icon.svg' width={20} height={20} alt='Share icon'/>
         </button>
         <button className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
@@ -33,7 +34,7 @@ const FileSelectOptions = () => {
           <Image src='/move-icon.svg' width={20} height={20} alt='Move icon'/>
         </button>
         <button className='rounded-full p-2 bg-[#FFE3E5]  hover:bg-[#FFCDD0]'>
-          <Image src='/delete-icon.svg' width={20} height={20} alt='Delete icon'/>
+          <DeleteFileAlert file={files} multiplefiles={true}/>
         </button>
       </div>
 

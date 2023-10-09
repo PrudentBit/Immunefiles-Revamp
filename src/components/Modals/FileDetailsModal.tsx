@@ -17,7 +17,7 @@ type Props = {
   file: FileOrFolderType;
 }
 
-const FileDetailsAlert = ({ file }: Props) => {
+const FileDetailsModal = ({ file }: Props) => {
   console.log(file)
   return (
     <AlertDialog>
@@ -66,4 +66,4 @@ const FileDetailsAlert = ({ file }: Props) => {
   )
 }
 
-export default FileDetailsAlert
+export default FileDetailsModal

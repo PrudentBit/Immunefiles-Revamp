@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
-import FileDetailsAlert from '@/components/Alerts/FileDetailsAlert';
+import FileDetailsModal from '@/components/Modals/FileDetailsModal';
 
 type Props = {
   file: FileOrFolderType;
@@ -29,7 +29,7 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/details-icon.svg' width={16} height={16} alt='Details icon'/>
-          <FileDetailsAlert file={file}/>
+          <FileDetailsModal file={file}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/move-icon.svg' width={16} height={16} alt='Move icon'/>
@@ -41,7 +41,7 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert file={file}/>
+          <DeleteFileAlert file={[file]} multiplefiles={false}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>

@@ -6,6 +6,7 @@ import AddFile from './AddFile'
 import FileSelectOptions from './FileSelectOptions'
 import {AnimatePresence, motion, useAnimation} from 'framer-motion'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
+import UploadFileModal from '@/components/Modals/UploadFileModal'
 
 const FileOperations = () => {
   const [addFile, setAddFile] = React.useState(false);
@@ -20,9 +21,7 @@ const FileOperations = () => {
   return (
     <div className='Operations flex justify-between'>
         <div className='flex gap-6'>
-          <button className="rounded-full bg-primary_bg p-2 hover:bg-button_hover ">
-            <Image src='/upload-icon.svg' width={26} height={26} alt='File icon'/>
-          </button>
+          <UploadFileModal/>
 
           <motion.button 
             className="bg-primary_bg px-[0.65rem] pb-[0.4rem] rounded-full hover:bg-button_hover"

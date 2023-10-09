@@ -5,13 +5,13 @@ import Image from 'next/image'
 import Link from 'next/link';
 import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
-
+import { useRouter } from 'next/navigation';
 type Props =  {
   file: FileOrFolderType;
   type: string;
 }
-
 const File = ({ file }:Props) => {
+  const router = useRouter();
   const [files, addFile, removeAllFiles, removeFile] = selectedFilesStore((state) => [state.files, state.addFile, state.removeAllFiles, state.removeFile]);
   const [isSelected, setIsSelected] = useState(false);
 
@@ -43,7 +43,7 @@ const File = ({ file }:Props) => {
   
 
   const handleDoubleClick = () => {
-    window.open(`/filesystem/${file.urlhash}`, '_blank');
+    router.push(`/filesystem/${file.urlhash}`);
   };
 
   const extension = file.is_file ? file.name.split('.').pop() : '';
@@ -53,8 +53,8 @@ const File = ({ file }:Props) => {
     <>
       {!file.is_file
         ? (
-          <Link href={`/filesystem/${file.urlhash}`}>
-            <div onClick={removeAllFiles} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}>
+          // <Link href={`/filesystem/${file.urlhash}`}>
+            <div onDoubleClick={handleDoubleClick} onClick={handleSelect} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}>
               <div className='flex gap-3'>
                 <Image src={iconSrc} width={24} height={24} alt='File icon'/>
                 <p className='text-primary_font_2 pb-1 truncate w-[8rem] mt-1 font-[500]'>{file.name}</p>
@@ -62,7 +62,7 @@ const File = ({ file }:Props) => {
 
               <ThreeDotsMenu file={file}/>
             </div>
-          </Link>
+          // </Link>
         )
         : (
           <div onClick={handleSelect} className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}>
