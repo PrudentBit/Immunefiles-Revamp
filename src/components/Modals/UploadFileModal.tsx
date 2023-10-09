@@ -81,8 +81,7 @@ const UploadFileModal = (props: Props) => {
       });
     }
   }
-  
-  
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className='rounded-full bg-primary_bg p-2 hover:bg-button_hover'>

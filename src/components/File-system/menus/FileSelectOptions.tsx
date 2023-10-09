@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
+import MoveFilesModal from '@/components/Modals/MoveFilesModal';
 
 const FileSelectOptions = () => {
   const [files, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeAllFiles]);
@@ -31,7 +32,7 @@ const FileSelectOptions = () => {
           <Image src='/copy-icon.svg' width={20} height={20} alt='Copy icon'/>
         </button>
         <button className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
-          <Image src='/move-icon.svg' width={20} height={20} alt='Move icon'/>
+          <MoveFilesModal file={files} multiplefiles={true}/>
         </button>
         <button className='rounded-full p-2 bg-[#FFE3E5]  hover:bg-[#FFCDD0]'>
           <DeleteFileAlert file={files} multiplefiles={true}/>

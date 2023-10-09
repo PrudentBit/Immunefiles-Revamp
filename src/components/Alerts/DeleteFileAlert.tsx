@@ -14,6 +14,7 @@ import {
 import Image from 'next/image'
 import deleteFiles from '@/utils/api/deleteFileAPI'
 import recoverDeletedFiles from '@/utils/api/recoverDeletedFilesAPI'
+import { selectedFilesStore } from '@/utils/store/selectFilesStore'
 
 type Props = {
   file: FileOrFolderType[];
@@ -21,13 +22,13 @@ type Props = {
 }
 
 const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
-  const [deletedSuccessfully, setDeletedSuccessfully] = useState(false);
+  const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
   const [deletedFiles, setDeletedFiles] = useState<string[]>([]);
   const [deletedFolders, setDeletedFolders] = useState<string[]>([]);
+  const [removeAllFiles] = selectedFilesStore((state) => [state.removeAllFiles]);
 
   const deleteSelected = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
-    console.log('delete');
 
     const files = file.filter(item => item.is_file);
     const folders = file.filter(item => !item.is_file);
@@ -36,7 +37,6 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
     const folderUrls = folders.map(item => item.urlhash);
 
     const result = await deleteFiles(fileUrls, folderUrls);
-    console.log(result);
     
     if(result.message === 'success'){
       setDeletedSuccessfully(true);
@@ -44,13 +44,13 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
       setDeletedFolders(folderUrls);
       setTimeout(() => {
         setDeletedSuccessfully(false);
+        window.location.reload();
       }, 10000);
     }
   }
 
   const recoverDeleted = async () => {
     const result = await recoverDeletedFiles(deletedFiles, deletedFolders);
-    console.log(result);
     
     if(result.message === 'success'){
       window.location.reload();
@@ -66,7 +66,7 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
             : <p onClick={(e) => e.stopPropagation()} className='w-full'>Delete</p>
           }
         </AlertDialogTrigger>
-        <AlertDialogContent className=''>
+        <AlertDialogContent className='translate-y-[-210%]'>
           <AlertDialogHeader className='flex flex-row items-center gap-3'>
             <Image src="/trash-icon.svg" width={20} height={20} className='rounded-full w-10 h-10 p-2 bg-[#FFEBEB]' alt='delete icon'/>
             <div className="flex flex-col h-full">
@@ -77,11 +77,22 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
             </div>  
           </AlertDialogHeader>
           <AlertDialogFooter className='flex gap-4'>
-            <button className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={(e)=>deleteSelected(e)}>Delete</button>
+            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={(e)=>deleteSelected(e)}>Delete</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black' onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {(deletedSuccessfully && multiplefiles) &&
+        <div className='absolute bottom-[5%] right-[3%] w-[27rem] h-[5.5rem] rounded-lg z-50 flex items-center justify-between gap-3 p-4 shadow-[0_2px_20px_0px_rgba(0,0,0,0.2)]'>
+          <Image src="/delete-icon.svg" height={20} width={20} alt='delete icon' className='bg-[#FFE3E5] p-4 h-[3.5rem] w-[3.5rem] rounded-md'></Image>
+          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>Items moved to trash.</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>you can restore the items from trash bin whenever needed.</p>
+          </div>
+          <button onClick={recoverDeleted} className='border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg'>undo</button>
+        </div>
+      }
     </>
   )
 }
