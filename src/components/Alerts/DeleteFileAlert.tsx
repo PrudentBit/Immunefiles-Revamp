@@ -15,6 +15,8 @@ import Image from 'next/image'
 import deleteFiles from '@/utils/api/deleteFileAPI'
 import recoverDeletedFiles from '@/utils/api/recoverDeletedFilesAPI'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore'
+import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
+import BotLeftAlert from '../botLeftAlert'
 
 type Props = {
   file: FileOrFolderType[];
@@ -25,7 +27,9 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
   const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
   const [deletedFiles, setDeletedFiles] = useState<string[]>([]);
   const [deletedFolders, setDeletedFolders] = useState<string[]>([]);
-  const [removeAllFiles] = selectedFilesStore((state) => [state.removeAllFiles]);
+  const [undoMessage, setUndoMessage] = useState<string>('Items moved to trash.');
+  const [removeAllFiles, removeFile, addFile] = selectedFilesStore((state) => [state.removeAllFiles, state.removeFile, state.addFile]);
+  const [toggleForceRefresh] = useFileAndFolderStore((state) => [state.toggleForceRefresh]);
 
   const deleteSelected = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -42,18 +46,25 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
       setDeletedSuccessfully(true);
       setDeletedFiles(fileUrls);
       setDeletedFolders(folderUrls);
+      for(let i = 0; i < fileUrls.length; i++){
+        removeFile(fileUrls[i]);
+      }
+      addFile({name: 'Trash', urlhash: 'trash', is_file: false, owner : '', date_created:"", shared_with:[]})
+      toggleForceRefresh();
       setTimeout(() => {
         setDeletedSuccessfully(false);
-        window.location.reload();
-      }, 10000);
+        removeAllFiles();
+      }, 5000);
     }
   }
 
   const recoverDeleted = async () => {
+    setUndoMessage("Recovering files...")
     const result = await recoverDeletedFiles(deletedFiles, deletedFolders);
-    
-    if(result.message === 'success'){
-      window.location.reload();
+    if(result.message === 'successfully recovered'){
+      setUndoMessage("Items recovered successfully.")
+      removeAllFiles();
+      toggleForceRefresh();
     }
   }
 
@@ -70,9 +81,9 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
           <AlertDialogHeader className='flex flex-row items-center gap-3'>
             <Image src="/trash-icon.svg" width={20} height={20} className='rounded-full w-10 h-10 p-2 bg-[#FFEBEB]' alt='delete icon'/>
             <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to delete this item?</AlertDialogTitle>
+              <AlertDialogTitle className='font-medium text-md'>{multiplefiles? ("Do you want to delete these items?"):("Do you want to delete this item?")}</AlertDialogTitle>
               <AlertDialogDescription className='text-xs'>
-                You can restore the item from trash
+                You can restore deleted items from trash
               </AlertDialogDescription>
             </div>  
           </AlertDialogHeader>
@@ -83,15 +94,14 @@ const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
         </AlertDialogContent>
       </AlertDialog>
 
-      {(deletedSuccessfully && multiplefiles) &&
-        <div className='absolute bottom-[5%] right-[3%] w-[27rem] h-[5.5rem] rounded-lg z-50 flex items-center justify-between gap-3 p-4 shadow-[0_2px_20px_0px_rgba(0,0,0,0.2)]'>
-          <Image src="/delete-icon.svg" height={20} width={20} alt='delete icon' className='bg-[#FFE3E5] p-4 h-[3.5rem] w-[3.5rem] rounded-md'></Image>
+      {(deletedSuccessfully) &&
+        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>Items moved to trash.</p>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>{undoMessage}</p>
             <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>you can restore the items from trash bin whenever needed.</p>
           </div>
           <button onClick={recoverDeleted} className='border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg'>undo</button>
-        </div>
+        </BotLeftAlert>
       }
     </>
   )

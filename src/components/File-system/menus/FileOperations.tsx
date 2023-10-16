@@ -28,9 +28,12 @@ const FileOperations = () => {
             onClick={toggleAddFile} 
             animate={controls} 
           >
-            <p className='leading-[0px] text-3xl text-secondary_font font'>+</p>
+            <p title='Add File/Folder' className='leading-[0px] text-3xl text-secondary_font font'>+</p>
           </motion.button>
 
+          <AnimatePresence>
+            {addFile && <AddFile />}
+          </AnimatePresence>
           <AnimatePresence>
             {addFile && <AddFile />}
           </AnimatePresence>
