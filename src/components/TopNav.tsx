@@ -35,7 +35,7 @@ const TopNav = ({currentTab}: Props) => {
     <nav className='flex w-full gap-6'>
       <SearchBar/>
 
-      <div className='flex w-[18rem] justify-between items-center'>
+      <div className='flex w-[21rem] min-w-[18rem] justify-between items-center'>
         <ModeToggle/>
 
         <button className='rounded-full bg-primary_bg h-12 w-12 p-3'>
