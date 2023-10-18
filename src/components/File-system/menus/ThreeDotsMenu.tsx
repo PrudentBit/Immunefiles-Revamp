@@ -8,16 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
-import FileDetailsAlert from '@/components/Alerts/FileDetailsAlert';
+import FileDetailsModal from '@/components/Modals/FileDetailsModal';
+import MoveFilesModal from '@/components/Modals/Move&CopyFilesModal';
 
 type Props = {
-  file: ItemProps;
+  file: FileOrFolderType;
 }
 
 const ThreeDotsMenu = ({file}: Props) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full hover:bg-button_hover cursor-pointer'>...</DropdownMenuTrigger>
+      <DropdownMenuTrigger title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full hover:bg-button_hover cursor-pointer'>...</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
           <Image src='/open-icon.svg' width={16} height={16} alt='Open icon'/>
@@ -29,19 +30,19 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/details-icon.svg' width={16} height={16} alt='Details icon'/>
-          <FileDetailsAlert file={file}/>
+          <FileDetailsModal file={file}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/move-icon.svg' width={16} height={16} alt='Move icon'/>
-          Move
+          <MoveFilesModal file={[file]} multiplefiles={false} moveORcopy='Move'/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/copy-icon.svg' width={16} height={16} alt='Copy icon'/>
-          Copy
+          <MoveFilesModal file={[file]} multiplefiles={false} moveORcopy='Copy'/>
         </DropdownMenuItem>
         <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert/>
+          <DeleteFileAlert file={[file]} multiplefiles={false}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>

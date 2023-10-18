@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import getFiles from '@/utils/api/getFiles'
+import getFiles from '@/utils/api/getFilesAPI'
 import { decryptData } from '@/utils/helper/decryptFiles'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -29,7 +29,11 @@ const FileNavigation = ({root}: Props) => {
   }, [root]);
 
   return (
+<<<<<<< HEAD
     <div className="w-full h-12 flex items-center  pl-4 bg-[#F0F0F0] rounded-lg">
+=======
+    <div className="w-full h-12 flex items-center pl-4 bg-[#F0F0F0] rounded-lg">
+>>>>>>> bd658a3f3bd757392ffd48ab4f1d10d24548846f
       {path?.map((item, index) => {
         return (
           <div key={index} className="flex gap-2 ml-2">

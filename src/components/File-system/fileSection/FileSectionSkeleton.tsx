@@ -21,7 +21,7 @@ const FileSectionSkeleton = (props: Props) => {
           <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">Folders</p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-[0.7rem] flex-wrap">
           <Skeleton className='w-[14rem] h-12'/>
           <Skeleton className='w-[14rem] h-12'/>
           <Skeleton className='w-[14rem] h-12'/>
@@ -47,7 +47,7 @@ const FileSectionSkeleton = (props: Props) => {
           <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">Files</p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-[0.7rem] flex-wrap">
           <Skeleton className='w-[14rem] h-12'/>
           <Skeleton className='w-[14rem] h-12'/>
           <Skeleton className='w-[14rem] h-12'/>
