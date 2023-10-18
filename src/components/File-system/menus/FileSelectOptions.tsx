@@ -2,11 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
-<<<<<<< HEAD
-=======
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
 import MoveFilesModal from '@/components/Modals/Move&CopyFilesModal';
->>>>>>> bd658a3f3bd757392ffd48ab4f1d10d24548846f
 
 const FileSelectOptions = () => {
   const [files, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeAllFiles]);
