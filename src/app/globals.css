@@ -71,3 +71,12 @@
     --ring: 263.4 70% 50.4%;
   }
 }
+
+
+input:focus {
+  outline: none;
+}
+
+input:active {
+  outline: none;
+}

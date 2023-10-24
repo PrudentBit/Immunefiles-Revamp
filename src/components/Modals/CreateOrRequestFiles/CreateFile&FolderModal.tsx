@@ -1,0 +1,192 @@
+"use client"
+
+import React, {useState} from 'react'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion';
+import Tabs from '@/components/Modals/CreateOrRequestFiles/Tabs'
+import CreateFileSection from '@/components/Modals/CreateOrRequestFiles/CreateFileSection'
+import CreateFolderSection from '@/components/Modals/CreateOrRequestFiles/CreateFolderSection'
+import RequestFileSection from '@/components/Modals/CreateOrRequestFiles/RequestFileSection'
+import createFile from '@/utils/api/createFilesAPI'
+import createFolder from '@/utils/api/createFolderAPI'
+import requestFiles from '@/utils/api/requestFilesAPI'
+import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
+
+type Props = {
+  propTab:string;
+}
+
+const CreateFileOrFolder = ({propTab}:Props) => {
+  const [tab, setTab] = useState(propTab);
+  const [direction, setDirection] = useState(0);
+
+  const [fileName, setFileName] = useState('');
+  const [selectedExtension, setSelectedExtension] = useState('txt');
+  
+  const [toggleForceRefresh] = useFileAndFolderStore((state) => [state.toggleForceRefresh]);
+
+  const [folderName, setFolderName] = useState('');
+
+  const [requestType, setRequestType] = useState<'internal' | 'external'>('internal');
+  const [requests, setRequests] = useState([{id:'', fileName: '', email: '', isEmailValid: true, requestType : 'internal'}]);
+  const handleAddRequest = () => {
+    const id = new Date().getTime().toString();
+    setRequests([...requests, { id, fileName: '', email: '', isEmailValid: true, requestType }]);
+  };
+  
+
+  const handleCreateFile = async () => {
+    try {
+      const result = await createFile(fileName, selectedExtension, 'root');
+      console.log(result);
+      toggleForceRefresh();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleCreateFolder = async () => {
+    try {
+      const result = await createFolder(folderName, 'root');
+      console.log(result);
+      toggleForceRefresh();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleRequestFiles = async () => {
+    try {
+      const result = await requestFiles(requests, 'root');
+      console.log(result);
+      toggleForceRefresh();
+    } catch (error) {
+      console.error(error);
+    }
+  }  
+
+  const variants = {
+    enter: (direction:number) => {
+      return {
+        x: direction > 0 ? 1000 : -1000,
+        opacity: 0
+      };
+    },
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction:number) => {
+      return {
+        zIndex: 0,
+        x: direction < 0 ? 1000 : -1000,
+        opacity: 0
+      };
+    }
+  };  
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <div onClick={(e) => e.stopPropagation()} className='flex gap-2 items-center'>
+          <Tabs tabName={tab}/>
+        </div>
+      </AlertDialogTrigger>
+      <AlertDialogContent className='w-[35rem]'>
+          <AlertDialogHeader className='flex flex-row h-10 justify-between'>
+            <AlertDialogTitle className='flex gap-4 items-center pt-1'>
+            <Tabs onClick={() => { setTab("Create File"); setDirection(-1); }} tabName='Create File' className={`${tab==="Create File" && "bg-primary_bg"}`}/>
+            <Tabs onClick={() => { setTab("Create Folder"); setDirection(tab === "Create File" ? 1 : -1); }}  tabName='Create Folder'className={`${tab==="Create Folder" && "bg-primary_bg"}`}/>
+            <Tabs onClick={() => { setTab("Request File"); setDirection(1); }}  tabName='Request File' className={`${tab==="Request File" && "bg-primary_bg"}`}/>
+            </AlertDialogTitle>
+            <AlertDialogCancel className='w-7 h-7 p-[0.4rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) => e.stopPropagation()}>
+              <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full' alt='close icon'/>
+            </AlertDialogCancel>
+          </AlertDialogHeader>
+        <AlertDialogDescription className='text-[#7A7AFF] text-md p-2'>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={tab}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+            >
+              {tab === 'Create File' && (
+                <CreateFileSection fileName={fileName} setFileName={setFileName} selectedExtension={selectedExtension} setSelectedExtension={setSelectedExtension}/>
+              )}
+
+              {tab === 'Create Folder' && (
+                <CreateFolderSection folderName={folderName} setFolderName={setFolderName} />
+              )}
+
+              {tab === 'Request File' && (
+                <RequestFileSection requests={requests} setRequests={setRequests} requestType={requestType} setRequestType={setRequestType}/>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </AlertDialogDescription>
+        <AlertDialogFooter className='flex justify-end'>
+          {tab === 'Create File' && (
+            <AlertDialogAction
+              onClick={handleCreateFile} 
+              disabled={!fileName || !selectedExtension}
+              title="Fields might be missing"
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+            >
+              Create & Save
+            </AlertDialogAction>
+          )}
+
+          {tab === 'Create Folder' && (
+            <AlertDialogAction
+              onClick={handleCreateFolder} 
+              disabled={!folderName}
+              title='Folder name might be missing'
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+            >
+              Create & Save
+            </AlertDialogAction>
+          )}
+
+          {tab === 'Request File' && (
+            <div className='w-full flex justify-between'>
+              <button className='flex gap-2 items-center rounded-full hover:bg-primary_bg pr-3' onClick={handleAddRequest}>
+                <Image src='/add-row-icon.svg' width={18} height={18} alt='Add row' className='rounded-full bg-primary_bg h-8 w-8 p-[0.35rem]'/>
+                <p className=' text-[#7A7AFF] font-medium text-sm'>Add request</p>
+              </button>
+              <AlertDialogAction
+                onClick={() => { console.log(requests)}} //handleRequestFiles
+                disabled={requests.some(request => !request.fileName || !request.email || !request.isEmailValid)}
+                title="Fields might be missing or incorrect"
+                className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+              >
+                Send requests
+              </AlertDialogAction>
+
+            </div>
+          )}
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+export default CreateFileOrFolder

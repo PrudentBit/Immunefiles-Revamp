@@ -14,14 +14,14 @@ export default async function createFolder(name: String, currentFolder: string) 
     };
   
     const upload = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/content/folder_create?tenant=${
+      `https://api.immunefiles.com/api/api/content/folder_create?tenant=${
         window.location.hostname.split(".")[0]
       }`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_TEST_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
         },
         body: JSON.stringify(createFolderData),
       }

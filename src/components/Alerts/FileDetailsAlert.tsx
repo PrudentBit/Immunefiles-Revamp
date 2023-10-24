@@ -14,7 +14,7 @@ import {
 import Image from 'next/image'
 
 type Props = {
-  file: ItemProps;
+  file: FileOrFolderType;
 }
 
 const FileDetailsAlert = ({ file }: Props) => {
@@ -41,7 +41,7 @@ const FileDetailsAlert = ({ file }: Props) => {
             </div>
             <div className='flex flex-row justify-between'>
               <p className='w-[30%]'>Owner</p>
-              <p className='text-[#7A7AFF] w-[70%]'>{file.owner.username}</p>
+              <p className='text-[#7A7AFF] w-[70%]'>{file.owner}</p>
             </div>
             <div className='flex flex-row justify-between'>
               <p className='w-[30%]'>Created on</p>

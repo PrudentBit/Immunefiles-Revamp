@@ -29,7 +29,7 @@ const FileNavigation = ({root}: Props) => {
   }, [root]);
 
   return (
-    <div className="w-full h-12 flex items-center pl-4 bg-[#F0F0F0] rounded-lg">
+    <div className="w-full h-12 flex items-center p-2 pl-4 bg-[#F0F0F0] rounded-lg">
       {path?.map((item, index) => {
         return (
           <div key={index} className="flex gap-2 ml-2">
@@ -42,8 +42,8 @@ const FileNavigation = ({root}: Props) => {
       )}
 
       {!path && (
-        <div className='flex gap-2'>
-          <p className="text-gray-700 font-medium">My home </p>
+        <div className='flex gap-2 h-8 items-center'>
+          <p className="text-gray-700 font-medium">My Home </p>
           <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
         </div>
       )}

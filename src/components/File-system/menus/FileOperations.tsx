@@ -34,9 +34,6 @@ const FileOperations = () => {
           <AnimatePresence>
             {addFile && <AddFile />}
           </AnimatePresence>
-          <AnimatePresence>
-            {addFile && <AddFile />}
-          </AnimatePresence>
         </div>
 
         <AnimatePresence>
