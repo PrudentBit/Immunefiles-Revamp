@@ -22,15 +22,15 @@ import copyFiles from '@/utils/api/copyFilesAPI'
 import getFiles from '@/utils/api/getFilesAPI'
 import { decryptData } from '@/utils/helper/decryptFiles'
 import BotLeftAlert from '../botLeftAlert'
+import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedFilesDisplay'
 
 type Props = {
-  file: FileOrFolderType[];
   multiplefiles: boolean;
   moveORcopy: string;
 }
 
-const MoveFilesModal = ({file, multiplefiles, moveORcopy}: Props) => {
-  const [removeFile, removeAllFiles] = selectedFilesStore((state) => [state.removeFile, state.removeAllFiles]);
+const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
+  const [file, removeFile, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeFile, state.removeAllFiles]);
   const [selectedFolder, setSelectedFolder] = React.useState<string>('');
   const [root, setRoot] = React.useState<string>('');
   const [folders, setFolders] = React.useState<FileOrFolderType[]>([]);
@@ -106,24 +106,8 @@ const MoveFilesModal = ({file, multiplefiles, moveORcopy}: Props) => {
           </AlertDialogHeader>
 
           <AlertDialogDescription className='text-[#7A7AFF] text-md flex flex-col justify-center h-[25rem] gap-4'>
-            <div className='w-full h-[30%] rounded-lg px-4 py-3 border-[1px] border-solid border-[#7A7AFF]'>
-              <div className='overflow-y-auto flex gap-3 flex-wrap h-full rounded-lg pr-4'>
-                {file.map((item, index) => {
-                  const extension = item.is_file ? item.name.split('.').pop() : '';
-                  const iconSrc = item.is_file ? `/FileIcons/${extension}.svg` : '/folder-icon-filled.svg';
 
-                  return (
-                    <div key={index} className='h-10 max-w-[38%] flex gap-2 items-center p-2 bg-primary_bg rounded-md'>
-                      <Image src={iconSrc} width={18} height={18} alt={`${item.is_file ? 'file' : 'folder'} icon`}/>
-                      <p className='truncate pr-2'>{item.name}</p>
-                      <button className='shrink-0' onClick={() => removeFileFromSelection(index)}>
-                        <Image src='/cross-icon.svg' width={14} height={14} alt='remove'/>
-                      </button>
-                    </div> 
-                  )
-                })}
-              </div>
-            </div>
+            <SelectedFilesDisplay file={file} removeFileFromSelection={removeFileFromSelection}/>
 
             <div className="w-full h-10 flex gap-4">
               {!(root === 'root') &&(

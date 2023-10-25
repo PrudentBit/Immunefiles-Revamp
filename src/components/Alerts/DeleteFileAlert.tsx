@@ -19,16 +19,15 @@ import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
 import BotLeftAlert from '../botLeftAlert'
 
 type Props = {
-  file: FileOrFolderType[];
   multiplefiles: boolean;
 }
 
-const DeleteFileAlert = ({ file, multiplefiles }: Props) => {
+const DeleteFileAlert = ({multiplefiles }: Props) => {
   const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
   const [deletedFiles, setDeletedFiles] = useState<string[]>([]);
   const [deletedFolders, setDeletedFolders] = useState<string[]>([]);
   const [undoMessage, setUndoMessage] = useState<string>('Items moved to trash.');
-  const [removeAllFiles, removeFile, addFile] = selectedFilesStore((state) => [state.removeAllFiles, state.removeFile, state.addFile]);
+  const [file, removeAllFiles, removeFile, addFile] = selectedFilesStore((state) => [state.files, state.removeAllFiles, state.removeFile, state.addFile]);
   const [toggleForceRefresh] = useFileAndFolderStore((state) => [state.toggleForceRefresh]);
 
   const deleteSelected = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
