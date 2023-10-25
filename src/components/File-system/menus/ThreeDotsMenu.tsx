@@ -10,6 +10,7 @@ import Image from 'next/image'
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
 import FileDetailsModal from '@/components/Modals/FileDetailsModal';
 import MoveFilesModal from '@/components/Modals/Move&CopyFilesModal';
+import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
 
 type Props = {
   file: FileOrFolderType;
@@ -34,19 +35,19 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/move-icon.svg' width={16} height={16} alt='Move icon'/>
-          <MoveFilesModal file={[file]} multiplefiles={false} moveORcopy='Move'/>
+          <MoveFilesModal multiplefiles={false} moveORcopy='Move'/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/copy-icon.svg' width={16} height={16} alt='Copy icon'/>
-          <MoveFilesModal file={[file]} multiplefiles={false} moveORcopy='Copy'/>
+          <MoveFilesModal multiplefiles={false} moveORcopy='Copy'/>
         </DropdownMenuItem>
         <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert file={[file]} multiplefiles={false}/>
+          <DeleteFileAlert multiplefiles={false}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          Share
+          <ShareContentModal multiplefiles={false}/>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

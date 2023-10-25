@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
 import MoveFilesModal from '@/components/Modals/Move&CopyFilesModal';
+import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
 
 const FileSelectOptions = () => {
   const [files, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeAllFiles]);
@@ -23,19 +24,19 @@ const FileSelectOptions = () => {
       
       <div className='flex gap-4 items-center'>
         <button title='Share' className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
-          <Image src='/share-icon.svg' width={20} height={20} alt='Share icon'/>
+          <ShareContentModal multiplefiles={true}/>
         </button>
         <button title='Link' className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
           <Image src='/link-icon.svg' width={20} height={20} alt='Link icon'/>
         </button>
         <button title='Copy' className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
-          <MoveFilesModal file={files} multiplefiles={true} moveORcopy={'Copy'}/>
+          <MoveFilesModal multiplefiles={true} moveORcopy={'Copy'}/>
         </button>
         <button title='Move' className='rounded-full p-2 bg-primary_bg  hover:bg-bg_hover'>
-          <MoveFilesModal file={files} multiplefiles={true} moveORcopy={'Move'}/>
+          <MoveFilesModal multiplefiles={true} moveORcopy={'Move'}/>
         </button>
         <button title='Delete' className='rounded-full p-2 bg-[#FFE3E5]  hover:bg-[#FFCDD0]'>
-          <DeleteFileAlert file={files} multiplefiles={true}/>
+          <DeleteFileAlert multiplefiles={true}/>
         </button>
       </div>
 
