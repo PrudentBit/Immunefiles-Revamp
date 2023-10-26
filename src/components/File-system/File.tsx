@@ -65,7 +65,7 @@ const File = ({ file }:Props) => {
         className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}
       >
         <div className='flex gap-3'>
-          <Image src={iconSrc} width={24} height={24} alt='File icon' className='object-contain' onError={handleImageError}/>
+          <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain' onError={handleImageError}/>
           <p className='text-primary_font_2 pb-1 truncate w-[8rem] mt-1 font-[500]'>{file.name}</p>
         </div>
 

@@ -9,7 +9,7 @@ const TabSelectionComponent = ({tab, setTab}: Props) => {
   return (
     <div className='flex justify-between items-center h-[16%]'>
       <button 
-        className={`rounded-full w-[23%] h-8 flex items-center px-4 ${tab === 'link' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
+        className={`rounded-full w-[23%] h-8 flex items-center justify-center ${tab === 'link' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
         onClick={() => setTab('link')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -19,7 +19,7 @@ const TabSelectionComponent = ({tab, setTab}: Props) => {
       </button>
 
       <button 
-        className={`rounded-full w-[23%] h-8 flex items-center px-4 ${tab === 'email' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
+        className={`rounded-full w-[23%] h-8 flex items-center justify-center ${tab === 'email' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
         onClick={() => setTab('email')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -30,7 +30,7 @@ const TabSelectionComponent = ({tab, setTab}: Props) => {
       </button>
 
       <button 
-        className={`rounded-full w-[23%] h-8 flex items-center px-4 ${tab === 'internal' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
+        className={`rounded-full w-[23%] h-8 flex items-center justify-center ${tab === 'internal' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
         onClick={() => setTab('internal')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -40,7 +40,7 @@ const TabSelectionComponent = ({tab, setTab}: Props) => {
       </button>
 
       <button 
-        className={`rounded-full w-[23%] h-8 flex items-center pl-3 ${tab === 'groups' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
+        className={`rounded-full w-[23%] h-8 flex items-center justify-center ${tab === 'groups' ? ('bg-primary_font_2 text-white') : (' text-[#333333]')}`}
         onClick={() => setTab('groups')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
