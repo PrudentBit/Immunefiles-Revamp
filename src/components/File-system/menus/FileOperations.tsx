@@ -19,27 +19,27 @@ const FileOperations = () => {
   };
 
   return (
-    <div className='Operations flex justify-between'>
-        <div className='flex gap-6'>
-          <UploadFileModal/>
+    <div className='Operations flex justify-between pr-1'>
+      <div className='flex gap-6'>
+        <UploadFileModal/>
 
-          <motion.button 
-            className="bg-primary_bg px-[0.65rem] pb-[0.4rem] rounded-full hover:bg-button_hover"
-            onClick={toggleAddFile} 
-            animate={controls} 
-          >
-            <p title='Add File/Folder' className='leading-[0px] text-3xl text-secondary_font font'>+</p>
-          </motion.button>
-
-          <AnimatePresence>
-            {addFile && <AddFile />}
-          </AnimatePresence>
-        </div>
+        <motion.button 
+          className="bg-primary_bg px-[0.65rem] pb-[0.4rem] rounded-full hover:bg-button_hover"
+          onClick={toggleAddFile} 
+          animate={controls} 
+        >
+          <p title='Add File/Folder' className='leading-[0px] text-3xl text-secondary_font font'>+</p>
+        </motion.button>
 
         <AnimatePresence>
-          {files.length > 0 && <FileSelectOptions/>}
+          {addFile && <AddFile />}
         </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {files.length > 0 && <FileSelectOptions/>}
+      </AnimatePresence>
+    </div>
   )
 }
 

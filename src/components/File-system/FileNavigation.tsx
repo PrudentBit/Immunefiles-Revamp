@@ -29,24 +29,26 @@ const FileNavigation = ({root}: Props) => {
   }, [root]);
 
   return (
-    <div className="w-full h-12 flex items-center p-2 pl-4 bg-[#F0F0F0] rounded-lg">
-      {path?.map((item, index) => {
-        return (
-          <div key={index} className="flex gap-2 ml-2">
-            <Link href={`/filesystem/${item}`}>
-              <p onClick={removeAllFiles} className="text-gray-700 font-medium hover:bg-gray-200 rounded-lg p-2">{item==='root' ? 'My home' : `${pathName[index]}`}</p>
-            </Link>
+    <div className=' h-12'>
+      <div className="w-full h-12 flex items-center p-2 pl-4 bg-[#F0F0F0] rounded-lg">
+        {path?.map((item, index) => {
+          return (
+            <div key={index} className="flex gap-2 ml-2">
+              <Link href={`/filesystem/${item}`}>
+                <p onClick={removeAllFiles} className="text-gray-700 font-medium hover:bg-gray-200 rounded-lg p-2">{item==='root' ? 'My home' : `${pathName[index]}`}</p>
+              </Link>
+              <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
+            </div>
+          )}
+        )}
+
+        {!path && (
+          <div className='flex gap-2 h-8 items-center'>
+            <p className="text-gray-700 font-medium">My Home </p>
             <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
           </div>
         )}
-      )}
-
-      {!path && (
-        <div className='flex gap-2 h-8 items-center'>
-          <p className="text-gray-700 font-medium">My Home </p>
-          <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
-        </div>
-      )}
+      </div>
     </div>
   )
 }

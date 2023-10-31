@@ -62,11 +62,11 @@ const File = ({ file }:Props) => {
         onDoubleClick={handleDoubleClick} 
         onClick={handleSelect} 
         data-key={file.urlhash}
-        className={`w-[14rem] select-none h-12 bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary' : 'border-primary_bg'}`}
+        className={`w-[13.6rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary bg-[#EFEFFD]' : 'border-primary_bg bg-primary_bg'}`}
       >
         <div className='flex gap-3'>
           <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain' onError={handleImageError}/>
-          <p className='text-primary_font_2 pb-1 truncate w-[8rem] mt-1 font-[500]'>{file.name}</p>
+          <p className='text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]'>{file.name}</p>
         </div>
 
         <ThreeDotsMenu file={file}/>
