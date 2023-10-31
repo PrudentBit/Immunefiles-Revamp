@@ -102,7 +102,6 @@ const ShareContentModal = ({multiplefiles}:Props) => {
       console.error(error);
     }
   };
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -147,44 +146,44 @@ const ShareContentModal = ({multiplefiles}:Props) => {
           
         </AlertDialogDescription>
         <AlertDialogFooter className='flex justify-end'>
-        {tab === "link" && (
-          <AlertDialogAction 
-            onClick={handleShare} 
-            className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-            disabled={!linkName}
-          >
-            Generate link
-          </AlertDialogAction>
-        )}
+          {tab === "link" && (
+            <AlertDialogAction 
+              onClick={handleShare} 
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+              disabled={!linkName}
+            >
+              Generate link
+            </AlertDialogAction>
+          )}
 
-        {tab === "email" && (
-          <AlertDialogAction 
-            onClick={handleShare} 
-            className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-            disabled={!linkName || !shareEmail}
-          >
-            Send Mail
-          </AlertDialogAction>
-        )}
+          {tab === "email" && (
+            <AlertDialogAction 
+              onClick={handleShare} 
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+              disabled={!linkName || !shareEmail}
+            >
+              Send Mail
+            </AlertDialogAction>
+          )}
 
-        {tab === "internal" && (
-          <AlertDialogAction
-            onClick={testing}
-            className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-          >
-            Share
-          </AlertDialogAction>
-        )}
+          {tab === "internal" && (
+            <AlertDialogAction
+              onClick={testing}
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+            >
+              Share
+            </AlertDialogAction>
+          )}
 
-        {tab === "groups" && (
-          <AlertDialogAction
-            onClick={testing}
-            className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-          >
-            Share
-          </AlertDialogAction>
-        )}
-      </AlertDialogFooter>
+          {tab === "groups" && (
+            <AlertDialogAction
+              onClick={testing}
+              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+            >
+              Share
+            </AlertDialogAction>
+          )}
+        </AlertDialogFooter>
       </AlertDialogContent>
 
       {(sharedSuccessfully && tab==="link") && (
@@ -206,7 +205,6 @@ const ShareContentModal = ({multiplefiles}:Props) => {
           <button onClick={onCloseAlert} className='text-primary_font px-2 mb-8 text-lg'>x</button>
         </BotLeftAlert>
       )}
-
     </AlertDialog>
   )
 }
