@@ -32,7 +32,7 @@ const TopNav = ({currentTab}: Props) => {
   }, []);
 
   return (
-    <nav className='flex w-full gap-6'>
+    <nav className='flex w-full gap-6 h-12'>
       <SearchBar/>
 
       <div className='flex w-[21rem] min-w-[18rem] justify-between items-center'>
