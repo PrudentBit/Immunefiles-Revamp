@@ -54,6 +54,7 @@ const File = ({ file }:Props) => {
   const handleImageError = (e: any) => {
     e.target.src = '/FileIcons/unknown.png';
   };
+  console.log('testtt')
 
   return (
     <>
