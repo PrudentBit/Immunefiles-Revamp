@@ -134,6 +134,11 @@ const ShareContentModal = ({multiplefiles}:Props) => {
     }
   };  
 
+  const variants = {
+    open: { opacity: 1, scale: 1 },
+    closed: { opacity: 0, scale: 0.9 },
+  };  
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -158,6 +163,20 @@ const ShareContentModal = ({multiplefiles}:Props) => {
 
           <TabSelectionComponent tab={tab} setTab={setTab}/>
 
+          <AnimatePresence initial={false}>
+            <motion.div
+              variants={variants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 20
+              }}
+              key={tab}
+              className='absolute h-[25rem] w-[46rem]'
+            >
           {tab === "link" && (
             <GenerateLinkSection settings={shareSettings} setSettings={setShareSettings} linkName={linkName} setLinkName={setLinkName}/>
           )}
@@ -173,7 +192,8 @@ const ShareContentModal = ({multiplefiles}:Props) => {
           {tab === "groups" && (
             <SendInGroupsSection settings={shareInternalSettings} setSettings={setShareInternalSettings} selectedGroups={selectedGroups} setSelectedGroups={setSelectedGroups} allChecked={allChecked} setAllChecked={setAllChecked}/>
           )}
-          
+            </motion.div>
+          </AnimatePresence>
         </AlertDialogDescription>
         <AlertDialogFooter className='flex justify-end'>
           {tab === "link" && (

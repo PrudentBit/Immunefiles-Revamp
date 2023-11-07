@@ -27,12 +27,14 @@ import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedF
 type Props = {
   multiplefiles: boolean;
   moveORcopy: string;
+  currFile?: FileOrFolderType;
 }
 
-const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
-  const [file, removeFile, removeAllFiles] = selectedFilesStore((state) => [state.files, state.removeFile, state.removeAllFiles]);
+const MoveOrCopyFilesModal = ({ multiplefiles, moveORcopy, currFile}: Props) => {
+  const [file, removeFile, removeAllFiles, addFile] = selectedFilesStore((state) => [state.files, state.removeFile, state.removeAllFiles, state.addFile]);
   const [selectedFolder, setSelectedFolder] = React.useState<string>('');
   const [root, setRoot] = React.useState<string>('');
+  const [folderStack, setFolderStack] = React.useState<string[]>([]);
   const [folders, setFolders] = React.useState<FileOrFolderType[]>([]);
   const [path, setPath] = React.useState<string[]>([]);
   const [pathName, setPathName] = React.useState<string[]>([]);
@@ -70,9 +72,20 @@ const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
     }
   }
 
+  const closeModal = () => {
+    setFolders([]);
+    setPath([]);
+    setPathName([]);
+    setSelectedFolder('');
+    setFolderStack([]);
+    setRoot("");
+    console.log('close modal');
+  }
+
   const traverseFile = (urlhash:string) => {
-    setRoot(urlhash)
-    setSelectedFolder(urlhash)
+    setRoot(urlhash);
+    setSelectedFolder(urlhash);
+    setFolderStack([...folderStack, urlhash]);
   }
 
   React.useEffect(() => {
@@ -87,20 +100,27 @@ const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
     fetchData();
   }, [root]);
 
+  const onOpenWithThreeDots = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+    e.stopPropagation(); 
+    if(currFile){
+      addFile(currFile)
+    }
+  }
+
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild >
           {multiplefiles 
-              ? <Image src={`/${moveORcopy.toLowerCase()}-icon.svg`} onClick={(e) => e.stopPropagation()} width={19} height={19} alt={`${moveORcopy} icon`}/>
-              : <p onClick={(e) => e.stopPropagation()} className='w-full'>{moveORcopy}</p>
-            }
+            ? <Image src={`/${moveORcopy.toLowerCase()}-icon.svg`} onClick={(e) => e.stopPropagation()} width={19} height={19} alt={`${moveORcopy} icon`}/>
+            : <p onClick={e => onOpenWithThreeDots(e)} className='w-full'>{moveORcopy}</p>
+          }
         </AlertDialogTrigger>
         <AlertDialogContent className='w-[45rem]'>
 
           <AlertDialogHeader className='flex flex-row h-10 justify-between'>
             <AlertDialogTitle className='font-bold text-xl text-black mt-1 pt-[0.3rem]'>{moveORcopy} Content</AlertDialogTitle>
-            <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) => e.stopPropagation()}>
+            <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) =>{ e.stopPropagation(); closeModal}}>
               <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full' alt='close icon'/>
             </AlertDialogCancel>
           </AlertDialogHeader>
@@ -109,50 +129,101 @@ const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
 
             <SelectedFilesDisplay file={file} removeFileFromSelection={removeFileFromSelection}/>
 
-            <div className="w-full h-10 flex gap-4">
-              {!(root === 'root') &&(
-                <button className='w-10 h-10 rounded-lg bg-[#F0F0F0] flex hover:bg-gray-200 items-center justify-center'><Image src="/left-arrow.svg" width={20} height={20} alt='back'/></button>
-              )}
-              <div className='w-full h-full rounded-lg bg-[#F0F0F0] flex items-center pl-2'>
-                {path?.map((item, index) => {
-                  return (
-                    <div key={index} className="flex gap-2 ml-2">
-                      <p onClick={()=>setRoot(item)} className="text-gray-700 font-medium hover:bg-gray-200 rounded-lg cursor-pointer p-2">{item==='root' ? 'My home' : `${pathName[index]}`}</p>
+            {!(root==='') &&(
+              <div className="w-full h-10 flex gap-4">
+                {!(root === 'root') &&(
+                  <button 
+                    className='w-10 h-10 rounded-lg bg-[#F0F0F0] flex hover:bg-gray-200 items-center justify-center'
+                    onClick={(e) => {
+                      const newStack = [...folderStack];
+                      newStack.pop();
+                      setFolderStack(newStack);
+                      setRoot(newStack[newStack.length - 1])
+                      e.stopPropagation()
+                    }}
+                  >
+                    <Image src="/left-arrow.svg" width={20} height={20} alt='back'/>
+                  </button>
+                )}
+                <div className='w-full h-full rounded-lg bg-[#F0F0F0] flex items-center pl-2'>
+                  {path?.map((item, index) => {
+                    return (
+                      <div key={index} className="flex gap-2 ml-2">
+                        <p 
+                          onClick={(e)=>{
+                            e.stopPropagation()
+                            setRoot(item);
+                          }} 
+                          className="text-gray-700 font-medium hover:bg-gray-200 rounded-lg cursor-pointer p-2"
+                        >
+                          {item==='root' ? 'My home' : `${pathName[index]}`}
+                        </p>
+                        <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
+                      </div>
+                    )}
+                  )}
+
+                  {!path && (
+                    <div className='flex gap-2'>
+                      <p className="text-gray-700 font-medium">My home </p>
                       <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
                     </div>
                   )}
-                )}
-
-                {!path && (
-                  <div className='flex gap-2'>
-                    <p className="text-gray-700 font-medium">My home </p>
-                    <Image src="/right-arrow.svg" className='pt-[0.2rem]' width={8} height={8} alt="arrow right"/>
-                  </div>
-                )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className='w-full h-[50%] rounded-lg p-4 border-[1px] border-solid border-[#7A7AFF]'>
               <div className='overflow-y-auto flex gap-3 flex-wrap h-full'>
                 {root === "" ? (
                   <>
                     <div className={`h-10 w-full mr-4 flex justify-between items-center p-2 cursor-pointer ${(selectedFolder === "root") ? "bg-[#e7e7ff]" : "bg-primary_bg"} rounded-md`}>
-                      <div className='flex gap-2 w-full' onClick={()=>setSelectedFolder("root")}>
+                      <div 
+                        className='flex gap-2 w-full' 
+                        onClick={(e)=>{
+                          e.stopPropagation()
+                          setSelectedFolder("root")
+                        }}
+                      >
                         <Image src='/folder-icon.svg' width={20} height={20} alt='folder icon'/>
                         <p className='truncate pr-2'>My Home</p>
                       </div>
-                      <button className='shrink-0 pr-2' onClick={()=>traverseFile("root")}><Image src='/right-arrow.svg' width={8} height={8} alt='enter'/></button>
+                      <button 
+                        className='shrink-0 pr-2' 
+                        onClick={(e)=>{
+                          traverseFile("root");
+                          e.stopPropagation()
+                        }}
+                        title='Enter folder'
+                      >
+                        <Image src='/right-arrow.svg' width={8} height={8} alt='enter'/>
+                      </button>
                     </div> 
                   </>
                 ):(
                   <>
                     {folders.map((item, index) => (
                       <div key={index} className={`h-10 w-full mr-4 flex justify-between items-center p-2 cursor-pointer ${(item.urlhash===selectedFolder) ? "bg-[#e7e7ff]" : "bg-primary_bg"} rounded-md`}>
-                        <div className='flex gap-2 w-full' onClick={()=>setSelectedFolder(item.urlhash)}>
+                        <div 
+                          className='flex gap-2 w-full' 
+                          onClick={(e)=>{
+                            e.stopPropagation()
+                            setSelectedFolder(item.urlhash)
+                          }}
+                        >
                           <Image src='/folder-icon.svg' width={20} height={20} alt='folder icon'/>
                           <p className='truncate pr-2'>{item.name}</p>
                         </div>
-                        <button className='shrink-0 pr-2' onClick={()=>traverseFile(item.urlhash)}><Image src='/right-arrow.svg' width={8} height={8} alt='enter'/></button>
+                        <button 
+                          className='shrink-0 pr-2' 
+                          onClick={(e)=>{
+                            traverseFile(item.urlhash);
+                            e.stopPropagation()
+                          }}
+                          title='Enter folder'
+                        >
+                          <Image src='/right-arrow.svg' width={8} height={8} alt='enter'/>
+                        </button>
                       </div> 
                     ))} 
                   </>
@@ -189,4 +260,4 @@ const MoveFilesModal = ({ multiplefiles, moveORcopy}: Props) => {
   )
 }
 
-export default MoveFilesModal
+export default MoveOrCopyFilesModal

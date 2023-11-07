@@ -1,5 +1,5 @@
 import React from 'react'
-import SwitchFields from './SwitchFields'
+import SwitchFields from '../../SwitchFields'
 
 type Props = {
   shareEmail: string;

@@ -13,3 +13,40 @@ type UserDetailsType = {
     profile_pic: string;
     username: string;
 };
+
+type AdminUsersType = {
+    username: string;
+    email: string;
+    name: string;
+    profile_pic: string;
+    profile_type: string;
+    FA: boolean;
+    status: boolean;
+    storage: number;
+    last_active: string;
+};
+
+type AdminSpecificUserType ={
+    FA: boolean;
+    email: string;
+    last_active: string;
+    links: {
+        active_links: number;
+        expired_link: number;
+        total_link: number;
+    };
+    name: string;
+    profile_pic: string;
+    profile_type: string;
+    status: boolean;
+    storage: {
+        perecentage: {
+            docs: string;
+            media: string;
+            others: string;
+        };
+        storage_used: string;
+        total_storage: string;
+    };
+    username: string;
+}

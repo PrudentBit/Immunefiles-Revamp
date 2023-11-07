@@ -106,3 +106,11 @@ input:active {
   width: 7px; /* Width of the vertical scrollbar */
   height: 7px; /* Height of the horizontal scrollbar */
 }
+
+.button, .flip-image{
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover .flip-image {
+  transform: scaleX(-1);
+}
