@@ -1,5 +1,5 @@
 import React from 'react'
-import SwitchFields from './SwitchFields'
+import SwitchFields from '../../SwitchFields'
 import Image from 'next/image'
 import { GroupStore } from '@/utils/store/groupDetailsStore'
 

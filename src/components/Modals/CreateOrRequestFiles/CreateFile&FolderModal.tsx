@@ -29,7 +29,6 @@ type Props = {
 
 const CreateFileOrFolder = ({propTab}:Props) => {
   const [tab, setTab] = useState(propTab);
-  const [direction, setDirection] = useState(0);
 
   const [fileName, setFileName] = useState('');
   const [selectedExtension, setSelectedExtension] = useState('txt');
@@ -77,24 +76,8 @@ const CreateFileOrFolder = ({propTab}:Props) => {
   }  
 
   const variants = {
-    enter: (direction:number) => {
-      return {
-        x: direction > 0 ? 1000 : -1000,
-        opacity: 0
-      };
-    },
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction:number) => {
-      return {
-        zIndex: 0,
-        x: direction < 0 ? 1000 : -1000,
-        opacity: 0
-      };
-    }
+    open: { opacity: 1, scale: 1 },
+    closed: { opacity: 0, scale: 0.8 },
   };  
 
   return (
@@ -107,27 +90,28 @@ const CreateFileOrFolder = ({propTab}:Props) => {
       <AlertDialogContent className='w-[35rem]'>
           <AlertDialogHeader className='flex flex-row h-10 justify-between'>
             <AlertDialogTitle className='flex gap-4 items-center pt-1'>
-            <Tabs onClick={() => { setTab("Create File"); setDirection(-1); }} tabName='Create File' className={`${tab==="Create File" && "bg-primary_bg"}`}/>
-            <Tabs onClick={() => { setTab("Create Folder"); setDirection(tab === "Create File" ? 1 : -1); }}  tabName='Create Folder'className={`${tab==="Create Folder" && "bg-primary_bg"}`}/>
-            <Tabs onClick={() => { setTab("Request File"); setDirection(1); }}  tabName='Request File' className={`${tab==="Request File" && "bg-primary_bg"}`}/>
+            <Tabs onClick={() => { setTab("Create File")}} tabName='Create File' className={`${tab==="Create File" && "bg-primary_bg"}`}/>
+            <Tabs onClick={() => { setTab("Create Folder")}}  tabName='Create Folder'className={`${tab==="Create Folder" && "bg-primary_bg"}`}/>
+            <Tabs onClick={() => { setTab("Request File")}}  tabName='Request File' className={`${tab==="Request File" && "bg-primary_bg"}`}/>
             </AlertDialogTitle>
             <AlertDialogCancel className='w-7 h-7 p-[0.4rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) => e.stopPropagation()}>
               <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full' alt='close icon'/>
             </AlertDialogCancel>
           </AlertDialogHeader>
-        <AlertDialogDescription className='text-[#7A7AFF] text-md p-2'>
-          <AnimatePresence initial={false} custom={direction}>
+        <AlertDialogDescription className={`text-[#7A7AFF] text-md p-2 relative ${tab === "Request File" ? ("h-[19rem]") : ("h-[8rem]")} w-full`}>
+          <AnimatePresence initial={false} >
             <motion.div
-              key={tab}
-              custom={direction}
               variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
+              initial="closed"
+              animate="open"
+              exit="closed"
               transition={{
-                x: { type: 'spring', stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 }
+                type: 'spring',
+                stiffness: 200,
+                damping: 20
               }}
+              key={tab}
+              className='absolute h-[7rem] w-[31rem]'
             >
               {tab === 'Create File' && (
                 <CreateFileSection fileName={fileName} setFileName={setFileName} selectedExtension={selectedExtension} setSelectedExtension={setSelectedExtension}/>
@@ -173,7 +157,7 @@ const CreateFileOrFolder = ({propTab}:Props) => {
                 <p className=' text-[#7A7AFF] font-medium text-sm'>Add request</p>
               </button>
               <AlertDialogAction
-                onClick={() => { console.log(requests)}} //handleRequestFiles
+                onClick={handleRequestFiles}
                 disabled={requests.some(request => !request.fileName || !request.email || !request.isEmailValid)}
                 title="Fields might be missing or incorrect"
                 className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'

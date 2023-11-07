@@ -14,7 +14,7 @@ export default async function requestFiles(requests: Request[], currentFolder: s
   }));
 
   const res = await fetch(
-    `${process.env.REACT_APP_BASE_URL}/content/request/create_request/${currentFolder}?tenant=${window.location.hostname.split(".")[0]}`,
+    `https://api.immunefiles.com/api/api/content/request/create_request/${currentFolder}?tenant=${window.location.hostname.split(".")[0]}`,
     {
       method: "POST",
       headers: {
