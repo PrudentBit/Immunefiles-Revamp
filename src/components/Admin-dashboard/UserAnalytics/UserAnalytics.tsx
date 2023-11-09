@@ -9,10 +9,10 @@ import getUsers from '@/utils/api/getAdminUsersAPI'
 type Props = {}
 
 const UserAnalytics = (props: Props) => {
-	const [twoFAGlobal, setTwoFAGlobal] = React.useState(false)
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [users, setUsers] = React.useState<AdminUsersType[]>([]);
   const [update, setUpdate] = React.useState(false);
+  const [selectedUsers, setSelectedUsers] = React.useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,20 +20,21 @@ const UserAnalytics = (props: Props) => {
         const users = await getUsers();
         console.log(users);
         setUsers(users.users);
-        const intervalId = setInterval(fetchData, 10000);
-        return () => clearInterval(intervalId);
       } 
       catch (error) {
         console.error(error);
       }
     }
-
+  
     fetchData();
+    const intervalId = setInterval(fetchData, 10000);
+    return () => clearInterval(intervalId);
   }, [update]);
+  
 
 	return (
     <ShadowedCard className='h-[65%] w-full justify-start gap-4'>
-			<AnalyticsNav twoFAGlobal={twoFAGlobal} setTwoFAGlobal={setTwoFAGlobal} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+			<AnalyticsNav selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setUpdate={setUpdate}/>
 
 			<div className='h-7 flex w-[98%] py-1 px-4 gap-7 text-[#AFAFAF] font-base'>
         <p className='w-6'></p>
@@ -47,7 +48,7 @@ const UserAnalytics = (props: Props) => {
 
 			<div className='h-[37vh] flex flex-col gap-4 overflow-y-auto pr-4'>
         {users?.filter(user => user.username.toLowerCase().includes(searchTerm.toLowerCase())).map((user, index) => (
-          <UserAnalyticRows key={index} user={user} setUpdate={setUpdate}/>
+          <UserAnalyticRows key={index} user={user} setUpdate={setUpdate} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
         ))}
       </div>
 

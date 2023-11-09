@@ -8,10 +8,11 @@ import BotLeftAlert from '@/components/BotLeftAlert'
 type Props = {
 	user: AdminUsersType
 	setUpdate: React.Dispatch<React.SetStateAction<boolean>>
+	selectedUsers: string[]
+	setSelectedUsers: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-const UserAnalyticRows = ({user, setUpdate}: Props) => {
-  const [checked, setChecked] = React.useState(false);
+const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Props) => {
 	const [showAlert, setShowAlert] = React.useState(false);
 
 	const handle2FASwitch = async () => {
@@ -26,12 +27,20 @@ const UserAnalyticRows = ({user, setUpdate}: Props) => {
       console.error(error);
     }
   }
+
+	const handleCheckboxClick = () => {
+		if (selectedUsers.includes(user.username)) {
+			setSelectedUsers(selectedUsers.filter(username => username !== user.username));
+		} else {
+			setSelectedUsers([...selectedUsers, user.username]);
+		}
+	};
 	
   return (
     <>
 			<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 gap-7 bg-primary_bg'>
-				<button onClick={()=>setChecked(!checked)} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
-					{checked ? (
+				<button onClick={handleCheckboxClick} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
+					{selectedUsers.includes(user.username) ? (
 						<Image src="/checked-icon.svg" alt='check' width={28} height={28}/>
 					):(
 						<Image src="/not-checked-icon.svg" alt='uncheck' width={28} height={28}/>
