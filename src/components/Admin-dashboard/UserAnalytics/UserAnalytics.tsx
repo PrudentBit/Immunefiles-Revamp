@@ -12,6 +12,7 @@ const UserAnalytics = (props: Props) => {
 	const [twoFAGlobal, setTwoFAGlobal] = React.useState(false)
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [users, setUsers] = React.useState<AdminUsersType[]>([]);
+  const [update, setUpdate] = React.useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,6 +20,8 @@ const UserAnalytics = (props: Props) => {
         const users = await getUsers();
         console.log(users);
         setUsers(users.users);
+        const intervalId = setInterval(fetchData, 10000);
+        return () => clearInterval(intervalId);
       } 
       catch (error) {
         console.error(error);
@@ -26,7 +29,7 @@ const UserAnalytics = (props: Props) => {
     }
 
     fetchData();
-  }, []);
+  }, [update]);
 
 	return (
     <ShadowedCard className='h-[65%] w-full justify-start gap-4'>
@@ -44,7 +47,7 @@ const UserAnalytics = (props: Props) => {
 
 			<div className='h-[37vh] flex flex-col gap-4 overflow-y-auto pr-4'>
         {users?.filter(user => user.username.toLowerCase().includes(searchTerm.toLowerCase())).map((user, index) => (
-          <UserAnalyticRows key={index} user={user} />
+          <UserAnalyticRows key={index} user={user} setUpdate={setUpdate}/>
         ))}
       </div>
 
