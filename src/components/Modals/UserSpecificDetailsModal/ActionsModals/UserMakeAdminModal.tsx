@@ -14,22 +14,22 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import BotLeftAlert from '@/components/BotLeftAlert'
-import editUser from '@/utils/api/editUserAPI'
+import createAdmin from '@/utils/api/makeUserAdminAPI'
 
 type Props = {
 	user?: AdminSpecificUserType
 }
 
-const AllowUserModal = ({user}: Props) => {
+const UserMakeAdminModal = ({user}: Props) => {
 
-  const [unRestrictedSuccessfully, setUnRestrictedSuccessfully] = useState(false);
+  const [adminCreatedSuccessfully, setAdminCreatedSuccessfully] = useState(false);
 
-  const handleUnRestrict = async () => {
+  const handleAdminCreation = async () => {
     if(user){
       try {
-        const result = await editUser(user.username, 'restrict');
+        const result = await createAdmin(user.username);
         if (result.success) {
-          setUnRestrictedSuccessfully(true);
+          setAdminCreatedSuccessfully(true);
         }
       } catch (error) {
         console.error(error);
@@ -41,21 +41,21 @@ const AllowUserModal = ({user}: Props) => {
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-[#3ABA6E] hover:bg-[#51C580]'>
-            <Image src='/allow-user-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
-            Allow Sign-in
+					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-primary_font_2 hover:bg-[#A0A0FF]'>
+            <Image src='/admin-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
+            Make admin
           </Button>
         </AlertDialogTrigger>
 				<AlertDialogOverlay className='backdrop-blur-[0px]'/>
         <AlertDialogContent className='translate-y-[-160%]'>
           <AlertDialogHeader className='flex flex-row items-center gap-3'>
-            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#D5FFE6]'>
-							<Image src='/open-lock.svg' width={18} height={18}  alt='allow'/>
+            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#E5EDFF]'>
+							<Image src='/admin-icon-2.svg' width={18} height={18}  alt='allow'/>
 						</div>
             <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to allow this user to login?</AlertDialogTitle>
+              <AlertDialogTitle className='font-medium text-md'>Do you want to make this user an admin?</AlertDialogTitle>
               <AlertDialogDescription className='text-xs'>
-                User will now be able to login into immunefiles.
+								This user will get all the privileges of an admin. 
               </AlertDialogDescription>
             </div>  
           </AlertDialogHeader>
@@ -69,21 +69,22 @@ const AllowUserModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full text-white bg-[#3ABA6E] hover:bg-[#51C580]' onClick={handleUnRestrict}>Allow login</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full bg-primary_font text-white hover:bg-[#628CE9]' onClick={handleAdminCreation}>Allow login</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {unRestrictedSuccessfully &&
+      {adminCreatedSuccessfully &&
         <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>User un-restricted successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will be able to login into immunefiles.</p>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>Admin created successfully</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>This user now has all the privileges of an admin.</p>
           </div>
         </BotLeftAlert>
       }
     </>
-	)
+  )
 }
-export default AllowUserModal
+
+export default UserMakeAdminModal

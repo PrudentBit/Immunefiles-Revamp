@@ -18,7 +18,7 @@ import Image from 'next/image'
 import uploadFiles from '@/utils/api/uploadFilesAPI'
 import uploadFolders from '@/utils/api/uploadFoldersAPI'
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
-import BotLeftAlert from '../botLeftAlert'
+import BotLeftAlert from '../BotLeftAlert'
 
 type Props = {}
 

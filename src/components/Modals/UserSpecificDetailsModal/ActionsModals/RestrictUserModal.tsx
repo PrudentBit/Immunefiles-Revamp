@@ -13,7 +13,7 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/botLeftAlert'
+import BotLeftAlert from '@/components/BotLeftAlert'
 import editUser from '@/utils/api/editUserAPI'
 
 type Props = {

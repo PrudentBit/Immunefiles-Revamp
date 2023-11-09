@@ -21,7 +21,7 @@ import GenerateLinkSection from './GenerateLinkSection';
 import SendMailSection from './SendMailSection';
 import InternalShareSection from './InternalShareSection';
 import SendInGroupsSection from './SendInGroupsSection';
-import BotLeftAlert from '@/components/botLeftAlert';
+import BotLeftAlert from '@/components/BotLeftAlert';
 import shareLinkOrMail from '@/utils/api/shareLinkOrMailAPI';
 import internalShare from '@/utils/api/internalShareAPI';
 import groupShare from '@/utils/api/shareInGroupAPI';

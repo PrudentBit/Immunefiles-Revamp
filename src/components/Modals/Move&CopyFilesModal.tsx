@@ -21,7 +21,7 @@ import moveFiles from '@/utils/api/movefilesAPI'
 import copyFiles from '@/utils/api/copyFilesAPI'
 import getFiles from '@/utils/api/getFilesAPI'
 import { decryptData } from '@/utils/helper/decryptFiles'
-import BotLeftAlert from '../botLeftAlert'
+import BotLeftAlert from '../BotLeftAlert'
 import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedFilesDisplay'
 
 type Props = {
