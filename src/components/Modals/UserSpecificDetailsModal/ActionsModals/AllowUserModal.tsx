@@ -14,17 +14,34 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import BotLeftAlert from '@/components/botLeftAlert'
+import editUser from '@/utils/api/editUserAPI'
 
 type Props = {
 	user?: AdminSpecificUserType
 }
 
 const AllowUserModal = ({user}: Props) => {
+
+  const [unRestrictedSuccessfully, setUnRestrictedSuccessfully] = useState(false);
+
+  const handleUnRestrict = async () => {
+    if(user){
+      try {
+        const result = await editUser(user.username, 'restrict');
+        if (result.success) {
+          setUnRestrictedSuccessfully(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-primary_font_2 hover:bg-[#A0A0FF]'>
+					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-[#3ABA6E] hover:bg-[#51C580]'>
             <Image src='/allow-user-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
             Allow Sign-in
           </Button>
@@ -32,11 +49,11 @@ const AllowUserModal = ({user}: Props) => {
 				<AlertDialogOverlay className='backdrop-blur-[0px]'/>
         <AlertDialogContent className='translate-y-[-160%]'>
           <AlertDialogHeader className='flex flex-row items-center gap-3'>
-            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-primary_bg'>
-							<Image src='/allow-user-icon.svg' width={18} height={18}  alt='allow'/>
+            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#D5FFE6]'>
+							<Image src='/open-lock.svg' width={18} height={18}  alt='allow'/>
 						</div>
             <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to allow this user?</AlertDialogTitle>
+              <AlertDialogTitle className='font-medium text-md'>Do you want to allow this user to login?</AlertDialogTitle>
               <AlertDialogDescription className='text-xs'>
                 User will now be able to login into immunefiles.
               </AlertDialogDescription>
@@ -52,21 +69,20 @@ const AllowUserModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]'>Restrict</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full text-white bg-[#3ABA6E] hover:bg-[#51C580]' onClick={handleUnRestrict}>Allow login</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* {(deletedSuccessfully) &&
-        <BotLeftAlert image='/delete-icon.svg' zimagebg='bg-[#FFE3E5]'>
+      {unRestrictedSuccessfully &&
+        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>{undoMessage}</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>you can restore the items from trash bin whenever needed.</p>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>User un-restricted successfully</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will be able to login into immunefiles.</p>
           </div>
-          <button onClick={recoverDeleted} className='border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg'>undo</button>
         </BotLeftAlert>
-      } */}
+      }
     </>
 	)
 }
