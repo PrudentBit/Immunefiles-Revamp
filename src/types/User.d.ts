@@ -49,4 +49,18 @@ type AdminSpecificUserType ={
         total_storage: string;
     };
     username: string;
-}
+    servers:{
+        active_gdrive: number;
+        active_onedrive: number;
+        total: number;
+        total_gdrive: number;
+        total_onedrive: number;
+    };
+    groups:[
+        group:{
+            is_admin: boolean,
+            name: string,
+            member_count: number,
+        }
+    ]
+};

@@ -9,7 +9,7 @@ import {
   buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import AdminManageStorage from '@/components/AdminManageStorage'
+import AdminManageStorage from '@/components/Modals/AdminManageStorage'
 
 type Props = {
   storage?: AnalyticsData['storage'];

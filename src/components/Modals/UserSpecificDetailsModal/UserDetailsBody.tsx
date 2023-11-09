@@ -92,9 +92,9 @@ const UserDetailsBody = ({username}: Props) => {
             <UserStorageAnalytics userDetailsStorage={userDetails?.storage} />
           </div>
 
-          <UserGroups />
+          <UserGroups userDetailsGroups={userDetails?.groups}/>
 
-          <UserDrives />
+          <UserDrives userDetailsServers={userDetails?.servers}/>
         </div>
       </div>
     </div>
