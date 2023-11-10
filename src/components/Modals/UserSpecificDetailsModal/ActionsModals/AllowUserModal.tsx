@@ -30,6 +30,7 @@ const AllowUserModal = ({user}: Props) => {
         const result = await editUser(user.username, 'restrict');
         if (result.success) {
           setUnRestrictedSuccessfully(true);
+          setTimeout(() => setUnRestrictedSuccessfully(false), 5000);
         }
       } catch (error) {
         console.error(error);
@@ -69,7 +70,7 @@ const AllowUserModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full text-white bg-[#3ABA6E] hover:bg-[#51C580]' onClick={handleUnRestrict}>Allow login</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full text-white bg-primary_font hover:bg-[#628CE9]' onClick={handleUnRestrict}>Allow login</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>

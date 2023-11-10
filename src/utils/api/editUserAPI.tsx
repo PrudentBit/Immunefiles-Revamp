@@ -11,7 +11,9 @@ export default async function editUser(username: string, action: string, extra_s
     }
 
     const res = await fetch(
-      `https://api.immunefiles.com/api/auth/admin/user/edit?tenant=prudentbit`,
+      `https://api.immunefiles.com/api/api/auth/admin/user/edit?tenant=${
+        window.location.hostname.split(".")[0]
+      }`,
       {
         method: "PATCH",
         headers: {

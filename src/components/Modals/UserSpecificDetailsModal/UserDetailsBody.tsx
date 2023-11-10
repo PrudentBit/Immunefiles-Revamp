@@ -11,8 +11,9 @@ import RestrictUserModal from './ActionsModals/RestrictUserModal'
 import DeleteUserModal from './ActionsModals/DeleteUserModal'
 import AllowUserModal from './ActionsModals/AllowUserModal'
 import UserMakeAdminModal from './ActionsModals/UserMakeAdminModal'
-import set2FA from '@/utils/api/user2FASetAPI'
 import BotLeftAlert from '@/components/BotLeftAlert'
+import editUser from '@/utils/api/editUserAPI'
+import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 
 type Props = {
   username: AdminUsersType['username']
@@ -41,16 +42,16 @@ const UserDetailsBody = ({username}: Props) => {
   }, [username, update]);
 
   const handle2FASwitch = async () => {
-    try {
-      const result = await set2FA([username]);
-      if (result.success) {
-        setUpdate(prevState => !prevState);
-        setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 5000);
+      try {
+        const result = await editUser(username, '2FA');
+        if (result.success) {
+          setUpdate(prevState => !prevState);
+          setShowAlert(true);
+          setTimeout(() => setShowAlert(false), 5000);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
   }
   
   return (
@@ -93,8 +94,12 @@ const UserDetailsBody = ({username}: Props) => {
               <AllowUserModal user={userDetails}/>
             )}
 
-            <UserMakeAdminModal user={userDetails}/>
-            
+            {userDetails?.username !== UserDetailsStore.getState().userDetails?.username &&
+              (
+                <UserMakeAdminModal user={userDetails}/>
+              )
+            }
+
             <Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-[#3ABA6E] hover:bg-[#51C580]'>
               <Image src='/download-icon-2-white.svg' width={16} height={16} alt="edit" className="flip-image"/>
               Download Logs
@@ -110,7 +115,7 @@ const UserDetailsBody = ({username}: Props) => {
             <div className='flex w-full h-[11rem] gap-5'>
               <UserLinkAnaltics user={userDetails} />
 
-              <UserStorageAnalytics userDetailsStorage={userDetails?.storage} />
+              <UserStorageAnalytics user={userDetails} />
             </div>
 
             {(userDetails?.groups?.length || 0) > 0 && 

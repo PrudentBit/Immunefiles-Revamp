@@ -62,5 +62,6 @@ type AdminSpecificUserType ={
             name: string,
             member_count: number,
         }
-    ]
+    ];
+    is_admin: boolean;
 };

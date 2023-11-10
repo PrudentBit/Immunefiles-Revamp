@@ -6,7 +6,9 @@ export default async function set2FA(usernames: string[]) {
       };
   
       const res = await fetch(
-        `https://api.immunefiles.com/api/api/auth/set_2FA?tenant=prudentbit`,
+        `https://api.immunefiles.com/api/api/auth/set_2FA?tenant==${
+          window.location.hostname.split(".")[0]
+        }`,
         {
           method: "POST",
           headers: {

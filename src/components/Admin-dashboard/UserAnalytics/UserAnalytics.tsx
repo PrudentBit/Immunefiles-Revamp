@@ -34,7 +34,7 @@ const UserAnalytics = (props: Props) => {
 
 	return (
     <ShadowedCard className='h-[65%] w-full justify-start gap-4'>
-			<AnalyticsNav selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setUpdate={setUpdate}/>
+			<AnalyticsNav users={users} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setUpdate={setUpdate}/>
 
 			<div className='h-7 flex w-[98%] py-1 px-4 gap-7 text-[#AFAFAF] font-base'>
         <p className='w-6'></p>

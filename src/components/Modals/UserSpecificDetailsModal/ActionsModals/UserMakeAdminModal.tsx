@@ -14,7 +14,7 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import BotLeftAlert from '@/components/BotLeftAlert'
-import createAdmin from '@/utils/api/makeUserAdminAPI'
+import editUser from '@/utils/api/editUserAPI'
 
 type Props = {
 	user?: AdminSpecificUserType
@@ -27,7 +27,7 @@ const UserMakeAdminModal = ({user}: Props) => {
   const handleAdminCreation = async () => {
     if(user){
       try {
-        const result = await createAdmin(user.username);
+        const result = await editUser(user.username, 'admin');
         if (result.success) {
           setAdminCreatedSuccessfully(true);
         }
@@ -42,8 +42,8 @@ const UserMakeAdminModal = ({user}: Props) => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
 					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-primary_font_2 hover:bg-[#A0A0FF]'>
-            <Image src='/admin-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
-            Make admin
+            <Image src='/admin-icon.svg' width={18} height={18} alt="edit" className="flip-image"/>
+            {user?.is_admin ? "Remove admin" : "Make admin"}
           </Button>
         </AlertDialogTrigger>
 				<AlertDialogOverlay className='backdrop-blur-[0px]'/>
@@ -53,9 +53,9 @@ const UserMakeAdminModal = ({user}: Props) => {
 							<Image src='/admin-icon-2.svg' width={18} height={18}  alt='allow'/>
 						</div>
             <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to make this user an admin?</AlertDialogTitle>
+              <AlertDialogTitle className='font-medium text-md'>{user?.is_admin ? "Do you want to remove this user as admin?":"Do you want to make this user an admin?"}</AlertDialogTitle>
               <AlertDialogDescription className='text-xs'>
-								This user will get all the privileges of an admin. 
+								{user?.is_admin ? "This user will no longer have admin privileges.":"This user will have all the privileges of an admin."}
               </AlertDialogDescription>
             </div>  
           </AlertDialogHeader>
@@ -69,7 +69,9 @@ const UserMakeAdminModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full bg-primary_font text-white hover:bg-[#628CE9]' onClick={handleAdminCreation}>Allow login</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full bg-primary_font text-white hover:bg-[#628CE9]' onClick={handleAdminCreation}>
+              {user?.is_admin ? "Remove admin" : "Make admin"}
+            </AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
