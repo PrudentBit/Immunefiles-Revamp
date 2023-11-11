@@ -16,7 +16,7 @@ import deleteFiles from '@/utils/api/deleteFileAPI'
 import recoverDeletedFiles from '@/utils/api/recoverDeletedFilesAPI'
 import { selectedFilesStore } from '@/utils/store/selectFilesStore'
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
-import BotLeftAlert from '../botLeftAlert'
+import BotLeftAlert from '../BotLeftAlert'
 
 type Props = {
   multiplefiles: boolean;

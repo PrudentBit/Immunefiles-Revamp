@@ -2,9 +2,11 @@ import React from 'react'
 import Image from 'next/image'
 import { Progress } from '@/components/ui/progress'
 
-type Props = {}
+type Props = {
+  userDetailsServers?: AdminSpecificUserType['servers']
+}
 
-const UserDrives = (props: Props) => {
+const UserDrives = ({userDetailsServers}: Props) => {
   return (
     <div className='flex flex-col gap-3 w-full h-[12rem] bg-[#E5EDFF] rounded-2xl px-6 pt-4 pb-2'>
       <div className='flex w-full h-5 justify-between pr-4'>
@@ -13,7 +15,7 @@ const UserDrives = (props: Props) => {
           <p className='text-primary_font text-[1.1rem] font-medium leading-4'>Servers</p>
         </div>
         
-        <p className=''>Total <span className='text-primary_font text-md font-medium leading-4'>-- Servers</span></p>
+        <p className=''>Total <span className='text-primary_font text-md font-medium leading-4'>{userDetailsServers?.total_gdrive || "--"} Servers</span></p>
       </div>
 
       <div className='w-full flex flex-col pr-2 gap-3'>
@@ -27,22 +29,22 @@ const UserDrives = (props: Props) => {
 
           <div className='flex flex-col w-[12rem]'>
             <p className='text-primary_font text-sm font-medium leading-4'>Google Drive</p>
-            <p className='text-gray-400'>-- servers created</p>
+            <p className='text-gray-400'>{userDetailsServers?.total_gdrive || "--"} servers created</p>
           </div>
 
           <div className='flex flex-col gap-2 w-full '>
-            <div className='flex gap-8 justify-end'>
-              <div className='flex gap-2 items-center'>
-                <div className='h-2 w-2 rounded-full bg-green-500 mt-[0.1rem]'></div>
-                <p className='text-green-500 text-[0.83rem] font-medium'>-- Active</p>
-              </div>
-              <div className='flex gap-2 items-center'>
-                <div className='h-2 w-2 rounded-full bg-gray-400 mt-[0.1rem]'></div>
-                <p className='text-gray-400 text-[0.83rem] font-medium'>-- Inactive</p>
-              </div>
+          <div className='flex gap-8 justify-end'>
+            <div className='flex gap-2 items-center'>
+              <div className='h-2 w-2 rounded-full bg-green-500 mt-[0.1rem]'></div>
+              <p className='text-green-500 text-[0.83rem] font-medium'>{userDetailsServers?.active_gdrive || "--"} Active</p>
             </div>
+            <div className='flex gap-2 items-center'>
+              <div className='h-2 w-2 rounded-full bg-gray-400 mt-[0.1rem]'></div>
+              <p className='text-gray-400 text-[0.83rem] font-medium'>{(userDetailsServers && userDetailsServers.total_gdrive !== undefined && userDetailsServers.active_gdrive !== undefined ? userDetailsServers.total_gdrive - userDetailsServers.active_gdrive : "--") + " Inactive"}</p>
+            </div>
+          </div>
 
-            <Progress value={50} className='bg-gray-300 h-[0.4rem]'/>
+          <Progress value={((userDetailsServers?.active_gdrive||0 )/ (userDetailsServers?.total_gdrive || 0)) * 100} className='bg-gray-300 h-[0.4rem]'/>
           </div>
         </div>
 
@@ -56,22 +58,22 @@ const UserDrives = (props: Props) => {
 
           <div className='flex flex-col w-[12rem]'>
             <p className='text-primary_font text-sm font-medium leading-4'>One Drive</p>
-            <p className='text-gray-400'>-- servers created</p>
+            <p className='text-gray-400'>{userDetailsServers?.total_onedrive || "--"} servers created</p>
           </div>
 
           <div className='flex flex-col gap-2 w-full '>
             <div className='flex gap-8 justify-end'>
               <div className='flex gap-2 items-center'>
                 <div className='h-2 w-2 rounded-full bg-green-500 mt-[0.1rem]'></div>
-                <p className='text-green-500 text-[0.83rem] font-medium'>-- Active</p>
+                <p className='text-green-500 text-[0.83rem] font-medium'>{userDetailsServers?.active_onedrive || "--"} Active</p>
               </div>
               <div className='flex gap-2 items-center'>
                 <div className='h-2 w-2 rounded-full bg-gray-400 mt-[0.1rem]'></div>
-                <p className='text-gray-400 text-[0.83rem] font-medium'>-- Inactive</p>
+                <p className='text-gray-400 text-[0.83rem] font-medium'>{(userDetailsServers && userDetailsServers.total_onedrive !== undefined && userDetailsServers.active_onedrive !== undefined ? userDetailsServers.total_onedrive - userDetailsServers.active_onedrive : "--") + " Inactive"}</p>
               </div>
             </div>
 
-            <Progress value={20} className='bg-gray-300 h-[0.4rem]'/>
+            <Progress value={((userDetailsServers?.active_onedrive||0 )/ (userDetailsServers?.total_onedrive || 0)) * 100} className='bg-gray-300 h-[0.4rem]'/>
           </div>
         </div>
       </div>

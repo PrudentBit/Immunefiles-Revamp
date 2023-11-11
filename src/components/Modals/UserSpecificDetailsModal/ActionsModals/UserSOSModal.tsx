@@ -20,43 +20,41 @@ type Props = {
 	user?: AdminSpecificUserType
 }
 
-const AllowUserModal = ({user}: Props) => {
+const UserSOSModal = ({user}: Props) => {
+	
+	const [sosAppliedSuccessfully, setSosAppliedSuccessfully] = useState(false);
 
-  const [unRestrictedSuccessfully, setUnRestrictedSuccessfully] = useState(false);
-
-  const handleUnRestrict = async () => {
+  const handleSOS = async () => {
     if(user){
-      try {
-        const result = await editUser(user.username, 'restrict');
-        if (result.success) {
-          setUnRestrictedSuccessfully(true);
-          setTimeout(() => setUnRestrictedSuccessfully(false), 5000);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+			try {
+				const result = await editUser(user.username, 'sos');
+				if (result.success) {
+					setSosAppliedSuccessfully(true);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
   }
 
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-					<Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg bg-[#3ABA6E] hover:bg-[#51C580]'>
-            <Image src='/allow-user-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
-            Allow Sign-in
-          </Button>
+					<Button variant='destructive' className='w-full h-8 bg-transparent mt-3 z-[100] text-red-400 border-[1px] border-solid border-red-400 hover:text-white'>
+						Apply SOS for user
+					</Button>
         </AlertDialogTrigger>
 				<AlertDialogOverlay className='backdrop-blur-[0px]'/>
         <AlertDialogContent className='translate-y-[-160%]'>
           <AlertDialogHeader className='flex flex-row items-center gap-3'>
-            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#D5FFE6]'>
-							<Image src='/open-lock.svg' width={18} height={18}  alt='allow'/>
+            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#FFEBEB]'>
+							<Image src="/warning-icon.svg" width={18} height={18}  alt='restrict'/>
 						</div>
             <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to allow this user to login?</AlertDialogTitle>
+              <AlertDialogTitle className='font-medium text-md'>Do you want to expire all links by this user?</AlertDialogTitle>
               <AlertDialogDescription className='text-xs'>
-                User will now be able to login into immunefiles.
+								Only apply SOS when you find suspicious activity. 
               </AlertDialogDescription>
             </div>  
           </AlertDialogHeader>
@@ -70,21 +68,22 @@ const AllowUserModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full text-white bg-primary_font hover:bg-[#628CE9]' onClick={handleUnRestrict}>Allow login</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={handleSOS}>Apply SOS</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {unRestrictedSuccessfully &&
+      {sosAppliedSuccessfully &&
         <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>User un-restricted successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will be able to login into immunefiles.</p>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>SOS applied successfully</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>All links by this user have been expired.</p>
           </div>
         </BotLeftAlert>
       }
     </>
-	)
+  )
 }
-export default AllowUserModal
+
+export default UserSOSModal

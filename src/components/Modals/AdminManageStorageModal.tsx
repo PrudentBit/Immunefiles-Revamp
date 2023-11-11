@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 
 type Props = {
   storage?: AnalyticsData['storage'];
@@ -38,7 +39,7 @@ const AdminManageStorage = ({storage}: Props) => {
           </AlertDialogCancel>
         </AlertDialogHeader>
 
-        <AlertDialogDescription className='h-[12vh] flex flex-col gap-2 pl-2 justify-between'>
+        <AlertDialogDescription className='h-[13vh] flex flex-col gap-4 pl-2 justify-between'>
           <div className='h-8 flex gap-8 pl-1 items-center'>
             <div className='flex gap-3 items-center'>
               <div className='h-2 w-2 rounded-full bg-primary_font mt-[0.1rem]'></div>
@@ -58,8 +59,9 @@ const AdminManageStorage = ({storage}: Props) => {
             <p className='text-[0.8rem] text-green-500 font-normal h-4 leading-4 pl-12'>{((storage?.total || 0) - (Math.ceil((storage?.used  || 0 )*10))/10)}GB left</p>
           </div>
 
-          <div className='h-8'>
-
+          <div className='h-8 relative w-[95%]'>
+            <Progress value={(storage?.alloted|| 0)/(storage?.total || 100) * 100} className='absolute bg-gray-100 h-3' barColor='bg-[#D1DFFF]'/>
+            <Progress value={storage?.percentage || 0} className='absolute bg-transparent h-3' barColor='bg-primary_font'/>
           </div>
 
           <div className='h-8 flex gap-2'>

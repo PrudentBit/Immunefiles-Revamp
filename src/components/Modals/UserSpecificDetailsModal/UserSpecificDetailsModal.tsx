@@ -22,11 +22,10 @@ const UserSpecificDetails = ({user}: Props) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild className='w-7 h-7 p-2 flex justify-center items-center rounded-md cursor-pointer hover:bg-bg_hover'>
+      <AlertDialogTrigger asChild className='w-[3.8rem] h-[3.8rem] p-6 flex justify-center items-center rounded-xl cursor-pointer hover:bg-bg_hover'>
         <Image src="/right-arrow-purple.svg" alt='more' width={6} height={6}/>
       </AlertDialogTrigger>
       <AlertDialogContent className='w-[40rem] left-[98%] translate-x-[-100%]'>
-
         <AlertDialogHeader className='flex flex-row justify-between gap-[6.5rem]'>
           <div className='flex gap-4'>
             <Image src="/user.svg" alt='profile' width={70} height={70} className='rounded-full'/>
