@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch } from '@/components/ui/switch'
 import Image from 'next/image'
 import UserSpecificDetails from '@/components/Modals/UserSpecificDetailsModal/UserSpecificDetailsModal'
-import set2FA from '@/utils/api/user2FASetAPI'
+import editUser from '@/utils/api/editUserAPI'
 import BotLeftAlert from '@/components/BotLeftAlert'
 
 type Props = {
@@ -17,7 +17,7 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 
 	const handle2FASwitch = async () => {
     try {
-      const result = await set2FA([user.username]);
+      const result = await editUser(user.username, '2FA');
       if (result.success) {
         setUpdate(prevState => !prevState);
         setShowAlert(true);
@@ -38,7 +38,7 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 	
   return (
     <>
-			<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 gap-7 bg-primary_bg'>
+			<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 pr-0 gap-7 bg-primary_bg'>
 				<button onClick={handleCheckboxClick} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
 					{selectedUsers.includes(user.username) ? (
 						<Image src="/checked-icon.svg" alt='check' width={28} height={28}/>
@@ -46,13 +46,22 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 						<Image src="/not-checked-icon.svg" alt='uncheck' width={28} height={28}/>
 					)}
 				</button>
-				<div className='flex gap-2 w-[42%]'>
+				<div className='flex gap-2 w-[32%]'>
 					<Image src="/user.svg" alt='profile' width={40} height={40} className='rounded-full'/>
 					<div>
 						<p className='text-[#7A7AFF] text-lg font-medium leading-5'>{user.name}</p>
 						<p className='text-[#7A7AFF] text-sm font-normal leading-4'>{user.email}</p>
 					</div>
 				</div>
+
+        {user.is_admin ? (
+          <div className='w-[2%] mr-10 flex justify-center'>
+            <Image src="/admin-icon-2-green.svg" alt='arrow' width={20} height={20}/>
+          </div>
+        ):(
+          <div className='w-[2%] mr-10 flex justify-center'>
+          </div>
+        )}
 
 				<div className='w-[10%] flex items-center justify-center'>
 					<Switch id={"user"} className='' checked={user.FA} onClick={handle2FASwitch}/>

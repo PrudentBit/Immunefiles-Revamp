@@ -36,14 +36,15 @@ const UserAnalytics = (props: Props) => {
     <ShadowedCard className='h-[65%] w-full justify-start gap-4'>
 			<AnalyticsNav users={users} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setUpdate={setUpdate}/>
 
-			<div className='h-7 flex w-[98%] py-1 px-4 gap-7 text-[#AFAFAF] font-base'>
+			<div className='h-7 flex w-[98%] py-1 px-4 pr-0 gap-7 text-[#AFAFAF] font-base'>
         <p className='w-6'></p>
-        <p className='w-[42%] pl-1'>User's info</p>
+        <p className='w-[32%] pl-1'>User's info</p>
+        <p className='w-[2%] mr-10 flex justify-center'></p>
         <p className='w-[10%] flex justify-center'>Enforce 2FA</p>
         <p className='w-[10%] flex justify-center'>Status</p>
         <p className='w-[10%] flex justify-center'>Storage</p>
         <p className='w-[10%] flex justify-center'>Last active</p>
-        <p className='w-7'></p>
+        <p className='w-[3.8rem]'></p>
 			</div>
 
 			<div className='h-[37vh] flex flex-col gap-4 overflow-y-auto pr-4'>

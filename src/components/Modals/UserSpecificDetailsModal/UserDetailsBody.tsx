@@ -22,7 +22,8 @@ type Props = {
 const UserDetailsBody = ({username}: Props) => {
   const [userDetails, setUserDetails] = useState<AdminSpecificUserType>();
   const [update, setUpdate] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const [FAApplied, setFAApplied] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -46,12 +47,25 @@ const UserDetailsBody = ({username}: Props) => {
         const result = await editUser(username, '2FA');
         if (result.success) {
           setUpdate(prevState => !prevState);
-          setShowAlert(true);
-          setTimeout(() => setShowAlert(false), 5000);
+          setFAApplied(true);
+          setTimeout(() => setFAApplied(false), 5000);
         }
       } catch (error) {
         console.error(error);
       }
+  }
+
+  const handleResetPassword = async () => {
+    try {
+      const result = await editUser(username, 'reset');
+      if (result.success) {
+        setUpdate(prevState => !prevState);
+        setResetSent(true);
+        setTimeout(() => setResetSent(false), 5000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
   
   return (
@@ -81,7 +95,7 @@ const UserDetailsBody = ({username}: Props) => {
           </div>
 
           <div className='flex gap-4 flex-wrap pl-1'>
-            <Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg hover:bg-[#628CE9]'>
+            <Button className='button w-min px-5 flex gap-2 h-9 truncate font-normal rounded-lg hover:bg-[#628CE9]' onClick={handleResetPassword}>
               <Image src='/reset-pass-icon.svg' width={20} height={20} alt="edit" className="flip-image"/>
               Reset Password
             </Button>
@@ -126,11 +140,20 @@ const UserDetailsBody = ({username}: Props) => {
           </div>
         </div>
       </div>
-      {showAlert &&
+      {FAApplied &&
         <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
             <p className='text-[#FF6161] font-semibold text-base leading-4  '>2FA set successfully</p>
             <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will now be required to use two-factor authentication.</p>
+          </div>
+        </BotLeftAlert>
+      }
+
+      {resetSent &&
+        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
+          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
+            <p className='text-[#FF6161] font-semibold text-base leading-4'>Reset password email has been sent</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user can change their password through their email.</p>
           </div>
         </BotLeftAlert>
       }

@@ -24,6 +24,7 @@ type AdminUsersType = {
     status: boolean;
     storage: number;
     last_active: string;
+    is_admin: boolean;
 };
 
 type AdminSpecificUserType ={
