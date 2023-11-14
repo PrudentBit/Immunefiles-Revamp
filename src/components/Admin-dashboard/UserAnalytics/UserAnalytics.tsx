@@ -12,6 +12,7 @@ const UserAnalytics = (props: Props) => {
 	const [twoFAGlobal, setTwoFAGlobal] = React.useState(false)
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [users, setUsers] = React.useState<AdminUsersType[]>([]);
+  const [selectedUsers, setSelectedUsers] = React.useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,7 +45,7 @@ const UserAnalytics = (props: Props) => {
 
 			<div className='h-[37vh] flex flex-col gap-4 overflow-y-auto pr-4'>
         {users?.filter(user => user.username.toLowerCase().includes(searchTerm.toLowerCase())).map((user, index) => (
-          <UserAnalyticRows key={index} user={user} />
+          <UserAnalyticRows key={index} user={user} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
         ))}
       </div>
 

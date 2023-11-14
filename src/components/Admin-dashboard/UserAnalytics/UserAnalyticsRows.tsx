@@ -5,28 +5,45 @@ import UserSpecificDetails from '@/components/Modals/UserSpecificDetailsModal/Us
 
 type Props = {
 	user: AdminUsersType
+	selectedUsers: string[]
+	setSelectedUsers: (users: string[]) => void
 }
 
-const UserAnalyticRows = ({user}: Props) => {
+const UserAnalyticRows = ({user, selectedUsers, setSelectedUsers}: Props) => {
 	
-  const [checked, setChecked] = React.useState(false);
+  const handleCheckboxClick = () => {
+		if (selectedUsers.includes(user.username)) {
+			setSelectedUsers(selectedUsers.filter((username) => username !== user.username))
+		} else {
+			setSelectedUsers([...selectedUsers, user.username])
+		}
+	}
 	
   return (
-    <div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 gap-7 bg-primary_bg'>
-			<button onClick={()=>setChecked(!checked)} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
-				{checked ? (
+		<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 pr-0 gap-7 bg-primary_bg'>
+			<button onClick={handleCheckboxClick} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
+				{selectedUsers.includes(user.username) ? (
 					<Image src="/checked-icon.svg" alt='check' width={28} height={28}/>
 				):(
 					<Image src="/not-checked-icon.svg" alt='uncheck' width={28} height={28}/>
 				)}
 			</button>
-			<div className='flex gap-2 w-[42%]'>
+			<div className='flex gap-2 w-[32%]'>
 				<Image src="/user.svg" alt='profile' width={40} height={40} className='rounded-full'/>
 				<div>
 					<p className='text-[#7A7AFF] text-lg font-medium leading-5'>{user.name}</p>
 					<p className='text-[#7A7AFF] text-sm font-normal leading-4'>{user.email}</p>
-				</div>
+				</div>  
 			</div>
+
+			{user.is_admin ? (
+				<div className='w-[2%] mr-10 flex justify-center'>
+					<Image src="/admin-icon-2-green.svg" alt='arrow' width={20} height={20}/>
+				</div>
+			):(
+				<div className='w-[2%] mr-10 flex justify-center'>
+				</div>
+			)}
 
 			<div className='w-[10%] flex items-center justify-center'>
 				<Switch id={"user"} className='' checked={user.FA} /> {/* onCheckedChange={() => setTwoFA(!twoFA)} */}

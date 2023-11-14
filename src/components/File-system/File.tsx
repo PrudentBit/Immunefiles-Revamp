@@ -5,6 +5,7 @@ import Image from 'next/image'
 import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import { useRouter } from 'next/navigation';
+import { lowerCaseExtensions, fileExtensions } from '../../../public/FileIcons/fileExtensions';
 
 type Props =  {
   file: FileOrFolderType;
@@ -48,13 +49,8 @@ const File = ({ file }:Props) => {
     }
   };
 
-  const extension = file.is_file ? file.name.split('.').pop() : '';
-  const iconSrc = file.is_file ? `/FileIcons/${extension}.svg` : '/folder-icon-filled.svg';
-
-  const handleImageError = (e: any) => {
-    e.target.src = '/FileIcons/unknown.png';
-  };
-  console.log('testtt')
+  const extension = file.is_file ? (file.name.split('.').pop() || '') : '';
+  const iconSrc = file.is_file ? (lowerCaseExtensions.includes(extension) ? `/FileIcons/${extension}.svg` : '/FileIcons/unknown.png') : '/folder-icon-filled.svg';
 
   return (
     <>
@@ -66,7 +62,7 @@ const File = ({ file }:Props) => {
         className={`w-[13.6rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary bg-[#EFEFFD]' : 'border-primary_bg bg-primary_bg'}`}
       >
         <div className='flex gap-3'>
-          <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain' onError={handleImageError}/>
+          <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain'/>
           <p className='text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]'>{file.name}</p>
         </div>
 
