@@ -1,14 +1,17 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosProgressEvent } from 'axios';
 
-export default async function uploadFolders(folderInput: {file: File, filePath: string}[], folderName: string, parentID: string, onUploadProgress: (progress: number) => void) {
+export default async function uploadFolders(folderInput: File[], onUploadProgress: (progress: number) => void) {
   const formData = new FormData();
 
-  formData.append("folder_name", folderName);
+  formData.append("folder_name", folderInput[0].path.split('/')[1]);
   formData.append("parent_hash", 'none');
 
   folderInput.forEach((fileObj) => {
-    const filePath = fileObj.filePath.replace(/ /g, "_");
-    formData.append(filePath, fileObj.file);
+    let filePath = fileObj.path.split('/');
+    if (filePath[0] === '') {
+      filePath = filePath.join('/').substring(1);
+    }
+    formData.append(filePath, fileObj);
     formData.append("shared_with", []);
   });
 
