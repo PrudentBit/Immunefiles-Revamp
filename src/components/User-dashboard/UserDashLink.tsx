@@ -2,12 +2,15 @@ import React from 'react'
 import ShadowedCard from '@/components/ShadowedCard'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import UserDashLinkGraph from './UserDashLinkGraph'
 
-type Props = {}
+type Props = {
+	linkDetails?: UserDashDetails['links'];
+}
 
-const UserLinkAnalytics = (props: Props) => {
+const UserLinkAnalytics = ({linkDetails}: Props) => {
   return (
-    <ShadowedCard className='w-[70%] gap-3 flex flex-col p-10 justify-between'>
+    <ShadowedCard className='w-[70%] flex flex-col p-10 justify-between'>
 			<div className='flex justify-between items-center mb-2'>
 				<div className='flex gap-2 h-5 items-center'>
 					<Image src='/link-analytics-icon.svg' width={24} height={24} alt="storage"/>
@@ -30,20 +33,18 @@ const UserLinkAnalytics = (props: Props) => {
 				</div>
 			</div>
 
-			<div className='w-full h-full px-4 pr-5'>
-				<div className='w-full h-full border-[1px] border-solid border-primary_border'>
-
-				</div>
+			<div className='w-full h-[11rem] px-4 pr-5'>
+				<UserDashLinkGraph/>
 			</div>
 
-			<div className='w-full h-14 flex justify-between items-center px-4'>
+			<div className='w-full h-10 flex justify-between items-center px-4'>
 				<div className='flex h-10 w-[65%] gap-12 px-8 justify-between items-center rounded-lg border-[1px] border-solid border-primary_border'>
 					<p className='text-[#7A7AFF] text-sm font-normal leading-3'>Overall: </p>
 
 					<div className='flex items-center justify-between w-full'>
-						<p className='text-[#afafaf] text-[0.83rem] font-normal'><span className='text-gray-400 text-[0.88rem] font-semibold'>---</span> Generated</p>
-						<p className='text-green-500 text-[0.83rem] font-normal'><span className='text-green-400 text-[0.88rem] font-semibold'>--</span> Active</p>
-						<p className='text-red-500 text-[0.83rem] font-normal'><span className='text-red-400 text-[0.88rem] font-semibold'>--</span> Expired</p>
+						<p className='text-[#afafaf] text-[0.83rem] font-normal'><span className='text-gray-400 text-[0.88rem] font-semibold'>{linkDetails?.overall.total}</span> Generated</p>
+						<p className='text-green-500 text-[0.83rem] font-normal'><span className='text-green-400 text-[0.88rem] font-semibold'>{linkDetails?.overall.active}</span> Active</p>
+						<p className='text-red-500 text-[0.83rem] font-normal'><span className='text-red-400 text-[0.88rem] font-semibold'>{linkDetails?.overall.expired}</span> Expired</p>
 					</div>
 				</div>
 

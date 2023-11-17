@@ -10,9 +10,11 @@ import "react-circular-progressbar/dist/styles.css";
 import Image from 'next/image'
 import { Progress } from '@/components/ui/progress';
 
-type Props = {}
+type Props = {
+  storageDetails?: UserDashDetails['storage']
+}
 
-const UserDashStorage = (props: Props) => {
+const UserDashStorage = ({storageDetails}: Props) => {
   return (
     <ShadowedCard className='w-[30%] gap-1'>
       <div className='flex items-center gap-3 h-5'>
@@ -24,14 +26,14 @@ const UserDashStorage = (props: Props) => {
         <div className='w-full h-full flex flex-col gap-2 justify-center pl-2'>
           <div className='flex gap-3 items-center'>
             <div className='h-2 w-2 rounded-full bg-primary_font mt-[0.1rem]'></div>
-            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.88rem] font-semibold'>--GB </span>used</p>
+            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.88rem] font-semibold'>{storageDetails?.storage_used}GB </span>used</p>
           </div>
           <div className='flex gap-3 items-center'>
             <div className='h-2 w-2 rounded-full bg-[#D1DFFF] mt-[0.1rem]'></div>
-            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.88rem] font-semibold'>--GB </span>useable</p>
+            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.88rem] font-semibold'>{storageDetails?.total_storage}GB </span>useable</p>
           </div>
           
-          <p className='text-xs text-green-500 font-medium h-4'>--GB available</p>
+          <p className='text-xs text-green-500 font-medium h-4'>{(storageDetails?.total_storage || 0) - (storageDetails?.storage_used || 0)}GB available</p>
         </div>
 
         <div className='w-[14rem] h-full'>
@@ -48,7 +50,7 @@ const UserDashStorage = (props: Props) => {
           >
             <div style={{ width: "103%" }}>
               <CircularProgressbarWithChildren
-                value={40}
+                value={Math.floor((storageDetails?.storage_used || 0) / (storageDetails?.total_storage || 0) * 100) || 0}
                 strokeWidth={6}
                 circleRatio={0.6}
                 styles={buildStyles({
@@ -59,7 +61,7 @@ const UserDashStorage = (props: Props) => {
               >
                 <div className='flex flex-col justify-center items-center mb-6'>
                   <p className='text-3xl text-primary_font font-medium'>
-                    --%
+                    {Math.floor((storageDetails?.storage_used || 0) / (storageDetails?.total_storage || 0) * 100) || 0}%
                   </p>
                   <p className='text-[#AFAFAF] text-sm font-semibold'>
                     used space
@@ -79,10 +81,12 @@ const UserDashStorage = (props: Props) => {
           <div className='flex flex-col gap-1 w-full'>
             <div className='flex gap-4 items-end'>
               <p className='text-primary_font text-[0.8rem] font-medium leading-4'>Documents</p>
-              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>--%</p>
-              <p className='text-primary_font text-xs font-medium leading-3 text-right w-full'>--GB</p>
+              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>{storageDetails?.perecentage.docs || 0}%</p>
+              <p className='text-primary_font text-xs font-medium leading-3 text-right w-full'>
+              {(parseInt(storageDetails?.perecentage.docs || "0") / 100 * (storageDetails?.total_storage || 1)).toFixed(2)}GB
+              </p>
             </div>
-            <Progress value={40} barColor='bg-primary_font' className='bg-[#D5D5FB] h-1'/>
+            <Progress value={parseInt(storageDetails?.perecentage.docs  || "0")} barColor='bg-primary_font' className='bg-[#D5D5FB] h-1'/>
           </div>
         </div>
 
@@ -93,12 +97,15 @@ const UserDashStorage = (props: Props) => {
           <div className='flex flex-col gap-1 w-full'>
             <div className='flex gap-4 items-end'>
               <p className='text-[#7A7AFF] text-[0.8rem] font-medium leading-4'>Images</p>
-              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>--%</p>
-              <p className='text-[#7A7AFF] text-xs font-medium leading-3 text-right w-full'>--GB</p>
+              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>{storageDetails?.perecentage.images || 0}%</p>
+              <p className='text-[#7A7AFF] text-xs font-medium leading-3 text-right w-full'>
+                {(parseInt(storageDetails?.perecentage.images || "0") / 100 * (storageDetails?.total_storage || 1)).toFixed(2)}GB
+              </p>
             </div>
-            <Progress value={40} barColor='bg-[#7A7AFF]' className='bg-[#D5D5FB] h-1'/>
+            <Progress value={parseInt(storageDetails?.perecentage.images  || "0")} barColor='bg-[#7A7AFF]' className='bg-[#D5D5FB] h-1'/>
           </div>
         </div>
+
 
         <div className='flex gap-2 w-full'>
           <div className='w-6 flex items-center justify-center'>
@@ -107,10 +114,12 @@ const UserDashStorage = (props: Props) => {
           <div className='flex flex-col gap-1 w-full'>
             <div className='flex gap-4 items-end'>
               <p className='text-primary_font text-[0.8rem] font-medium leading-4'>Media</p>
-              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>--%</p>
-              <p className='text-primary_font text-xs font-medium leading-3 text-right w-full'>--GB</p>
+              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>{storageDetails?.perecentage.media}%</p>
+              <p className='text-primary_font text-xs font-medium leading-3 text-right w-full'>
+                {(parseInt(storageDetails?.perecentage.media || "0") / 100 * (storageDetails?.total_storage || 1)).toFixed(2)}GB
+              </p>
             </div>
-            <Progress value={40} barColor='bg-primary_font' className='bg-[#D5D5FB] h-1'/>
+            <Progress value={parseInt(storageDetails?.perecentage.media  || "0")} barColor='bg-primary_font' className='bg-[#D5D5FB] h-1'/>
           </div>
         </div>
 
@@ -121,10 +130,12 @@ const UserDashStorage = (props: Props) => {
           <div className='flex flex-col gap-1 w-full'>
             <div className='flex gap-4 items-end'>
               <p className='text-[#7A7AFF] text-[0.8rem] font-medium leading-4'>Others</p>
-              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>--%</p>
-              <p className='text-[#7A7AFF] text-xs font-medium leading-3 text-right w-full'>--GB</p>
+              <p className='text-[#afafaf] text-xs font-semibold min-w-[2rem]'>{storageDetails?.perecentage.others}%</p>
+              <p className='text-[#7A7AFF] text-xs font-medium leading-3 text-right w-full'>
+              {(parseInt(storageDetails?.perecentage.others || "0") / 100 * (storageDetails?.total_storage || 1)).toFixed(2)}GB
+              </p>
             </div>
-            <Progress value={40} barColor='bg-[#7A7AFF]' className='bg-[#D5D5FB] h-1'/>
+            <Progress value={parseInt(storageDetails?.perecentage.others  || "0")} barColor='bg-[#7A7AFF]' className='bg-[#D5D5FB] h-1'/>
           </div>
         </div>
       </div>
