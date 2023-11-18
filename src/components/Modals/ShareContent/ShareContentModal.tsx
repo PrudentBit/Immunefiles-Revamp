@@ -205,25 +205,7 @@ const ShareContentModal = ({multiplefiles}:Props) => {
               Generate link
             </AlertDialogAction>
           )}
-          {tab === "link" && (
-            <AlertDialogAction 
-              onClick={handleShare} 
-              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-              disabled={!linkName}
-            >
-              Generate link
-            </AlertDialogAction>
-          )}
 
-          {tab === "email" && (
-            <AlertDialogAction 
-              onClick={handleShare} 
-              className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
-              disabled={!linkName || !shareEmail}
-            >
-              Send Mail
-            </AlertDialogAction>
-          )}
           {tab === "email" && (
             <AlertDialogAction 
               onClick={handleShare} 
