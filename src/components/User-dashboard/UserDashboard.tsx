@@ -39,7 +39,7 @@ const UserDashboard = (props: Props) => {
       <div className='flex gap-10 h-[45%]'>
         <UserDashFavGroups/>
 
-        <UserDashCritLinks/>
+        <UserDashCritLinks critLinks={userDetails?.critical_links}/>
       </div>
     </div>
   )
