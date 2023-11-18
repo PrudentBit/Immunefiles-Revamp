@@ -6,13 +6,14 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import Image from 'next/image'; 
 import { Button } from '@/components/ui/button';
+import UserSOSModal from './ActionsModals/UserSOSModal';
 
 
 type Props = {
-  userDetailsLink?: AdminSpecificUserType['links']
+  user?: AdminSpecificUserType
 }
 
-const UserLinkAnaltics = ({userDetailsLink}: Props) => {
+const UserLinkAnaltics = ({user}: Props) => {
   return (
     <div className='w-[60%] bg-primary_bg rounded-xl p-3 px-6'>
       <div className='flex gap-2 h-5'>
@@ -24,13 +25,13 @@ const UserLinkAnaltics = ({userDetailsLink}: Props) => {
         <div className='flex flex-col gap-[0.1rem] w-[50%] h-full justify-center pl-2'>
           <div className='flex gap-2 items-center'>
             <div className='h-2 w-2 rounded-full bg-green-500 mt-[0.1rem]'></div>
-            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.92rem] font-medium'>{userDetailsLink?.active_links || 0} </span>Active</p>
+            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.92rem] font-medium'>{user?.links.active_links || 0} </span>Active</p>
           </div>
           <div className='flex gap-2 items-center'>
             <div className='h-2 w-2 rounded-full bg-red-500 mt-[0.1rem]'></div>
-            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.92rem] font-medium'>{userDetailsLink?.expired_link || 0} </span>Expired</p>
+            <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-gray-400 text-[0.92rem] font-medium'>{user?.links.expired_link || 0} </span>Expired</p>
           </div>
-          <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-primary_font text-base font-semibold'>{userDetailsLink?.total_link || 0} </span>Total links </p>
+          <p className='text-[#afafaf] text-[0.83rem] font-medium'><span className='text-primary_font text-base font-semibold'>{user?.links.total_link || 0} </span>Total links </p>
         </div>
 
         <div className='w-[8rem]'>
@@ -47,7 +48,7 @@ const UserLinkAnaltics = ({userDetailsLink}: Props) => {
           >
             <div style={{ width: "102%" }}>
               <CircularProgressbarWithChildren
-                value={Math.floor(((userDetailsLink?.active_links||0) / (userDetailsLink?.total_link || 0))*100 || 0)}
+                value={Math.floor(((user?.links.active_links||0) / (user?.links.total_link || 0))*100 || 0)}
                 strokeWidth={6.5}
                 circleRatio={0.6}
                 styles={buildStyles({
@@ -59,7 +60,7 @@ const UserLinkAnaltics = ({userDetailsLink}: Props) => {
               >
                 <div className='flex flex-col justify-center items-center mb-6'>
                   <p className='text-2xl text-primary_font font-medium'>
-                    {`${Math.floor(((userDetailsLink?.active_links||0) / (userDetailsLink?.total_link || 0))*100 || 0)}%`}
+                    {`${Math.floor(((user?.links.active_links||0) / (user?.links.total_link || 0))*100 || 0)}%`}
                   </p>
                   <p className='text-[#AFAFAF] text-sm font-normal'>
                     active links
@@ -72,9 +73,7 @@ const UserLinkAnaltics = ({userDetailsLink}: Props) => {
       </div>
 
       <div className='w-full'>
-        <Button variant='destructive' className='w-full h-8 bg-transparent mt-3 z-[100] text-red-400 border-[1px] border-solid border-red-400 hover:text-white'>
-          Apply SOS for user
-        </Button>
+        <UserSOSModal user={user}/>
       </div>
     </div>
   )

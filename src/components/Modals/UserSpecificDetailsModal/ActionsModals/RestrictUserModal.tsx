@@ -13,13 +13,30 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/botLeftAlert'
+import BotLeftAlert from '@/components/BotLeftAlert'
+import editUser from '@/utils/api/editUserAPI'
 
 type Props = {
 	user?: AdminSpecificUserType
 }
 
 const RestrictUserModal = ({user}: Props) => {
+
+  const [restrictedSuccessfully, setRestrictedSuccessfully] = useState(false);
+
+  const handleRestrict = async () => {
+    if(user){
+      try {
+        const result = await editUser(user.username, 'restrict');
+        if (result.success) {
+          setRestrictedSuccessfully(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <>
       <AlertDialog>
@@ -52,21 +69,20 @@ const RestrictUserModal = ({user}: Props) => {
 						</div>
 					</AlertDialogDescription>
           <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]'>Restrict</AlertDialogAction>
+            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={handleRestrict}>Restrict</AlertDialogAction>
             <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* {(deletedSuccessfully) &&
-        <BotLeftAlert image='/delete-icon.svg' zimagebg='bg-[#FFE3E5]'>
+      {restrictedSuccessfully &&
+        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
           <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>{undoMessage}</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>you can restore the items from trash bin whenever needed.</p>
+            <p className='text-[#FF6161] font-semibold text-base leading-4  '>User restricted successfully</p>
+            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will no longer be able to login into immunefiles.</p>
           </div>
-          <button onClick={recoverDeleted} className='border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg'>undo</button>
         </BotLeftAlert>
-      } */}
+      }
     </>
 	)
 }

@@ -9,6 +9,7 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Button } from '@/components/ui/button'
+import TenantSOSModal from '@/components/Modals/TenantSOSModal';
 
 
 type Props = {
@@ -16,9 +17,6 @@ type Props = {
 }
 
 const LinkAnalytics = ({links}: Props) => {
-	const [totalLinksGenerated, setTotalLinksGenerated] = React.useState<number>(30)
-	const [activeLinks, setActiveLinks] = React.useState<number>(16)
-	const [expiredLinks, setExpiredLinks] = React.useState<number>(14)
 
   return (
     <ShadowedCard className='w-[40%] gap-0'>
@@ -90,9 +88,7 @@ const LinkAnalytics = ({links}: Props) => {
 
 
 			<div className='h-10 w-full'>
-				<Button variant='destructive' className='w-[40%] h-8 bg-transparent text-red-500 border-[1px] border-solid border-red-500 hover:text-white'>
-					Apply SOS
-				</Button>
+				<TenantSOSModal/>
 			</div>
     </ShadowedCard>
   )
