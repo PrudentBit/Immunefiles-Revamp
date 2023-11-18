@@ -8,7 +8,9 @@
   "plugins": ["prettier", "@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }]
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off"
+
   },
   "root": true
 }

@@ -1,6 +1,14 @@
-import axios, {AxiosRequestConfig, AxiosResponse, AxiosProgressEvent} from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosProgressEvent,
+} from 'axios';
 
-export default async function uploadFiles(fileInput: File[], currentFolder: string, onUploadProgress: (progress: number) => void) {
+export default async function uploadFiles(
+  fileInput: File[],
+  currentFolder: string,
+  onUploadProgress: (_progress: number) => void
+) {
   const fileArr = [...fileInput];
   const formData = new FormData();
 
@@ -9,8 +17,8 @@ export default async function uploadFiles(fileInput: File[], currentFolder: stri
   });
 
   const config: AxiosRequestConfig = {
-    onUploadProgress: function(progressEvent: AxiosProgressEvent) {
-      if(progressEvent.progress){
+    onUploadProgress: function (progressEvent: AxiosProgressEvent) {
+      if (progressEvent.progress) {
         const percentCompleted = Math.round(progressEvent.progress * 100);
         onUploadProgress(percentCompleted);
       }
@@ -23,7 +31,9 @@ export default async function uploadFiles(fileInput: File[], currentFolder: stri
 
   try {
     const res: AxiosResponse = await axios.post(
-      `https://api.immunefiles.com/api/api/content/file_create/${currentFolder}?tenant=${window.location.hostname.split('.')[0]}`,
+      `https://api.immunefiles.com/api/api/content/file_create/${currentFolder}?tenant=${
+        window.location.hostname.split('.')[0]
+      }`,
       formData,
       config
     );

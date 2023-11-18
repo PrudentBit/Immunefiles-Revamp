@@ -1,10 +1,17 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosProgressEvent } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosProgressEvent,
+} from 'axios';
 
-export default async function uploadFolders(folderInput: File[], onUploadProgress: (progress: number) => void) {
+export default async function uploadFolders(
+  folderInput: File[],
+  onUploadProgress: (_progress: number) => void
+) {
   const formData = new FormData();
 
-  formData.append("folder_name", folderInput[0].path.split('/')[1]);
-  formData.append("parent_hash", 'none');
+  formData.append('folder_name', folderInput[0].path.split('/')[1]);
+  formData.append('parent_hash', 'none');
 
   folderInput.forEach((fileObj) => {
     let filePath = fileObj.path.split('/');
@@ -12,12 +19,12 @@ export default async function uploadFolders(folderInput: File[], onUploadProgres
       filePath = filePath.join('/').substring(1);
     }
     formData.append(filePath, fileObj);
-    formData.append("shared_with", []);
+    formData.append('shared_with', []);
   });
 
   const config: AxiosRequestConfig = {
-    onUploadProgress: function(progressEvent: AxiosProgressEvent) {
-      if(progressEvent.progress){
+    onUploadProgress: function (progressEvent: AxiosProgressEvent) {
+      if (progressEvent.progress) {
         const percentCompleted = Math.round(progressEvent.progress * 100);
         onUploadProgress(percentCompleted);
       }
@@ -30,7 +37,9 @@ export default async function uploadFolders(folderInput: File[], onUploadProgres
 
   try {
     const res: AxiosResponse = await axios.post(
-      `https://api.immunefiles.com/api/api/content/upload_folder?tenant=${window.location.hostname.split('.')[0]}`,
+      `https://api.immunefiles.com/api/api/content/upload_folder?tenant=${
+        window.location.hostname.split('.')[0]
+      }`,
       formData,
       config
     );

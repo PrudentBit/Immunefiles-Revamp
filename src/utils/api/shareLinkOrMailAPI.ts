@@ -1,6 +1,13 @@
-export default async function shareLinkOrMail(accessType: string,linkTitle: string, values: ShareSettings, sentFileArray: string[], sentFolder: string[], inputFields: string[]) {
-  let data = {
-    owner: "",
+export default async function shareLinkOrMail(
+  accessType: string,
+  linkTitle: string,
+  values: ShareSettings,
+  sentFileArray: string[],
+  sentFolder: string[],
+  inputFields: string[]
+) {
+  const data = {
+    owner: '',
     name: linkTitle,
     file_hash: sentFileArray,
     folder_hash: sentFolder,
@@ -11,25 +18,27 @@ export default async function shareLinkOrMail(accessType: string,linkTitle: stri
     expiry_date:
       values.expiryDate && values.expiryDate.length > 0
         ? `${values.expiryDate} ${
-            values.expiryTime && values.expiryTime.length > 0 ? values.expiryTime : "00:00"
+            values.expiryTime && values.expiryTime.length > 0
+              ? values.expiryTime
+              : '00:00'
           }:00`
-        : "",
+        : '',
     access_type: accessType,
     is_password: values.password,
-    access_limit: values.accessValue> 0 ? values.accessValue : -1,
-    custom_password: values.password ? values.passwordValue : "",
+    access_limit: values.accessValue > 0 ? values.accessValue : -1,
+    custom_password: values.password ? values.passwordValue : '',
     is_random_password: false,
-    clients_shared_with: inputFields
+    clients_shared_with: inputFields,
   };
 
   const res = await fetch(
     `https://api.immunefiles.com/api/api/content/share_file_link?tenant=${
-      window.location.hostname.split(".")[0]
+      window.location.hostname.split('.')[0]
     }`,
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
       body: JSON.stringify(data),
@@ -38,7 +47,7 @@ export default async function shareLinkOrMail(accessType: string,linkTitle: stri
 
   if (res.ok) {
     const jsonData = await res.json();
-    return { success: true, message: "Successfully Shared", data: jsonData };
+    return { success: true, message: 'Successfully Shared', data: jsonData };
   } else {
     throw new Error('Error sharing file link');
   }
