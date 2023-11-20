@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -7,7 +7,6 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
-    AlertDialogTitle,
     AlertDialogTrigger,
 		AlertDialogOverlay,
   } from "@/components/ui/alert-dialog"
@@ -28,7 +27,7 @@ const AddUserStorageModal = ({user}: Props) => {
     setVisualTotalStorage(prevStorage => prevStorage + 1);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setVisualTotalStorage(parseInt(user?.storage.total_storage || "0"));
   }, [user]);
 

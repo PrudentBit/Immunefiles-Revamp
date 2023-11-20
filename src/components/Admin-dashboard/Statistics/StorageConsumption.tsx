@@ -10,6 +10,7 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import AdminManageStorage from '@/components/Modals/AdminManageStorageModal'
+import RequestStorageModal from '@/components/Modals/RequestStorageModal'
 
 type Props = {
   storage?: AnalyticsData['storage'];
@@ -96,10 +97,7 @@ const StorageConsumption = ({storage}: Props) => {
       </div>
 
       <div className='flex justify-between items-center z-50'>
-        <div className='flex gap-3 h-5 items-center'>
-          <p className='text-black text-[0.85rem] font-medium leading-3 h-3'>Request more</p>
-          <Image src='/right-arrow.svg' width={7} height={7} alt="storage"/>
-        </div>
+        <RequestStorageModal storage={storage}/>
 
         <div className='flex gap-4 items-center justify-center'>
           <p className='text-xs text-green-500 font-medium h-4'>{((storage?.total || 0) - (Math.ceil((storage?.used  || 0 )*10))/10)}GB left</p>
