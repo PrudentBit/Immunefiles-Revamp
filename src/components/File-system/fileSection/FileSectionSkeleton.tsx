@@ -22,16 +22,16 @@ const FileSectionSkeleton = (props: Props) => {
         </div>
 
         <div className="flex gap-[0.7rem] flex-wrap">
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
         </div>
       </section>
 
@@ -48,26 +48,26 @@ const FileSectionSkeleton = (props: Props) => {
         </div>
 
         <div className="flex gap-[0.7rem] flex-wrap">
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
         </div>
       </section>
     </>

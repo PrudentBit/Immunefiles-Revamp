@@ -91,7 +91,7 @@ const FileAndFolder = ({root}:Props) => {
         </div>
       )}
       <div className='pr-1 p-3'>
-        <div className="fileAndFolder absolute flex flex-col gap-8 h-[64vh] overflow-auto pr-3">
+        <div className="fileAndFolder absolute flex flex-col gap-8 h-[64vh] overflow-auto pr-1">
           {loading ? (
             <FileSectionSkeleton />
           ) : (

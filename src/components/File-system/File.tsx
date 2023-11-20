@@ -59,7 +59,7 @@ const File = ({ file }:Props) => {
         onDoubleClick={handleDoubleClick} 
         onClick={handleSelect} 
         data-key={file.urlhash}
-        className={`w-[13.6rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary bg-[#EFEFFD]' : 'border-primary_bg bg-primary_bg'}`}
+        className={`w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary bg-[#EFEFFD]' : 'border-primary_bg bg-primary_bg'}`}
       >
         <div className='flex gap-3'>
           <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain'/>

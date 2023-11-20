@@ -174,10 +174,10 @@ const LeftNav = () => {
             </div>
         )
         :(
-            <div className='h-[100vh] w-[7rem] bg-primary_bg mr-4'>
-                <div className='flex items-center justify-center w-[7rem] pl-11 py-[2rem]'>
+            <div className='h-[100vh] w-[6rem] bg-primary_bg mr-4'>
+                <div className='flex items-center justify-center w-[6rem] pl-9 py-[2rem] pb-[4rem]'>
                     <Image src='/logo.png' width={27} height={27} alt='Immunefile logo'/>
-                    <button onClick={toggleMenu} className='translate-x-5 rounded-full h-10 w-10 bg-white shadow-md flex items-center justify-center'>
+                    <button onClick={toggleMenu} className='translate-x-4 rounded-full h-10 min-w-[2.5rem] bg-white shadow-md flex items-center justify-center'>
                         <Image src='/right-arrow-purple.svg' width={10} height={10} alt='Menu'/>
                     </button>
                 </div>
