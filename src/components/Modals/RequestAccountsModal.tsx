@@ -16,10 +16,10 @@ import BotLeftAlert from '@/components/BotLeftAlert'
 import { Progress } from '@/components/ui/progress' 
 
 type Props = {
-  storage?: AnalyticsData['storage'];
+  accounts?: AnalyticsData['users'];
 }
 
-const RequestStorageModal = ({storage}: Props) => {
+const RequestAccountsModal = ({accounts}: Props) => {
   const [emailSent, setEmailSent] = useState(false);
   const [storageRequested, setStorageRequested] = useState(0);
 
@@ -39,7 +39,7 @@ const RequestStorageModal = ({storage}: Props) => {
     }
   };
 
-  const barColor = getBarColor(storage?.percentage || 0);
+  const barColor = getBarColor(accounts?.percentage || 0);
 
   return (
     <>
@@ -57,7 +57,7 @@ const RequestStorageModal = ({storage}: Props) => {
               <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#E5EDFF]'>
                 <Image src="cloud-storage.svg" width={18} height={18}  alt='manage'/>
               </div>  
-              <p className='text-black font-semibold text-base'>Request more storage</p>
+              <p className='text-black font-semibold text-base'>Request more accounts</p>
             </div>
 
             <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#E5EDFF] mt-0' onClick={(e) => e.stopPropagation()}>
@@ -69,19 +69,19 @@ const RequestStorageModal = ({storage}: Props) => {
             <div className='mb-3 flex pr-4 items-center justify-between'>
               <p className='text-primary_font font-medium text-sm leading-6'>Current Consumption</p>
 
-              <p className='text-primary_font font-light text-xs'><span className='text-[0.9rem] text-green-500 font-normal leading-4'>{Math.round(storage?.used || 0)}</span> / {storage?.total || 0} GB</p>
+              <p className='text-primary_font font-light text-xs'><span className='text-[0.9rem] text-green-500 font-normal leading-4'>{Math.round(accounts?.active || 0)}</span> / {accounts?.total || 0} GB</p>
             </div>
 
             <div className='h-8 relative w-[97%] mb-2'>
-              <Progress value={storage?.percentage || 0} className='absolute bg-[#E5EDFF] h-2' barColor={barColor}/>
+              <Progress value={accounts?.percentage || 0} className='absolute bg-[#E5EDFF] h-2' barColor={barColor}/>
             </div>
 
             <div className='flex gap-2 items-center pb-3'>
-              <p className='text-[#7A7AFF] font-medium text-sm leading-6'>Enter required storage : </p>
+              <p className='text-[#7A7AFF] font-medium text-sm leading-6'>Enter required accounts : </p>
               <input type='number-to-text' onChange={handleStorageInput} className='py-2 ml-1 w-[7rem] rounded-sm text-center bg-bg_hover text-[#7A7AFF] text-base font-semibold'/>
               <div className='flex flex-col items-center gap-0 pl-4'>
-                <p className='text-[#7A7AFF] font-medium text-sm leading-4'> + {Math.ceil((storage?.total || 0) - (storage?.used || 0) + (storageRequested || 0))} GB</p>
-                <p className='text-[#7A7AFF] font-light text-sm leading-3'>current storage</p>
+                <p className='text-[#7A7AFF] font-medium text-sm leading-4'> + {Math.ceil((accounts?.total || 0) - (accounts?.active || 0) + (storageRequested || 0))} GB</p>
+                <p className='text-[#7A7AFF] font-light text-sm leading-3'>current accounts</p>
               </div>
             </div>
           </AlertDialogDescription>
@@ -107,4 +107,4 @@ const RequestStorageModal = ({storage}: Props) => {
   )
 }
 
-export default RequestStorageModal
+export default RequestAccountsModal
