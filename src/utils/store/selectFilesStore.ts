@@ -4,8 +4,8 @@ type File = FileOrFolderType;
 
 type State = {
   files: File[];
-  addFile: (file: File) => void;
-  removeFile: (urlhash: string) => void;
+  addFile: (_file: File) => void;
+  removeFile: (_urlhash: string) => void;
   removeAllFiles: () => void;
 };
 

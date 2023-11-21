@@ -2,7 +2,7 @@ import {create} from 'zustand';
 
 type Store = {
     userDetails: UserDetailsType | null;
-    setUserDetails: (userDetails: UserDetailsType) => void;
+    setUserDetails: (_userDetails: UserDetailsType) => void;
 };
 
 export const UserDetailsStore = create<Store>((set) => ({
