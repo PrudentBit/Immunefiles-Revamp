@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,7 +43,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
   const [sharedSuccessfully, setSharedSuccessfully] = useState<boolean>(false);
   const [response, setResponse] = useState(null);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [allChecked, setAllChecked] = React.useState<boolean>(false);
+  const [allChecked, setAllChecked] = useState<boolean>(false);
 
   const [shareSettings, setShareSettings] = useState<ShareSettings>({
     expiry: false,

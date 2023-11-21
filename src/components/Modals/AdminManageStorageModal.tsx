@@ -6,10 +6,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+} from "@/components/ui/alert-dialog"
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
+import RequestStorageModal from './RequestStorageModal'
 
 type Props = {
   storage?: AnalyticsData['storage'];
@@ -112,17 +113,9 @@ const AdminManageStorage = ({ storage }: Props) => {
           </div>
         </AlertDialogDescription>
 
-        <AlertDialogFooter className="flex h-8 justify-between gap-4 items-end pl-2">
-          <p className="text-[#8f8f8f] text-[0.83rem] font-light">
-            *you can not reduce the allotted storage if it has been consumed
-            totally.
-          </p>
-          <div className="flex gap-3 h-5 items-center pr-2">
-            <p className="text-black text-[0.85rem] font-medium leading-3 h-3">
-              Request more
-            </p>
-            <Image src="/right-arrow.svg" width={7} height={7} alt="storage" />
-          </div>
+        <AlertDialogFooter className='flex h-8 justify-between gap-4 items-end pl-2'>
+          <p className='text-[#8f8f8f] text-[0.83rem] font-light'>*you can not reduce the allotted storage if it has been consumed totally.</p>
+          <RequestStorageModal storage={storage}/>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

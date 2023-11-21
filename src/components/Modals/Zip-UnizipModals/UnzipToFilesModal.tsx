@@ -1,4 +1,6 @@
 'use client';
+
+import { useState, useEffect } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,12 +25,12 @@ type Props = {
 };
 
 const UnziptoFilesAlert = ({ files, multiplefiles }: Props) => {
-  const [selectedFolder, setSelectedFolder] = React.useState<string>('');
-  const [root, setRoot] = React.useState<string>('');
-  const [folderStack, setFolderStack] = React.useState<string[]>([]);
-  const [folders, setFolders] = React.useState<FileOrFolderType[]>([]);
-  const [path, setPath] = React.useState<string[]>([]);
-  const [pathName, setPathName] = React.useState<string[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string>('');
+  const [root, setRoot] = useState<string>('');
+  const [folderStack, setFolderStack] = useState<string[]>([]);
+  const [folders, setFolders] = useState<FileOrFolderType[]>([]);
+  const [path, setPath] = useState<string[]>([]);
+  const [pathName, setPathName] = useState<string[]>([]);
   const [toggleForceRefresh] = useFileAndFolderStore((state) => [
     state.toggleForceRefresh,
   ]);
@@ -51,7 +53,7 @@ const UnziptoFilesAlert = ({ files, multiplefiles }: Props) => {
     setRoot('');
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const data = await getFiles(root);
       const decryptedData = decryptData(data.ciphertext);

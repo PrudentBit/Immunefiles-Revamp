@@ -31,7 +31,7 @@ const UnzipFilesAlert = ({ files, multipleFiles }: Props) => {
   const handleUnzipFiles = async () => {
     const zipFile = files[0].urlhash;
     const response = await unzippingFiles([zipFile]);
-    if (response.message === 'Folder unzipped') {
+    if (response.message === 'Success') {
       toggleForceRefresh();
       removeAllFiles();
     }

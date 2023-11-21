@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-  AlertDialogOverlay,
-} from '@/components/ui/alert-dialog';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import BotLeftAlert from '@/components/BotLeftAlert';
-import editUser from '@/utils/api/editUserAPI';
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTrigger,
+		AlertDialogOverlay,
+  } from "@/components/ui/alert-dialog"
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import BotLeftAlert from '@/components/BotLeftAlert'
+import editUser from '@/utils/api/editUserAPI'
 
 type Props = {
   user?: AdminSpecificUserType;
@@ -30,7 +30,7 @@ const AddUserStorageModal = ({ user }: Props) => {
   };
 
   useEffect(() => {
-    setVisualTotalStorage(parseInt(user?.storage.total_storage || '0'));
+    setVisualTotalStorage(parseInt(user?.storage.total_storage || "0"));
   }, [user]);
 
   const handleSave = async () => {
