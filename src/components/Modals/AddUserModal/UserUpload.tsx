@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
 
 type Props = {
-  setUploadedFile: (file: File) => void;
+  setUploadedFile: (_file: File) => void;
 };
 
 const UserUpload = ({ setUploadedFile }: Props) => {
