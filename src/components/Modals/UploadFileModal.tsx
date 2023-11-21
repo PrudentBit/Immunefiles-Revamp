@@ -17,7 +17,7 @@ import Image from 'next/image'
 import uploadFiles from '@/utils/api/uploadFilesAPI'
 import uploadFolders from '@/utils/api/uploadFoldersAPI'
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
-import BotLeftAlert from '../botLeftAlert'
+import BotLeftAlert from '../BotLeftAlert'
 import { useDropzone } from 'react-dropzone'
 
 
@@ -99,14 +99,14 @@ const UploadFileModal = (props: Props) => {
         </AlertDialogHeader>
 
         <AlertDialogDescription className='text-[#7A7AFF] text-md p-2 pr-0 flex flex-col justify-center h-[25rem] gap-2'>
-        <div {...getRootProps()} className={`w-[24rem] cursor-pointer ${(uploadedFiles.length > 0 || uploadedFolders.length > 0 ) ? "h-[40%]" : "h-[100%]"} mr-2 bg-primary_bg rounded-md flex justify-center items-center border-dashed border-[2px] border-[#c7c7c7]`}>
-          <input {...getInputProps()} type="file" name="UploadFiles" id="UploadFiles" className='hidden'/>
-          <div className='flex flex-col justify-center items-center gap-3'>
-            <Image src="/upload-icon-2.svg" width={48} height={48} alt='upload icon'/>
-            <p className='text-black text-sm font-semibold'>Drag & drop files or <span className='text-primary_font underline'>Browse</span></p>
-            <p className='text-[#676767] text-xs font-normal'>Upload your files/folders from you local machine</p>
+          <div {...getRootProps()} className={`w-[24rem] cursor-pointer ${(uploadedFiles.length > 0 || uploadedFolders.length > 0 ) ? "h-[40%]" : "h-[100%]"} mr-2 bg-primary_bg rounded-md flex justify-center items-center border-dashed border-[2px] border-[#c7c7c7]`}>
+            <input {...getInputProps()} type="file" name="UploadFiles" id="UploadFiles" className='hidden'/>
+            <div className='flex flex-col justify-center items-center gap-3'>
+              <Image src="/upload-icon-2.svg" width={48} height={48} alt='upload icon'/>
+              <p className='text-black text-sm font-semibold'>Drag & drop files or <span className='text-primary_font underline'>Browse</span></p>
+              <p className='text-[#676767] text-xs font-normal'>Upload your files/folders from you local machine</p>
+            </div>
           </div>
-        </div>
 
           {(uploadedFiles.length > 0 || uploadedFolders.length > 0) &&
             <div className='w-full h-[60%] rounded-md py-2 overflow-y-auto'>

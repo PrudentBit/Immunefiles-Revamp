@@ -1,11 +1,9 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
-    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
@@ -23,6 +21,35 @@ type Props = {
 const TenantSOSModal = ({user}: Props) => {
 	
 	const [sosAppliedSuccessfully, setSosAppliedSuccessfully] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [buttonHeld, setButtonHeld] = useState(false);
+
+  const startProgress = () => {
+    const id = setInterval(() => {
+      setProgress((prevProgress) => {
+        const newProgress = prevProgress + 0.01;
+        return newProgress;
+      });
+    }, 10);
+    setIntervalId(id);
+  };
+
+  const stopProgress = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+    setProgress(0);
+  };
+
+  useEffect(() => {
+    if (progress >= 3) {
+      stopProgress();
+      setButtonHeld(true)
+      handleSOS();
+    }
+  }, [progress]);
 
   const handleSOS = async () => {
     try {
@@ -45,25 +72,49 @@ const TenantSOSModal = ({user}: Props) => {
           </Button>
         </AlertDialogTrigger>
 				<AlertDialogOverlay className='backdrop-blur-[0px]'/>
-        <AlertDialogContent className='translate-y-[-160%]'>
-          <AlertDialogHeader className='flex flex-row items-center gap-3'>
-            <div className='rounded-full w-10 h-10 flex items-center justify-center bg-[#FFEBEB]'>
-							<Image src="/warning-icon.svg" width={18} height={18}  alt='restrict'/>
-						</div>
-            <div className="flex flex-col h-full">
-              <AlertDialogTitle className='font-medium text-md'>Do you want to expire all links globally?</AlertDialogTitle>
-              <AlertDialogDescription className='text-xs'>
-								This action will remove all expired and active links.
-              </AlertDialogDescription>
-            </div>  
+        <AlertDialogContent className='w-[35vw] pt-4'>
+          <AlertDialogHeader className='flex flex-row items-center justify-between'>
+            <div className='flex gap-3'>
+              <div className='rounded-full w-9 h-9 flex items-center justify-center bg-[#FFEBEB]'>
+                <Image src="/warning-icon.svg" width={14} height={14}  alt='restrict'/>
+              </div>
+              <div className="flex flex-col h-full">
+                <AlertDialogTitle className='font-medium text-[0.9rem]'>Do you want to expire all the links on this domain?</AlertDialogTitle>
+                <AlertDialogDescription className='text-xs'>
+                  Only apply SOS when you find suspicious activity. 
+                </AlertDialogDescription>
+              </div>  
+            </div>
+            <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0' onClick={(e) => e.stopPropagation()}>
+              <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full ' alt='close icon'/>
+            </AlertDialogCancel>
           </AlertDialogHeader>
-					<AlertDialogDescription className='text-xs text-[#979797]'>
-            Only apply SOS when you find suspicious activity.
+					<AlertDialogDescription className='h-[12rem] flex items-center justify-between px-10 gap-4'>
+            
+            {buttonHeld ? (
+              <Button 
+                className='h-[10rem] p-0 w-[10rem] flex items-center justify-center bg-[#FF6161] hover:bg-[#FF6161] flex-col border-2 border-solid border-[#FF6161] rounded-[2.5rem]'
+              >
+                <p className='text-white font-semibold text-lg'>SOS Applied</p>
+              </Button>
+            ):(
+              <Button 
+                className='h-[10rem] p-0 w-[10rem] flex items-center justify-center bg-white flex-col border-2 border-solid border-[#FF6161] rounded-[2.5rem]'
+                onMouseDown={startProgress}
+                onMouseUp={stopProgress}
+                onTouchStart={startProgress}
+                onTouchEnd={stopProgress}
+                style={{
+                  background: `linear-gradient(to top, #FF6161 ${progress * 33.33}%, transparent ${progress * 33.33}%, transparent 100%)`,
+                }}
+              >
+                <p className={`font-semibold text-lg text-${progress >= 1.6 ? 'white' : '[#FF6161]' }`}>Apply SOS</p>
+
+                <p className={`text-xs font-normal text-${progress >= 1.3 ? 'gray-100' : 'gray-400' }`}>click & hold for 3s to apply</p>
+              </Button>
+            )}
+
 					</AlertDialogDescription>
-          <AlertDialogFooter className='flex gap-4'>
-            <AlertDialogAction className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]' onClick={handleSOS}>Apply SOS</AlertDialogAction>
-            <AlertDialogCancel className='w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black'>Cancel</AlertDialogCancel>
-          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
