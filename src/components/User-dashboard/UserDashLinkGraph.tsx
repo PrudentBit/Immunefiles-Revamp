@@ -1,16 +1,32 @@
-"use client"
+'use client';
 
-import React from 'react'
-import { Chart, LineController, LinearScale, CategoryScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import React from 'react';
+import {
+  Chart,
+  LineController,
+  LinearScale,
+  CategoryScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-Chart.register(LineController, LinearScale, CategoryScale, PointElement, LineElement, Title, Tooltip, Legend);
+Chart.register(
+  LineController,
+  LinearScale,
+  CategoryScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-import { Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2';
 
-type Props = {}
-
-const UserDashLinkGraph = (props: Props) => {
-
+const UserDashLinkGraph = () => {
   const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -25,7 +41,6 @@ const UserDashLinkGraph = (props: Props) => {
       },
     ],
   };
-  
 
   const options = {
     scales: {
@@ -44,7 +59,7 @@ const UserDashLinkGraph = (props: Props) => {
         },
         border: {
           color: '#FFFFFF',
-        }
+        },
       },
       x: {
         ticks: {
@@ -61,13 +76,13 @@ const UserDashLinkGraph = (props: Props) => {
       },
     },
     maintainAspectRatio: false,
-  };  
+  };
 
   return (
-    <div className='h-full'>
+    <div className="h-full">
       <Line data={data} options={options} />
     </div>
-  )
-}
+  );
+};
 
-export default UserDashLinkGraph
+export default UserDashLinkGraph;

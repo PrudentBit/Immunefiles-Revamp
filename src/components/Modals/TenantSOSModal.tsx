@@ -61,13 +61,16 @@ const TenantSOSModal = ({user}: Props) => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant='destructive' className='w-[40%] h-8 bg-transparent text-red-500 border-[1px] border-solid border-red-500 hover:text-white'>
+          <Button
+            variant="destructive"
+            className="w-[40%] h-8 bg-transparent text-red-500 border-[1px] border-solid border-red-500 hover:text-white"
+          >
             Apply SOS
           </Button>
         </AlertDialogTrigger>
@@ -118,16 +121,20 @@ const TenantSOSModal = ({user}: Props) => {
         </AlertDialogContent>
       </AlertDialog>
 
-      {sosAppliedSuccessfully &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>SOS applied successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>All links have been expired.</p>
+      {sosAppliedSuccessfully && (
+        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
+          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
+            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
+              SOS applied successfully
+            </p>
+            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
+              All links have been expired.
+            </p>
           </div>
         </BotLeftAlert>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default TenantSOSModal
+export default TenantSOSModal;
