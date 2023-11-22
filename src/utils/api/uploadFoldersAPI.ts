@@ -3,23 +3,27 @@ import axios, {
   AxiosResponse,
   AxiosProgressEvent,
 } from 'axios';
+import { FileWithPath } from 'react-dropzone';
 
 export default async function uploadFolders(
-  folderInput: File[],
+  folderInput: FileWithPath[],
   onUploadProgress: (_progress: number) => void
 ) {
   const formData = new FormData();
+  let path = '';
 
-  formData.append('folder_name', folderInput[0].path.split('/')[1]);
+  if (folderInput[0].path) {
+    formData.append('folder_name', folderInput[0].path.split('/')[1]);
+  }
   formData.append('parent_hash', 'none');
 
   folderInput.forEach((fileObj) => {
-    let filePath = fileObj.path.split('/');
-    if (filePath[0] === '') {
-      filePath = filePath.join('/').substring(1);
+    let filePath = fileObj.path?.split('/');
+    if (filePath && filePath[0] === '') {
+      path = filePath.join('/').substring(1);
     }
-    formData.append(filePath, fileObj);
-    formData.append('shared_with', []);
+    formData.append(path, fileObj);
+    formData.append('shared_with', '');
   });
 
   const config: AxiosRequestConfig = {
