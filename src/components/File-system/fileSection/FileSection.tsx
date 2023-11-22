@@ -13,10 +13,10 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
   console.log('FileSection called');
   const sectionType = type === "folder" ? "Folders" : "Files";
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
-  const [files, removeAllFiles, addFile, removeFile, removeDupes] = selectedFilesStore(
+  console.log('selected', selected);
+  const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
     (state) => [
       state.files,
-      state.removeAllFiles,
       state.addFile,
       state.removeFile,
       state.removeDupes

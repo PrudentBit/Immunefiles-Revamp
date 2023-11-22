@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect} from 'react';
 import Image from 'next/image';
 import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';

@@ -18,7 +18,7 @@ export default async function uploadFolders(
   formData.append('parent_hash', 'none');
 
   folderInput.forEach((fileObj) => {
-    let filePath = fileObj.path?.split('/');
+    const filePath = fileObj.path?.split('/');
     if (filePath && filePath[0] === '') {
       path = filePath.join('/').substring(1);
     }
