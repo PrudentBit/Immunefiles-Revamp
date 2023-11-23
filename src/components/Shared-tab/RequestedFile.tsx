@@ -5,7 +5,7 @@ type Props = {}
 
 const RequestedFile = (props: Props) => {
   return (
-    <div className='h-14 w-[13.6rem] flex justify-center px-3 items-center rounded-lg gap-2 border-2 border-dashed border-primary_border bg-bg_hover'>
+    <div className='h-14 w-[13.6rem] flex justify-center px-3 items-center rounded-lg gap-2 cursor-pointer border-2 border-dashed border-primary_border bg-bg_hover'>
       <Image src='/file-icon-2.svg' width={24} height={24} alt='file'/>
 
       <p className="text-primary_font_2 pb-1 truncate w-full mt-1 font-normal">File name</p>

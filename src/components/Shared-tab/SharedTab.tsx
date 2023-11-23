@@ -4,7 +4,10 @@ import React from 'react'
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import PendingRequests from '@/components/Shared-tab/PendingRequests'
-import FileSection from '../File-system/fileSection/FileSection';
+import FileSection from '@/components/File-system/fileSection/FileSection';
+import { AnimatePresence} from 'framer-motion';
+import { selectedFilesStore } from '@/utils/store/selectFilesStore';
+import FileSelectOptions from '@/components/File-system/menus/FileSelectOptions';
 
 type Props = {}
 
@@ -52,18 +55,26 @@ const sharedTab = (props: Props) => {
     }
   ]  
 
+  const [files] = selectedFilesStore((state) => [state.files]);
+
   return (
     <div className='h-full w-full flex flex-col gap-6 pt-4'>
-      <div className='flex gap-4'>
-        <Button className='rounded-full flex gap-2 h-9 hover:bg-[#647eb7]'>
-          <Image src='/request-icon-white.svg' width={16} height={16} alt='request'/>
-          <p>Request file</p>
-        </Button>
+      <div className='flex justify-between'>
+        <div className='flex gap-4'>
+          <Button className='rounded-full flex gap-2 h-9 hover:bg-[#647eb7]'>
+            <Image src='/request-icon-white.svg' width={16} height={16} alt='request'/>
+            <p>Request file</p>
+          </Button>
 
-        <Button className='rounded-full flex gap-2 h-9 bg-[#FF6161] hover:bg-[#FF7474]'>
-          <Image src='/close-icon-2.svg' width={16} height={16} alt='ignore'/>
-          <p>Ignore all</p>
-        </Button>
+          <Button className='rounded-full flex gap-2 h-9 bg-[#FF6161] hover:bg-[#FF7474]'>
+            <Image src='/close-icon-2.svg' width={16} height={16} alt='ignore'/>
+            <p>Ignore all</p>
+          </Button>
+        </div>
+
+        <AnimatePresence>
+          {files.length > 0 && <FileSelectOptions />}
+        </AnimatePresence>
       </div>
 
       <div className='bg-[#fcfcfc] px-4 py-2 relative h-full rounded-2xl flex flex-col gap-6 focus:outline-none'>

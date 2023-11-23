@@ -1,6 +1,6 @@
 import React from 'react'
-import RequestedFile from '@/components/Shared-tab/RequestedFile';
 import Image from 'next/image';
+import RequestedFileModal from '@/components/Modals/RequestedFileModal';
 
 type Props = {}
 
@@ -13,13 +13,14 @@ const PendingRequests = (props: Props) => {
         </div>
 
         <div className='flex gap-3 flex-wrap'>
-          <RequestedFile/>
-          <RequestedFile/>
-          <RequestedFile/>
-          <RequestedFile/>
-          <RequestedFile/>
-          <RequestedFile/>
-          <RequestedFile/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+          <RequestedFileModal/>
+
         </div>
       </div>
   )
