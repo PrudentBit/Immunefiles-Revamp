@@ -8,19 +8,19 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  const sectionType = type === "folder" ? "Folders" : "Files";
+  const sectionType = type === "Folders" ? "Folder" : "File";
 
   return (
     <section className="flex flex-col gap-5">
       <div className="flex gap-2">
         <Image
-          src={`/${type}-icon.svg`}
+          src={`/${sectionType}-icon.svg`}
           width={20}
           height={20}
           alt={`${type} icon`}
           className="ml-[2px]"
         />
-        <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{sectionType}</p>
+        <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{type}</p>
       </div>
 
       <div className="flex gap-3 flex-wrap pb-2">

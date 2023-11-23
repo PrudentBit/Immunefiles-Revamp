@@ -72,7 +72,7 @@ const CreateFileSection = ({
     <div className="flex flex-col gap-5 pt-2 h-[7rem]">
       <div className="flex gap-3 flex-col">
         <div className="flex gap-2">
-          <Image src="/file-icon.svg" width={18} height={18} alt="File icon" />
+          <Image src="/File-icon.svg" width={18} height={18} alt="File icon" />
           <p className="text-primary_font font-normal text-md">File Name</p>
         </div>
 

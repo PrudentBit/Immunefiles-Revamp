@@ -111,7 +111,7 @@ const AddUserModal = () => {
                       <div className="absolute h-[8rem] w-[8rem] p-3 flex flex-col justify-center items-center gap-1 border-[1px] border-solid border-primary_font rounded-xl">
                         <div className="h-[4.6rem] w-[4.6rem] bg-[#E5EDFF] flex items-center justify-center rounded-xl">
                           <Image
-                            src="/user-file-icon.svg"
+                            src="/user-File-icon.svg"
                             width={35}
                             height={35}
                             alt={uploadedfile.name}
