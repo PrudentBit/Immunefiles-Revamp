@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -21,6 +23,7 @@ type Props = {
 const RequestedFileModal = (props: Props) => {
   const [failed, setFailed] = useState(false);
   const [requestedFile, setRequestedFile] = useState<File | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -36,14 +39,22 @@ const RequestedFileModal = (props: Props) => {
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger>
-          <div className='h-14 w-[13.6rem] flex justify-center px-3 items-center rounded-lg gap-2 cursor-pointer border-2 border-dashed border-primary_border bg-bg_hover'>
-            <Image src='/file-icon-2.svg' width={24} height={24} alt='file'/>
-            <p className="text-primary_font_2 pb-1 text-left truncate w-full mt-1 font-normal">File name</p>
-            <button className='flex items-center justify-center rounded-full h-6 min-w-[1.5rem] hover:bg-primary_bg'>
+        <AlertDialogTrigger asChild>
+          <button 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)} 
+            className={`h-14 w-[13.6rem] flex justify-center px-3 items-center rounded-lg gap-2 cursor-pointer  bg-bg_hover hover:bg-gray-100 border-2 border-dashed ${isHovered ? "border-gray-400" : "border-primary_font_2"}`}
+          >
+            {isHovered ? (
+              <Image src='/upload-icon-gray.svg' width={28} height={28} alt='upload'/>
+            ):(
+              <Image src='/file-icon-2.svg' width={24} height={24} alt='file'/>
+            )}
+            <p className={`${isHovered ? "text-gray-400" : "text-primary_font_2"} pb-1 text-left truncate w-full mt-1 font-normal`}>{isHovered ? 'Upload file' : 'File name'}</p>
+            <div className='flex items-center justify-center rounded-full h-6 min-w-[1.5rem] cursor-pointer hover:bg-primary_bg'>
               <Image src='/close-icon.svg' width={12} height={12} alt='remove'/>
-            </button>
-          </div>
+            </div>
+          </button>
         </AlertDialogTrigger>
         <AlertDialogContent className="w-[40rem] pb-4">
           <AlertDialogHeader className="flex flex-row justify-between gap-[6.5rem]">

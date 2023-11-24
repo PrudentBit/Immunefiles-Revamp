@@ -8,6 +8,7 @@ import FileSection from '@/components/File-system/fileSection/FileSection';
 import { AnimatePresence} from 'framer-motion';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import FileSelectOptions from '@/components/File-system/menus/FileSelectOptions';
+import IgnoreRequestedAlert from '@/components/Alerts/IgnoreRequestsAlert';
 
 type Props = {}
 
@@ -61,15 +62,12 @@ const sharedTab = (props: Props) => {
     <div className='h-full w-full flex flex-col gap-6 pt-4'>
       <div className='flex justify-between'>
         <div className='flex gap-4'>
-          <Button className='rounded-full flex gap-2 h-9 hover:bg-[#647eb7]'>
+          <Button className='rounded-full flex gap-2 h-9 bg-primary_font hover:bg-[#648FED]'>
             <Image src='/request-icon-white.svg' width={16} height={16} alt='request'/>
             <p>Request file</p>
           </Button>
 
-          <Button className='rounded-full flex gap-2 h-9 bg-[#FF6161] hover:bg-[#FF7474]'>
-            <Image src='/close-icon-2.svg' width={16} height={16} alt='ignore'/>
-            <p>Ignore all</p>
-          </Button>
+          <IgnoreRequestedAlert/>
         </div>
 
         <AnimatePresence>

@@ -20,7 +20,6 @@ const PendingRequests = (props: Props) => {
           <RequestedFileModal/>
           <RequestedFileModal/>
           <RequestedFileModal/>
-
         </div>
       </div>
   )
