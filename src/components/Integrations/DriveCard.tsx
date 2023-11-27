@@ -14,10 +14,10 @@ type Props = {
 
 const DriveCard = ({image, name, gradient, shadow}: Props) => {
   const link=name.toLowerCase().replace(/\s/g, '');
-  const [isConnected, setIsConnected] = useState(true)
+  const [isConnected, setIsConnected] = useState(false)
 
   return (
-    <div className={`h-[16rem] w-[16rem] flex flex-col gap-[0.9rem] rounded-3xl p-5 shadow-[${shadow}]`}>
+    <div className={`h-[16rem] w-[16rem] flex flex-col gap-[0.9rem] rounded-3xl p-5 ${shadow}`}>
       <div className='flex gap-3'>
         <div className="relative h-[3.9rem] w-[3.9rem] p-1 rounded-lg">
           <div className={`absolute inset-0 ${gradient} opacity-[35%] rounded-lg`}></div>
@@ -46,7 +46,7 @@ const DriveCard = ({image, name, gradient, shadow}: Props) => {
           View
         </Link>
       ):(
-        <Button className='bg-white hover:bg-primary_font border-solid border-[1px] border-primary_font text-primary_font hover:text-white text-sm font-medium py-3 px-4 rounded-2xl'>
+        <Button onClick={()=>setIsConnected(!isConnected)} className='bg-white hover:bg-primary_font border-solid border-[1px] border-primary_font text-primary_font hover:text-white text-sm font-medium py-3 px-4 rounded-2xl'>
           Connect
         </Button>
       )}
