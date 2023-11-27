@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import AddNewServerModal from "@/components/Modals/AddNewServerModal"
 
 
 type Props = {
@@ -41,10 +42,7 @@ const IntegrationHeader = ({urlhash}: Props) => {
           <Image src='/sync-icon.svg' width={22} height={22} alt="sync"/>
         </Button>
 
-        <Button className='h-10 flex gap-2 px-6 hover:bg-[#6B97F8]'>
-          <Image src='/server-icon.svg' width={18} height={18} alt="more"/>
-          Add New
-        </Button>
+        <AddNewServerModal urlhash={urlhash} navButton={true}/>
       </div>
     </div>
   )
