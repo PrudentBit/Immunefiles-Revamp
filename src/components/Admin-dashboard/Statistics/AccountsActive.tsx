@@ -8,6 +8,7 @@ import {
   buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import RequestAccountsModal from '@/components/Modals/RequestAccountsModal';
 
 
 type Props = {
@@ -78,10 +79,7 @@ const AccountsActive = ({accounts}: Props) => {
       </div>
 
       <div className='flex justify-between items-center'>
-        <div className='flex gap-3 h-5 items-center'>
-          <p className='text-black text-[0.85rem] font-medium leading-3 h-3'>Request more</p>
-          <Image src='/right-arrow.svg' width={7} height={7} alt="storage"/>
-        </div>
+        <RequestAccountsModal accounts={accounts}/>
 
         <div className='flex gap-4 items-center justify-center'>
           <p className={`text-xs ${(accounts?.active || 1) > ((accounts?.total || 2)/2 ) ? ("text-red-500"):("text-green-500")} font-medium h-4`}>{((accounts?.total || 0)-(accounts?.active || 0))} left</p>

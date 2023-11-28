@@ -1,20 +1,34 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosProgressEvent } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosProgressEvent,
+} from 'axios';
+import { FileWithPath } from 'react-dropzone';
 
-export default async function uploadFolders(folderInput: {file: File, filePath: string}[], folderName: string, parentID: string, onUploadProgress: (progress: number) => void) {
+export default async function uploadFolders(
+  folderInput: FileWithPath[],
+  onUploadProgress: (_progress: number) => void
+) {
   const formData = new FormData();
+  let path = '';
 
-  formData.append("folder_name", folderName);
-  formData.append("parent_hash", 'none');
+  if (folderInput[0].path) {
+    formData.append('folder_name', folderInput[0].path.split('/')[1]);
+  }
+  formData.append('parent_hash', 'none');
 
   folderInput.forEach((fileObj) => {
-    const filePath = fileObj.filePath.replace(/ /g, "_");
-    formData.append(filePath, fileObj.file);
-    formData.append("shared_with", []);
+    const filePath = fileObj.path?.split('/');
+    if (filePath && filePath[0] === '') {
+      path = filePath.join('/').substring(1);
+    }
+    formData.append(path, fileObj);
+    formData.append('shared_with', '');
   });
 
   const config: AxiosRequestConfig = {
-    onUploadProgress: function(progressEvent: AxiosProgressEvent) {
-      if(progressEvent.progress){
+    onUploadProgress: function (progressEvent: AxiosProgressEvent) {
+      if (progressEvent.progress) {
         const percentCompleted = Math.round(progressEvent.progress * 100);
         onUploadProgress(percentCompleted);
       }
@@ -27,7 +41,9 @@ export default async function uploadFolders(folderInput: {file: File, filePath: 
 
   try {
     const res: AxiosResponse = await axios.post(
-      `https://api.immunefiles.com/api/api/content/upload_folder?tenant=${window.location.hostname.split('.')[0]}`,
+      `https://api.immunefiles.com/api/api/content/upload_folder?tenant=${
+        window.location.hostname.split('.')[0]
+      }`,
       formData,
       config
     );
