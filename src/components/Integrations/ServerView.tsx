@@ -1,14 +1,11 @@
 "use client"
 
-import { useState } from 'react'
 import Image from 'next/image'
 import AddNewServerModal from '../Modals/AddNewServerModal'
 import ServerRow from './ServerRow'
 
-type Props = {}
-
-const ServerView = (props: Props) => {
-  const [servers, setServers] = useState<boolean>(true);
+const ServerView = () => {
+  const servers = true;
   return (
     <>
       {servers? (

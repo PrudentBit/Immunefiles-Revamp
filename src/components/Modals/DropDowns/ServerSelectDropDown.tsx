@@ -2,9 +2,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from '@/component
 import { DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import Image from 'next/image'
 
-type Props = {}
-
-const ServerSelectDropDown = (props: Props) => {
+const ServerSelectDropDown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='w-[40rem] h-12 flex justify-between items-center px-6 bg-bg_hover rounded-lg'>
