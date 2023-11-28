@@ -35,7 +35,7 @@ const ServerView = (props: Props) => {
               No Remote Servers Connected
             </p>
     
-            <AddNewServerModal urlhash='googledrive' navButton={false}/>
+            <AddNewServerModal drive='googledrive' navButton={false}/>
           </div>
         </div>
       ) }

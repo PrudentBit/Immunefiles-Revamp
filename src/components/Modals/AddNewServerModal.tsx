@@ -15,11 +15,11 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
 type Props = {
-  urlhash: string
+  drive: string
   navButton?: boolean
 }
 
-const AddNewServerModal = ({urlhash, navButton}: Props) => {
+const AddNewServerModal = ({drive, navButton}: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -48,7 +48,7 @@ const AddNewServerModal = ({urlhash, navButton}: Props) => {
         </AlertDialogHeader>
         <AlertDialogDescription className='text-[#7A7AFF] text-md p-2'>
           <div className='flex gap-4'>
-            {urlhash == 'googledrive' ? (
+            {drive == 'googledrive' ? (
               <div className="relative h-10 min-w-[2.5rem] p-1 rounded-sm">
                 <div className={`absolute inset-0 bg-gradient-to-b from-green-700 via-blue-600 to-yellow-400 opacity-[35%] rounded-sm`}></div>
                 <div className="relative h-full w-full flex items-center justify-center">
