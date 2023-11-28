@@ -8,6 +8,9 @@ type Props = {
 }
 
 const IntegrationHeader = ({drive}: Props) => {
+
+  const serverCount = 3;
+
   return (
     <div className='w-full flex justify-between h-[7%]'>
       <div className='flex gap-4'>
@@ -33,13 +36,27 @@ const IntegrationHeader = ({drive}: Props) => {
       </div>
 
       <div className='flex gap-4'>
-        <Button title="refresh" className='h-10 w-10 p-0 bg-[#EEEEEE] flex justify-center items-center rounded-sm hover:bg-[#DDDDDD]'>
-          <Image src='/refresh-icon.svg' width={22} height={22} alt="refresh"/>
-        </Button>
+        {serverCount > 0 ? (
+          <>
+            <Button title="refresh" className='h-10 w-10 p-0 bg-[#D0FFE3] flex justify-center items-center rounded-sm hover:bg-[#ABEDC6]'>
+              <Image src='/refresh-icon-green.svg' width={22} height={22} alt="refresh"/>
+            </Button>
 
-        <Link title="sync servers" href={`/integrations/${drive}/syncserver`} className='h-10 w-10 p-0 bg-[#EEEEEE] flex justify-center items-center rounded-sm hover:bg-[#DDDDDD]'>
-          <Image src='/sync-icon.svg' width={22} height={22} alt="sync"/>
-        </Link>
+            <Link title="sync servers" href={`/integrations/${drive}/syncserver`} className='h-10 w-10 p-0 bg-bg_hover flex justify-center items-center rounded-sm hover:bg-[#C7C7FF]'>
+              <Image src='/sync-icon-purple.svg' width={22} height={22} alt="sync"/>
+            </Link>
+          </>
+        ):(
+          <>
+            <Button title="refresh" className='h-10 w-10 p-0 bg-[#EEEEEE] flex justify-center items-center rounded-sm'>
+              <Image src='/refresh-icon.svg' width={22} height={22} alt="refresh"/>
+            </Button>
+
+            <div title="sync servers" className='h-10 w-10 p-0 cursor-pointer bg-[#EEEEEE] flex justify-center items-center rounded-sm'>
+              <Image src='/sync-icon.svg' width={22} height={22} alt="sync"/>
+            </div>
+          </>
+        )}
 
         <AddNewServerModal drive={drive} navButton={true}/>
       </div>
