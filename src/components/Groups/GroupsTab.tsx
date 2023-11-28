@@ -1,12 +1,31 @@
 "use client"
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import DeleteGroupAlert from '../Alerts/DeleteGroupAlert';
 import Groups from './Groups';
+import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI';
+import { GroupStore } from '@/utils/store/groupDetailsStore';
 
 type Props = {}
 
 const GroupsTab = (props: Props) => {
+  const [loading, setLoading] = useState(true);
+  const { groups, setGroups } = GroupStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+
+      const groupData = await fetchGroupDetails();
+      setGroups(groupData);
+
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className='h-full w-full flex flex-col gap-7'>
       <div className='flex gap-4 pt-2'>
@@ -31,15 +50,9 @@ const GroupsTab = (props: Props) => {
         </div>
 
         <div className='flex flex-wrap gap-4 p-1'>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
-          <Groups/>
+          {groups?.map(group => (
+            <Groups key={group.urlhash} group={group}/>
+          ))}
         </div>
       </div>
     </div>
