@@ -9,15 +9,22 @@ type Props = {
   image: string
   name: string
   gradient: string
-  shadow: string
 }
 
-const DriveCard = ({image, name, gradient, shadow}: Props) => {
+const DriveCard = ({image, name, gradient}: Props) => {
   const link=name.toLowerCase().replace(/\s/g, '');
   const [isConnected, setIsConnected] = useState(false)
 
   return (
-    <div className={`h-[16rem] w-[16rem] flex flex-col gap-[0.9rem] rounded-3xl p-5 ${shadow}`}>
+    <div 
+      className={`h-[16rem] w-[16rem] flex flex-col gap-[0.9rem] rounded-3xl p-5 
+        ${isConnected ? (
+          "shadow-[0px_4px_30px_0px_rgba(58,186,110,0.25)]"
+        ) : (
+          "shadow-[0px_4px_30px_0px_rgba(75,123,229,0.25)]"
+        )}`
+      }
+    >
       <div className='flex gap-3'>
         <div className="relative h-[3.9rem] w-[3.9rem] p-1 rounded-lg">
           <div className={`absolute inset-0 ${gradient} opacity-[35%] rounded-lg`}></div>

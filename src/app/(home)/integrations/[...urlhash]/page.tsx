@@ -12,7 +12,7 @@ const Integrations: React.FC<FileSystemProps> = ({ params: { urlhash } }) => {
     <div className='w-full h-[100vh] p-6 flex flex-col gap-6 overflow-auto'>
       <TopNav currentTab='integrations'/>
 
-      <div className='w-full h-full'>
+      <div className='w-full h-full flex flex-col gap-7'>
         <IntegrationHeader urlhash={urlhash}/>
 
         <ServerView/>
