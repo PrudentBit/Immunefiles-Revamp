@@ -129,11 +129,11 @@ const FileAndFolder = ({ root }: Props) => {
           ) : (
             <>
               {folders && folders.length > 0 && (
-                <FileSection subFiles={folders} type={'Folders'} />
+                <FileSection subFiles={folders} type={'folders'} />
               )}
 
               {files && files.length > 0 && (
-                <FileSection subFiles={files} type={'Files'} />
+                <FileSection subFiles={files} type={'files'} />
               )}
             </>
           )}

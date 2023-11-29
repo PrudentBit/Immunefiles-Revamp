@@ -20,3 +20,25 @@ type FileOrFolderType = {
   url?: string;
   urlhash: string;
 }
+
+type SharedFilesType = {
+  files: {
+    urlhash: string;
+    name: string;
+    url: string;
+    owner: string;
+    size: string;
+    can_download: boolean;
+    can_share_content: boolean;
+  }[];
+  children: {
+    urlhash: string;
+    name: string;
+    owner: string;
+    size: string;
+    can_download: boolean;
+    can_share_content: boolean;
+  }[];
+  hash_path: null | string;
+  path: null | string;
+};

@@ -10,7 +10,6 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  console.log('FileSection called');
   const sectionType = type === "folder" ? "Folders" : "Files";
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
   console.log('selected', selected);
@@ -61,13 +60,13 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
     <section className="flex flex-col">
       <div className="flex gap-2">
         <Image
-          src={`/${sectionType}-icon.svg`}
+          src={`/${type}-icon.svg`}
           width={20}
           height={20}
           alt={`${type} icon`}
           className="ml-[2px]"
         />
-        <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{type}</p>
+        <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{sectionType}</p>
       </div>
         <SelectionArea className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5"
           onStart={onStart}

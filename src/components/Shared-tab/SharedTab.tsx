@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import PendingRequests from '@/components/Shared-tab/PendingRequests'
-import FileSection from '@/components/File-system/fileSection/FileSection';
 import { AnimatePresence} from 'framer-motion';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import FileSelectOptions from '@/components/File-system/menus/FileSelectOptions';
 import IgnoreRequestedAlert from '@/components/Alerts/IgnoreRequestsAlert';
+import getRequests from '@/utils/api/getRequestsAPI';
+import PendingRequestsSkeleton from './PendingRequestsSkeleton';
+import { decryptData } from '@/utils/helper/decryptFiles';
+import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 
 type Props = {}
 
@@ -56,6 +59,37 @@ const sharedTab = (props: Props) => {
     }
   ]  
 
+  const [requests, setRequests] = useState<RequestsType>();
+  const [reload, setReload] = useState(false);
+  const [sharedFiles, setSharedFiles] = useState<SharedFilesType>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRequests();
+        const decryptedData = decryptData(data.ciphertext);
+        setRequests(decryptedData.requests);
+        console.log(decryptedData.requests);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const getFiles = async () => {
+      try {
+        const hash = 'root';
+        const data = await getSharedFiles(hash);
+        setSharedFiles(data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getFiles();
+    fetchData();
+  }, [reload]);
+
   const [files] = selectedFilesStore((state) => [state.files]);
 
   return (
@@ -67,7 +101,7 @@ const sharedTab = (props: Props) => {
             <p>Request file</p>
           </Button>
 
-          <IgnoreRequestedAlert/>
+          <IgnoreRequestedAlert setReload={setReload}/>
         </div>
 
         <AnimatePresence>
@@ -76,9 +110,72 @@ const sharedTab = (props: Props) => {
       </div>
 
       <div className='bg-[#fcfcfc] px-4 py-2 relative h-full rounded-2xl flex flex-col gap-6 focus:outline-none'>
-        <PendingRequests/>
+        {requests ?(
+          <>
+            <PendingRequests requests={requests} setReload={setReload}/>
+          </>
+        ):(
+          <PendingRequestsSkeleton/>
+        )}
 
-        <FileSection subFiles={subFiles} type='Files shared with you'/>
+        {sharedFiles &&
+          <section className="flex flex-col">
+            <div className="flex gap-2">
+              <Image
+                src={`/files-icon.svg`}
+                width={20}
+                height={20}
+                alt="Files"
+                className="ml-[2px]"
+              />
+              <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">Files shared with you</p>
+            </div>
+            <div className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5">
+              {sharedFiles.children.map((folder, index) => (
+                <div
+                  title={folder.name}
+                  className={`w-[13.4rem] select-none h-12 border-primary_bg bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px]`}
+                >
+                  <div className="flex gap-3">
+                    <Image
+                      src="/Folder-icon-filled.svg"
+                      width={26}
+                      height={26}
+                      alt="File icon"
+                      className="object-contain"
+                    />
+                    <p className="text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]">
+                      {folder.name}
+                    </p>
+                  </div>
+          
+                  <div title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full hover:bg-button_hover cursor-pointer'>...</div>
+                </div>
+              ))}
+              {sharedFiles.files.map((file, index) => (
+                <div
+                  title={file.name}
+                  className={`w-[13.4rem] select-none h-12 border-primary_bg bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px]`}
+                >
+                  <div className="flex gap-3">
+                    <Image
+                      src=""
+                      width={26}
+                      height={26}
+                      alt="File icon"
+                      className="object-contain"
+                    />
+                    <p className="text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]">
+                      {file.name}
+                    </p>
+                  </div>
+          
+                  <div title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full hover:bg-button_hover cursor-pointer'>...</div>
+                </div>
+              ))}
+            </div>
+        </section>
+        }
       </div>
     </div>
   );

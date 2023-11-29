@@ -13,11 +13,28 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import BotLeftAlert from '@/components/BotLeftAlert';
+import deleteRequestedFiles from '@/utils/api/deleteRequestedFilesAPI';
 
-type Props = {};
+type Props = {
+  setReload: (reload: boolean) => void;
+};
 
-const IgnoreRequestedAlert = (props: Props) => {
+const IgnoreRequestedAlert = ({setReload}: Props) => {
   const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
+
+  const handleIgnore = async () => {
+    try {
+      const response = await deleteRequestedFiles();
+      if (response?.status === 200) {
+        console.log('File ignored successfully');
+        setReload(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
     <>
       <AlertDialog>
@@ -49,6 +66,10 @@ const IgnoreRequestedAlert = (props: Props) => {
           <AlertDialogFooter className="flex gap-4">
             <AlertDialogAction
               className="w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleIgnore();
+              }}
             >
               Yes! Ignore
             </AlertDialogAction>

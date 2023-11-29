@@ -126,6 +126,7 @@ input[type=number]::-webkit-outer-spin-button {
   transition-property: all;
   transition-duration: 0.4s;
   transition-timing-function: ease-out;
+}
   
 .selection-area {
   background: rgba(46, 115, 252, 0.11);

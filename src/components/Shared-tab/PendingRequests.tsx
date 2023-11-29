@@ -1,10 +1,12 @@
-import React from 'react'
 import Image from 'next/image';
-import RequestedFileModal from '@/components/Modals/RequestedFileModal';
+import Request from './Request';
 
-type Props = {}
+type Props = {
+  requests: RequestsType
+  setReload: (reload: boolean) => void
+}
 
-const PendingRequests = (props: Props) => {
+const PendingRequests = ({requests, setReload}: Props) => {
   return (
     <div className='flex flex-col gap-5'>
         <div className='flex gap-2'>
@@ -13,13 +15,9 @@ const PendingRequests = (props: Props) => {
         </div>
 
         <div className='flex gap-3 flex-wrap'>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
-          <RequestedFileModal/>
+          {requests.map((request) => (
+            <Request key={request.request_hash} request={request} setReload={setReload}/>
+          ))}
         </div>
       </div>
   )
