@@ -37,7 +37,7 @@ const Request = ({request, setReload}: Props) => {
         ):(
           <Image src='/file-icon-2.svg' width={24} height={24} alt='file'/>
         )}
-        <p className={`${isHovered ? "text-gray-400" : "text-primary_font_2"} pb-1 text-left truncate w-full mt-1 font-normal`}>{isHovered ? 'Upload file' : request.file_name}</p>
+        <p className={`${isHovered ? "text-gray-400" : "text-primary_font_2"} pb-1 text-left truncate w-[7.5rem] mt-1 font-normal`}>{isHovered ? 'Upload file' : request.file_name}</p>
       </div>
       <div 
         className='self-end flex items-center justify-center rounded-full h-6 min-w-[1.5rem] cursor-pointer hover:bg-primary_bg'

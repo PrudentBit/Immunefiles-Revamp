@@ -122,7 +122,7 @@ const sharedTab = (props: Props) => {
           <section className="flex flex-col">
             <div className="flex gap-2">
               <Image
-                src={`/files-icon.svg`}
+                src={`/file-icon.svg`}
                 width={20}
                 height={20}
                 alt="Files"
