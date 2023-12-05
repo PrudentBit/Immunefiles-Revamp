@@ -2,13 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import AddNewServerModal from "@/components/Modals/AddNewServerModal"
+import ServerSortBy from "./ServerSortBy"
 
 type Props = {
   drive: string
 }
 
 const IntegrationHeader = ({drive}: Props) => {
-
+  
   const serverCount = 3;
 
   return (
@@ -17,6 +18,8 @@ const IntegrationHeader = ({drive}: Props) => {
         <Link href={`/integrations`} className='h-10 w-10 bg-[#E5EDFF] flex justify-center items-center rounded-sm hover:bg-bg_hover'>
           <Image src='/left-arrow-blue.svg' width={20} height={20} alt="back"/>
         </Link>
+
+        <ServerSortBy/>
 
         {drive == 'googledrive' ? (
           <div className="relative h-10 w-10 p-1 rounded-sm">
