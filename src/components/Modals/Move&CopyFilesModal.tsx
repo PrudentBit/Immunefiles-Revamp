@@ -162,7 +162,7 @@ const MoveOrCopyFilesModal = ({
             </AlertDialogCancel>
           </AlertDialogHeader>
 
-          <AlertDialogDescription className="text-[#7A7AFF] text-md flex flex-col justify-center h-[25rem] gap-4">
+          <AlertDialogDescription className="text-[#7A7AFF] text-md flex flex-col justify-center h-[25rem] gap-4 w-[41rem]">
             <SelectedFilesDisplay
               file={file}
               removeFileFromSelection={removeFileFromSelection}

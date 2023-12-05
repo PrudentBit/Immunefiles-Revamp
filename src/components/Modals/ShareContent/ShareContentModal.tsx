@@ -30,6 +30,12 @@ type Props = {
   multiplefiles: boolean;
 };
 
+type responseType = {
+  message: string;
+  success: boolean;
+  data: any;
+};
+
 const ShareContentModal = ({ multiplefiles }: Props) => {
   const [tab, setTab] = useState<'link' | 'email' | 'internal' | 'groups'>(
     'link'
@@ -41,7 +47,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
   const [linkName, setLinkName] = useState<string>('');
   const [shareEmail, setShareEmail] = useState<string>('');
   const [sharedSuccessfully, setSharedSuccessfully] = useState<boolean>(false);
-  const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState<responseType | null>(null);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [allChecked, setAllChecked] = useState<boolean>(false);
 
@@ -187,7 +193,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
             />
           </AlertDialogCancel>
         </AlertDialogHeader>
-        <AlertDialogDescription className="h-[26rem] text-md p-2">
+        <AlertDialogDescription className="h-[26rem] text-md p-2 w-[47rem]">
           <SelectedFilesDisplay
             file={files}
             removeFileFromSelection={removeFileFromSelection}
@@ -251,7 +257,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
             </motion.div>
           </AnimatePresence>
         </AlertDialogDescription>
-        <AlertDialogFooter className="flex justify-end">
+        <AlertDialogFooter className="flex justify-end z-50">
           {tab === 'link' && (
             <AlertDialogAction
               onClick={handleShare}
@@ -306,9 +312,9 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
             </p>
             <p
               className="text-[#979797] font-[400] text-sm leading-[1.1rem]"
-              title={response.data.data.link}
+              title="link"
             >
-              Link: {response.data.data.link}
+              Link: {response?.data.data.link}
             </p>
           </div>
           <button
@@ -327,7 +333,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
               Files/Folders shared successfully
             </p>
             <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              {response.data.message}
+              
             </p>
           </div>
           <button
@@ -346,7 +352,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
               Files/Folders shared successfully
             </p>
             <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              {response.data.message.trial}
+              
             </p>
           </div>
           <button

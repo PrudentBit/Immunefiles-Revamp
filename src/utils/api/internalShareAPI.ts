@@ -6,18 +6,17 @@ export default async function internalShare(
 ) {
   const data = {
     owner: '',
-    file_hash: sentFileArray,
-    folder_hash: sentFolder,
-    shared_with: inputFields,
-    is_downloadable: settings.downloadable,
-    can_add_delete_content: settings.modifyable,
-    can_share_content: settings.shareable,
-    can_download_content: settings.downloadable,
+    files: sentFileArray,
+    folders: sentFolder,
+    share_with: inputFields,
+    downloadable: settings.downloadable,
+    editable: settings.modifyable,
+    shareable: settings.shareable,
     is_proctored: settings.proctored,
   };
 
   const res = await fetch(
-    `https://api.immunefiles.com/api/api/content/internalshare?tenant=${
+    `https://api.immunefiles.com/api/api/content/share/internal?tenant=${
       window.location.hostname.split('.')[0]
     }`,
     {
