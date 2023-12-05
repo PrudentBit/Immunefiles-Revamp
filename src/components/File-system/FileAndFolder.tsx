@@ -20,12 +20,15 @@ type Props = {
 const FileAndFolder = ({ root }: Props) => {
   const {
     files,
+    sortBy,
     folders,
     setFiles,
     setFolders,
     forceRefresh,
     toggleForceRefresh,
   } = useFileAndFolderStore();
+  console.log('files', files);
+  console.log('folders', folders);
   const { setGroups } = GroupStore();
   const [loading, setLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
