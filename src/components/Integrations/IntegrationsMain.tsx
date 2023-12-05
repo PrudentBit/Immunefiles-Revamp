@@ -1,6 +1,23 @@
+"use client"
+
+import { useEffect } from 'react'
 import DriveCard from './DriveCard'
+import getIntegrations from '@/utils/api/getUserDrivesAPI'
 
 const IntegrationsMain = () => {
+
+  const fetchIntegrations = async () => {
+    try {
+      const integrations = await getIntegrations();
+      console.log(integrations);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchIntegrations();
+  }, []);
 
   return (
     <div className='h-full w-full flex gap-10 p-2'>
