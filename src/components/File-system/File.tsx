@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import Image from 'next/image';
 import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
@@ -10,44 +10,26 @@ import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 type Props = {
   file: FileOrFolderType;
   type: string;
+  className?: string;
+  dataKey: number;
 };
-const File = ({ file }: Props) => {
+const File = ({ file, className, dataKey }: Props) => {
   const router = useRouter();
-  const [files, addFile, removeAllFiles, removeFile] = selectedFilesStore(
+  const [files, removeAllFiles] = selectedFilesStore(
     (state) => [
       state.files,
-      state.addFile,
       state.removeAllFiles,
-      state.removeFile,
     ]
   );
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
-    setIsSelected(files.some((f) => f.urlhash === file.urlhash));
-  }, [files, file]);
-
-  const handleSelect = (event: React.MouseEvent) => {
-    if (event.shiftKey) {
-      if (isSelected) {
-        removeFile(file.urlhash);
-        setIsSelected(false);
-      } else {
-        addFile(file);
-        setIsSelected(true);
-      }
+    if (files.includes(file)) {
+      setIsSelected(true);
     } else {
-      if (isSelected && files.length === 1) {
-        removeAllFiles();
-        setIsSelected(false);
-      } else {
-        removeAllFiles();
-        addFile(file);
-        setIsSelected(true);
-      }
+      setIsSelected(false);
     }
-    console.log(files);
-  };
+  }, [files]);
 
   const handleDoubleClick = () => {
     if (!file.is_file) {
@@ -68,11 +50,10 @@ const File = ({ file }: Props) => {
       <div
         title={file.name}
         onDoubleClick={handleDoubleClick}
-        onClick={handleSelect}
-        data-key={file.urlhash}
-        className={`w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${
-          isSelected
-            ? 'border-primary bg-[#EFEFFD]'
+        data-key={dataKey}
+        className={`${className} w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${
+          (isSelected)
+            ? 'border-primary_font bg-[#EFEFFD]'
             : 'border-primary_bg bg-primary_bg'
         }`}
       >
