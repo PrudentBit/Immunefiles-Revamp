@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prepare": "husky install",
+    "lint": "next lint",
+    "prettier": "prettier --write .",
+    "lint-staged": "lint-staged",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit && echo "
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -18,16 +22,13 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
     "@types/crypto-js": "^4.1.2",
-    "@types/node": "20.6.5",
-    "@types/react-dom": "18.2.7",
+    "@viselect/react": "^3.4.1",
     "autoprefixer": "10.4.16",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "crypto-js": "^4.1.1",
-    "eslint": "8.50.0",
-    "eslint-config-next": "13.5.2",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.279.0",
     "next": "13.5.2",
@@ -42,10 +43,21 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.2.2",
     "zustand": "^4.4.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.29"
+    "@types/node": "^20.9.1",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/react-dropzone": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "eslint": "^8.54.0",
+    "eslint-config-next": "^14.0.3",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.2.2"
   }
 }

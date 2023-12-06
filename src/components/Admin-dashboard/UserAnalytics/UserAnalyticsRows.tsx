@@ -38,7 +38,7 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 	
   return (
     <>
-			<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-left p-4 pr-0 gap-7 bg-primary_bg'>
+			<div className='h-[3.8rem] w-full rounded-xl flex items-center justify-between p-4 pr-0 gap-7 bg-primary_bg'>
 				<button onClick={handleCheckboxClick} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
 					{selectedUsers.includes(user.username) ? (
 						<Image src="/checked-icon.svg" alt='check' width={28} height={28}/>

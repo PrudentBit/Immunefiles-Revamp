@@ -5,7 +5,7 @@ type tab = string;
 
 type State = {
   tab: tab;
-  changeTab: (tab: tab) => void;
+  changeTab: (_tab: tab) => void;
 };
 
 export const tabStore = create<State>((set) => ({

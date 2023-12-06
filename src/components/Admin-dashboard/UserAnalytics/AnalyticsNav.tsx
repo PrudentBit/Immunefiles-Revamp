@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import set2FA from '@/utils/api/user2FASetAPI'
 import BotLeftAlert from '@/components/BotLeftAlert'
+import AddUserModal from '@/components/Modals/AddUserModal/AddUserModal'
 
 type Props = {
 	selectedUsers: string[]
@@ -84,10 +85,6 @@ const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSe
                 <Image src='/cross-icon.svg' width={12} height={12} alt='Cross icon'/>
               </button>
             </div>
-
-            <div className='h-9 w-9 rounded-md bg-bg_hover flex justify-center align-center cursor-pointer hover:bg-[#D5D5FB]'>
-              <Image src="/add-user.svg" alt='add user' width={18} height={18}/>
-            </div>
           </div>
         ):(
           <>
@@ -111,9 +108,7 @@ const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSe
                 </svg>
               </div>
 
-              <div title='Add user' className='h-9 w-9 rounded-md bg-bg_hover flex justify-center align-center cursor-pointer hover:bg-[#D5D5FB]'>
-                <Image src="/add-user.svg" alt='add user' width={18} height={18}/>
-              </div>
+              <AddUserModal />
 
               <form action="" className='flex items-center gap-4 h-full px-3 rounded-md justify-between bg-[#F0F0F0]'>
                 <button>

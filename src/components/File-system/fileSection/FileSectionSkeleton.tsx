@@ -1,12 +1,8 @@
-import React from 'react'
-import Image from 'next/image'
-import { Skeleton } from '@/components/ui/skeleton'
+import React from 'react';
+import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
-type Props = {
-
-}
-
-const FileSectionSkeleton = (props: Props) => {
+const FileSectionSkeleton = () => {
   return (
     <>
       <section className="flex flex-col gap-6">
@@ -18,20 +14,22 @@ const FileSectionSkeleton = (props: Props) => {
             alt={`folder icon`}
             className="ml-[-2px]"
           />
-          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">Folders</p>
+          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">
+            Folders
+          </p>
         </div>
 
         <div className="flex gap-[0.7rem] flex-wrap">
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
         </div>
       </section>
 
@@ -44,34 +42,36 @@ const FileSectionSkeleton = (props: Props) => {
             alt={`file icon`}
             className="ml-[-2px]"
           />
-          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">Files</p>
+          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">
+            Files
+          </p>
         </div>
 
         <div className="flex gap-[0.7rem] flex-wrap">
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
-          <Skeleton className='w-[14rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
+          <Skeleton className='w-[13.4rem] h-12'/>
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default FileSectionSkeleton
+export default FileSectionSkeleton;

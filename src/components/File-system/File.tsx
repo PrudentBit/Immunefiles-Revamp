@@ -1,76 +1,79 @@
-"use client"
+'use client';
 
-import React, {useState, useEffect} from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect} from 'react';
+import Image from 'next/image';
 import ThreeDotsMenu from './menus/ThreeDotsMenu';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import { useRouter } from 'next/navigation';
-import { lowerCaseExtensions, fileExtensions } from '../../../public/FileIcons/fileExtensions';
+import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 
-type Props =  {
+type Props = {
   file: FileOrFolderType;
   type: string;
-}
-const File = ({ file }:Props) => {
+  className?: string;
+  dataKey: number;
+};
+const File = ({ file, className, dataKey }: Props) => {
   const router = useRouter();
-  const [files, addFile, removeAllFiles, removeFile] = selectedFilesStore((state) => [state.files, state.addFile, state.removeAllFiles, state.removeFile]);
+  const [files, removeAllFiles] = selectedFilesStore(
+    (state) => [
+      state.files,
+      state.removeAllFiles,
+    ]
+  );
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
-    setIsSelected(files.some((f) => f.urlhash === file.urlhash));
-  }, [files, file]);
-
-  const handleSelect = (event: React.MouseEvent) => {
-    if (event.shiftKey) {
-      if (isSelected) {
-        removeFile(file.urlhash);
-        setIsSelected(false);
-      } else {
-        addFile(file);
-        setIsSelected(true);
-      }
+    if (files.includes(file)) {
+      setIsSelected(true);
     } else {
-      if (isSelected && files.length === 1) {
-        removeAllFiles();
-        setIsSelected(false);
-      } else {
-        removeAllFiles();
-        addFile(file);
-        setIsSelected(true);
-      }
+      setIsSelected(false);
     }
-    console.log(files);
-  };
+  }, [files]);
 
   const handleDoubleClick = () => {
-    if(!file.is_file){
+    if (!file.is_file) {
       removeAllFiles();
       router.push(`/filesystem/${file.urlhash}`);
     }
   };
 
-  const extension = file.is_file ? (file.name.split('.').pop() || '') : '';
-  const iconSrc = file.is_file ? (lowerCaseExtensions.includes(extension) ? `/FileIcons/${extension}.svg` : '/FileIcons/unknown.png') : '/folder-icon-filled.svg';
+  const extension = file.is_file ? file.name.split('.').pop() || '' : '';
+  const iconSrc = file.is_file
+    ? lowerCaseExtensions.includes(extension)
+      ? `/FileIcons/${extension}.svg`
+      : '/FileIcons/unknown.png'
+    : '/folder-icon-filled.svg';
 
   return (
     <>
-      <div 
-        title={file.name} 
-        onDoubleClick={handleDoubleClick} 
-        onClick={handleSelect} 
-        data-key={file.urlhash}
-        className={`w-[13.6rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${isSelected ? 'border-primary bg-[#EFEFFD]' : 'border-primary_bg bg-primary_bg'}`}
+      <div
+        title={file.name}
+        onDoubleClick={handleDoubleClick}
+        data-key={dataKey}
+        className={`${className} w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${
+          (isSelected)
+            ? 'border-primary_font bg-[#EFEFFD]'
+            : 'border-primary_bg bg-primary_bg'
+        }`}
       >
-        <div className='flex gap-3'>
-          <Image src={iconSrc} width={26} height={26} alt='File icon' className='object-contain'/>
-          <p className='text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]'>{file.name}</p>
+        <div className="flex gap-3">
+          <Image
+            src={iconSrc}
+            width={26}
+            height={26}
+            alt="File icon"
+            className="object-contain"
+          />
+          <p className="text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]">
+            {file.name}
+          </p>
         </div>
 
-        <ThreeDotsMenu file={file}/>
+        <ThreeDotsMenu file={file} />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default File;
-
