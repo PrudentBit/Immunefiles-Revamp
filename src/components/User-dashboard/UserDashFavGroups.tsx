@@ -2,6 +2,8 @@ import React from 'react'
 import ShadowedCard from '@/components/ShadowedCard'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import UserFavGroupsRow from './UserFavGroupsRow'
+import { User } from 'lucide-react'
 
 type Props = {}
 
@@ -18,41 +20,12 @@ const UserDashFavGroups = (props: Props) => {
       </div>
 
       <div className='flex flex-col gap-3 h-[30vh] overflow-y-auto pr-5 pl-3'>
-        <div className='flex gap-4 justify-between items-center p-[0.6rem] px-5 rounded-lg bg-primary_bg'>
-          <Image src='/groups-icon.svg' width={20} height={20} alt="group"/>
-          <p className='w-full text-[#7A7AFF] text-base font-normal'>Group name</p>
-          <button>
-            <Image src='/remove-star-icon.svg' width={22} height={22} alt="storage"/>
-          </button>
-        </div>
-        <div className='flex gap-4 justify-between items-center p-[0.6rem] px-5 rounded-lg bg-primary_bg'>
-          <Image src='/groups-icon.svg' width={20} height={20} alt="group"/>
-          <p className='w-full text-[#7A7AFF] text-base font-normal'>Group name</p>
-          <button>
-            <Image src='/remove-star-icon.svg' width={22} height={22} alt="storage"/>
-          </button>
-        </div>
-        <div className='flex gap-4 justify-between items-center p-[0.6rem] px-5 rounded-lg bg-primary_bg'>
-          <Image src='/groups-icon.svg' width={20} height={20} alt="group"/>
-          <p className='w-full text-[#7A7AFF] text-base font-normal'>Group name</p>
-          <button>
-            <Image src='/remove-star-icon.svg' width={22} height={22} alt="storage"/>
-          </button>
-        </div>
-        <div className='flex gap-4 justify-between items-center p-[0.6rem] px-5 rounded-lg bg-primary_bg'>
-          <Image src='/groups-icon.svg' width={20} height={20} alt="group"/>
-          <p className='w-full text-[#7A7AFF] text-base font-normal'>Group name</p>
-          <button>
-            <Image src='/remove-star-icon.svg' width={22} height={22} alt="storage"/>
-          </button>
-        </div>
-        <div className='flex gap-4 justify-between items-center p-[0.6rem] px-5 rounded-lg bg-primary_bg'>
-          <Image src='/groups-icon.svg' width={20} height={20} alt="group"/>
-          <p className='w-full text-[#7A7AFF] text-base font-normal'>Group name</p>
-          <button>
-            <Image src='/remove-star-icon.svg' width={22} height={22} alt="storage"/>
-          </button>
-        </div>
+        <UserFavGroupsRow/>
+        <UserFavGroupsRow/>
+        <UserFavGroupsRow/>
+        <UserFavGroupsRow/>
+        <UserFavGroupsRow/>
+        <UserFavGroupsRow/>
       </div>
     </ShadowedCard>
   )
