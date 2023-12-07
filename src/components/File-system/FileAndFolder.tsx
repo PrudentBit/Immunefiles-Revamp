@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FileSection from '@/components/File-system/fileSection/FileSection';
 import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
 import getFiles from '@/utils/api/getFilesAPI';
@@ -20,19 +20,23 @@ type Props = {
 const FileAndFolder = ({ root }: Props) => {
   const {
     files,
-    sortBy,
     folders,
     setFiles,
     setFolders,
     forceRefresh,
     toggleForceRefresh,
+    sortFiles,
+    sortFolders,
   } = useFileAndFolderStore();
-  console.log('files', files);
-  console.log('folders', folders);
   const { setGroups } = GroupStore();
   const [loading, setLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
   const [uploadedFolders, setUploadedFolders] = useState<FileWithPath[]>([]);
+
+  useEffect(() => {
+    sortFiles();
+    sortFolders();
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     noClick: true,

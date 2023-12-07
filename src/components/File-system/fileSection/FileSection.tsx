@@ -10,10 +10,9 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  console.log('FileSection called');
   const sectionType = type === "folder" ? "Folders" : "Files";
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
-  console.log('selected', selected);
+  // console.log('selected', selected);
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
     (state) => [
       state.files,
@@ -37,7 +36,6 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
   };
 
   const onMove = ({ store: {changed: {added, removed}}}: SelectionEvent) => {
-    console.log('onMove called');
     setSelected(prev => {
       const next = new Set(prev);
       extractIds(added).forEach(id => {
@@ -57,6 +55,8 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
     });
   };
 
+  console.log(sectionType, 'subFiles', subFiles);
+
   return (
     <section className="flex flex-col">
       <div className="flex gap-2">
@@ -72,7 +72,8 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
         <SelectionArea className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5"
           onStart={onStart}
           onMove={onMove}
-          selectables=".selectable">
+          selectables=".selectable"
+        >
           {subFiles.map((folder, index) => (
             <File dataKey={index} key={index} file={folder} type={type} className="selectable"/>
           ))}

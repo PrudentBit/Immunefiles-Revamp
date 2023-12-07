@@ -28,6 +28,7 @@ const SwitchFields = ({ label, svg, svgSize, checked, setChecked }: Props) => {
         className=""
         checked={checked}
         onCheckedChange={() => setChecked(!checked)}
+        onClick={(e) => e.stopPropagation()}
       />
     </div>
   );
