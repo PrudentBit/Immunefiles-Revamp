@@ -6,6 +6,7 @@ import DeleteGroupAlert from '../Alerts/DeleteGroupAlert';
 import Groups from './Groups';
 import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI';
 import { GroupStore } from '@/utils/store/groupDetailsStore';
+import GroupsSortBy from './GroupsSortBy';
 
 type Props = {}
 
@@ -39,7 +40,7 @@ const GroupsTab = (props: Props) => {
         </div>
 
         <div className='flex gap-4 pt-2'>
-          
+          <GroupsSortBy/>
         </div>
       </div>
 
