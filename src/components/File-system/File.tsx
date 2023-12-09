@@ -38,6 +38,9 @@ const File = ({ file, className, dataKey }: Props) => {
       removeAllFiles();
       router.push(`/filesystem/${file.urlhash}`);
     }
+    else {
+      window.open(`https://${window.location.hostname.split(".")[0]}.immunefiles.com/file/view/${file.urlhash}`, '_blank');
+    }
   };
 
   const extension = file.is_file ? file.name.split('.').pop() || '' : '';
@@ -66,7 +69,7 @@ const File = ({ file, className, dataKey }: Props) => {
               width={26}
               height={26}
               alt="File icon"
-              className="object-contain"
+              className="object-contain pointer-events-none"
             />
             <p className="text-primary_font_2 pb-1 truncate w-[7.5rem] mt-1 font-[500]">
               {file.name}

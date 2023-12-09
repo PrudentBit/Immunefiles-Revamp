@@ -63,7 +63,7 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false}/>
+          <ShareContentModal multiplefiles={false} currFile={file}/>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

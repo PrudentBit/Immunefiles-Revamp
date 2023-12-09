@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,6 +28,7 @@ import groupShare from '@/utils/api/shareInGroupAPI';
 
 type Props = {
   multiplefiles: boolean;
+  currFile: FileOrFolderType;
 };
 
 type responseType = {
@@ -36,13 +37,14 @@ type responseType = {
   data: any;
 };
 
-const ShareContentModal = ({ multiplefiles }: Props) => {
+const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
   const [tab, setTab] = useState<'link' | 'email' | 'internal' | 'groups'>(
     'link'
   );
-  const [files, removeFile] = selectedFilesStore((state) => [
+  const [files, removeFile ,addFile] = selectedFilesStore((state) => [
     state.files,
     state.removeFile,
+    state.addFile
   ]);
   const [linkName, setLinkName] = useState<string>('');
   const [shareEmail, setShareEmail] = useState<string>('');
@@ -80,6 +82,13 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
     setSharedSuccessfully(false);
     setResponse(null);
   };
+
+  const alertDialogCancelRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (files.length === 0 && alertDialogCancelRef.current) {
+      alertDialogCancelRef.current.click();
+    }
+  }, [files]);
 
   const handleShare = async () => {
     try {
@@ -151,6 +160,15 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
     closed: { opacity: 0, scale: 0.9 },
   };
 
+  const onOpenWithThreeDots = (
+    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (currFile) {
+      addFile(currFile);
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -168,7 +186,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
           </p>
         )}
       </AlertDialogTrigger>
-      <AlertDialogContent className="w-[50rem] gap-1">
+      <AlertDialogContent className="w-[50rem] gap-1" onClick={(e)=> e.stopPropagation()}>
         <AlertDialogHeader className="flex flex-row h-10 justify-between">
           <AlertDialogTitle className="flex gap-4 items-center pt-1 ">
             <Image
@@ -181,6 +199,7 @@ const ShareContentModal = ({ multiplefiles }: Props) => {
             <p>Share Content</p>
           </AlertDialogTitle>
           <AlertDialogCancel
+            ref={alertDialogCancelRef}
             className="w-7 h-7 p-[0.4rem] rounded-full bg-[#F0F0F0] mt-0"
             onClick={(e) => e.stopPropagation()}
           >

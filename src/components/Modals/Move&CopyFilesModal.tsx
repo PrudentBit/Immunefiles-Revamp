@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,12 +43,12 @@ const MoveOrCopyFilesModal = ({
       state.addFile,
     ]
   );
-  const [selectedFolder, setSelectedFolder] = React.useState<string>('');
-  const [root, setRoot] = React.useState<string>('');
-  const [folderStack, setFolderStack] = React.useState<string[]>([]);
-  const [folders, setFolders] = React.useState<FileOrFolderType[]>([]);
-  const [path, setPath] = React.useState<string[]>([]);
-  const [pathName, setPathName] = React.useState<string[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string>('');
+  const [root, setRoot] = useState<string>('');
+  const [folderStack, setFolderStack] = useState<string[]>([]);
+  const [folders, setFolders] = useState<FileOrFolderType[]>([]);
+  const [path, setPath] = useState<string[]>([]);
+  const [pathName, setPathName] = useState<string[]>([]);
   const [toggleForceRefresh] = useFileAndFolderStore((state) => [
     state.toggleForceRefresh,
   ]);
@@ -57,7 +57,7 @@ const MoveOrCopyFilesModal = ({
     removeFile(file[indexToRemove].urlhash);
   };
 
-  const [apiSuccess, setApiSuccess] = React.useState<boolean>(false);
+  const [apiSuccess, setApiSuccess] = useState<boolean>(false);
 
   const handleMoveClick = async () => {
     if (moveORcopy === 'Move') {
@@ -101,7 +101,7 @@ const MoveOrCopyFilesModal = ({
     setFolderStack([...folderStack, urlhash]);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const data = await getFiles(root);
       const decryptedData = decryptData(data.ciphertext);
@@ -122,6 +122,13 @@ const MoveOrCopyFilesModal = ({
     }
   };
 
+  const alertDialogCancelRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (file.length === 0 && alertDialogCancelRef.current) {
+      alertDialogCancelRef.current.click();
+    }
+  }, [file]);
+
   return (
     <>
       <AlertDialog>
@@ -140,12 +147,13 @@ const MoveOrCopyFilesModal = ({
             </p>
           )}
         </AlertDialogTrigger>
-        <AlertDialogContent className="w-[45rem]">
+        <AlertDialogContent className="w-[45rem]" onClick={(e)=> e.stopPropagation()}>
           <AlertDialogHeader className="flex flex-row h-10 justify-between">
             <AlertDialogTitle className="font-bold text-xl text-black mt-1 pt-[0.3rem]">
               {moveORcopy} Content
             </AlertDialogTitle>
             <AlertDialogCancel
+              ref={alertDialogCancelRef}
               className="w-9 h-9 p-[0.6rem] rounded-full bg-[#F0F0F0] mt-0"
               onClick={(e) => {
                 e.stopPropagation();
@@ -214,8 +222,12 @@ const MoveOrCopyFilesModal = ({
                   })}
 
                   {!path && (
-                    <div className="flex gap-2">
-                      <p className="text-gray-700 font-medium">My home </p>
+                    <div 
+                    className="flex gap-2"
+                      onClick={()=>setRoot('')}
+                    >
+                      <p
+                      className="w-20 text-gray-700 font-medium h-10 rounded-lg bg-[#F0F0F0] flex hover:bg-gray-200 items-center justify-center cursor-pointer">My home </p>
                       <Image
                         src="/right-arrow.svg"
                         className="pt-[0.2rem]"
