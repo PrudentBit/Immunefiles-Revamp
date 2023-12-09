@@ -181,7 +181,7 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
             alt="Share icon"
           />
         ) : (
-          <p onClick={(e) => e.stopPropagation()} className="w-full">
+          <p onClick={onOpenWithThreeDots} className="w-full">
             Share
           </p>
         )}

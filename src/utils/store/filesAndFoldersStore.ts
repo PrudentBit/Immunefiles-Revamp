@@ -31,7 +31,7 @@ export const useFileAndFolderStore = create<Store>((set, get) => ({
 
   sortFiles: () => {
     const { files, sortBy } = get();
-    let sortedFiles = [...files];
+    const sortedFiles = [...files];
     switch (sortBy) {
       case 'extension':
         sortedFiles.sort((a, b) => (a.name.split('.').pop() || '').localeCompare(b.name.split('.').pop() || ''));
@@ -57,7 +57,7 @@ export const useFileAndFolderStore = create<Store>((set, get) => ({
 
   sortFolders: () => {
     const { folders, sortBy } = get();
-    let sortedFolders = [...folders];
+    const sortedFolders = [...folders];
     switch (sortBy) {
       case 'dateAsc':
         sortedFolders.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime());

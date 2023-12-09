@@ -1,9 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import Image from 'next/image'
 
-type Props = {}
-
-const ServerSortBy = (props: Props) => {
+const ServerSortBy = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='w-[7rem] h-10 flex justify-between items-center gap-2 px-4 bg-bg_hover rounded-lg'>

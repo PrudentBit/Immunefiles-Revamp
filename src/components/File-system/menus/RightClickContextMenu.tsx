@@ -62,7 +62,7 @@ const RightClickContextMenu = ({children, file}: Props) => {
         </ContextMenuItem>
         <ContextMenuItem className="flex gap-2 items-center">
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false}/>
+          <ShareContentModal multiplefiles={false} currFile={file}/>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
