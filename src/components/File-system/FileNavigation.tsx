@@ -19,10 +19,12 @@ const FileNavigation = ({root}: Props) => {
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await getFiles(root);
-      const decryptedData = decryptData(data.ciphertext);
+      if(data){
+        const decryptedData = decryptData(data.ciphertext);
 
-      setPath(decryptedData.hash_path);
-      setPathName(decryptedData.path);
+        setPath(decryptedData.hash_path);
+        setPathName(decryptedData.path);
+      }
     };
   
     fetchData();

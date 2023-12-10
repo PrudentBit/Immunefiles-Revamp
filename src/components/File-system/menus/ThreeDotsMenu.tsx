@@ -13,6 +13,7 @@ import MoveOrCopyFilesModal from '@/components/Modals/Move&CopyFilesModal';
 import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
 import UnzipFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipFilesAlert';
 import UnziptoFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipToFilesModal';
+import DownloadFile from './DownloadFile';
 
 type Props = {
   file: FileOrFolderType;
@@ -41,10 +42,12 @@ const ThreeDotsMenu = ({file}: Props) => {
           <Image src='/open-icon.svg' width={16} height={16} alt='Open icon'/>
           Open
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Image src='/download-icon.svg' width={16} height={16} alt='Download icon'/>
-          Download
-        </DropdownMenuItem>
+        {file.is_file && (
+          <DropdownMenuItem>
+            <Image src='/download-icon.svg' width={16} height={16} alt='Download icon'/>
+            <DownloadFile file={file}/>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem>
           <Image src='/details-icon.svg' width={16} height={16} alt='Details icon'/>
           <FileDetailsModal file={file}/>

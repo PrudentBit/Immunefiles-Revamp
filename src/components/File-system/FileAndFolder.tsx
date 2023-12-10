@@ -92,15 +92,17 @@ const FileAndFolder = ({ root }: Props) => {
     const fetchData = async () => {
       setLoading(true);
       const fileData = await getFiles(root);
-      const decryptedData = decryptData(fileData.ciphertext);
+      if (fileData){
+        const decryptedData = decryptData(fileData.ciphertext);
 
-      setFolders(decryptedData.children);
-      setFiles(decryptedData.files);
+        setFolders(decryptedData.children);
+        setFiles(decryptedData.files);
 
-      const groupData = await fetchGroupDetails();
-      setGroups(groupData);
+        const groupData = await fetchGroupDetails();
+        setGroups(groupData);
 
-      setLoading(false);
+        setLoading(false);
+      }
     };
 
     fetchData();

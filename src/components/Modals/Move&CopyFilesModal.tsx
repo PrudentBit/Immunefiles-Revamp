@@ -104,10 +104,12 @@ const MoveOrCopyFilesModal = ({
   useEffect(() => {
     const fetchData = async () => {
       const data = await getFiles(root);
-      const decryptedData = decryptData(data.ciphertext);
-      setFolders(decryptedData.children);
-      setPath(decryptedData.hash_path);
-      setPathName(decryptedData.path);
+      if(data){
+        const decryptedData = decryptData(data.ciphertext);
+        setFolders(decryptedData.children);
+        setPath(decryptedData.hash_path);
+        setPathName(decryptedData.path);
+      }
     };
 
     fetchData();
