@@ -2,6 +2,7 @@ import LeftNav  from '@/components/LeftNav'
 import './globals.css'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-proivder';
+import { CommandBox } from '@/components/command/CommandBox';
 
 export const metadata: Metadata = {
   title: "Immunefiles",
@@ -21,6 +22,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
         >
+          <CommandBox />
           <LeftNav />
           {children}
         </ThemeProvider>
