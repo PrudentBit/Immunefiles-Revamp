@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/popover"
 import Image from "next/image"
 import { Button } from "./ui/button"
+import Link from "next/link"
 
 type Props = {
   userDetails?: UserDetailsType
@@ -30,9 +31,9 @@ const UserProfileCard = ({userDetails}: Props) => {
           <div className='text-left h-[5.3rem] w-[9rem] flex flex-col justify-between'>
             <p className='text-lg font-semibold whitespace-nowrap leading-6 truncate'>{userDetails?.name}</p>
             <p className='text-gray-400 text-sm whitespace-nowrap'>@{userDetails?.username}</p>
-            <Button className="text-primary_font h-8 w-full px-2 mt-2 text-sm font-medium leading-4 bg-white border-solid border-[1px] border-primary_font hover:bg-primary_font hover:text-white rounded-lg">
-              Manage Groups
-            </Button>
+            <Link href="/manageaccount" className="flex items-center justify-center text-primary_font h-8 w-full px-2 mt-2 text-sm font-medium leading-4 bg-white border-solid border-[1px] border-primary_font hover:bg-primary_font hover:text-white rounded-lg">
+              Manage Account
+            </Link>
           </div>
         </div>
         <div className="flex gap-2 flex-wrap w-fit">
