@@ -22,7 +22,7 @@ const General = () => {
             <p className='text-primary_font text-xl font-semibold leading-5'>{userDetails?.name}</p>
             <p className='text-gray-700 text-sm font-semibold'>@{userDetails?.username}</p>
           </div>
-          <Button className="h-8 w-max rounded-xl flex items-center gap-2 bg-bg_hover">
+          <Button className="h-8 w-max rounded-xl flex items-center gap-2 bg-bg_hover hover:bg-[#D9D9FF]">
             <p className='text-primary_font_2 text-xs font-normal leading-4'>Change Password</p>
           </Button>
         </div>

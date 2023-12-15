@@ -11,10 +11,10 @@ const ManageAccount = (props: Props) => {
 
       <Tabs defaultValue="General" className="w-full h-full">
         <TabsList className='bg-transparent z-10 gap-8 rounded-none p-0'>
-          <TabsTrigger value="General" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] data-[state=active]:border-primary '>General</TabsTrigger> 
-          <TabsTrigger value="Groups" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] data-[state=active]:border-primary '>Groups</TabsTrigger> 
-          <TabsTrigger value="Links" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] data-[state=active]:border-primary '>Links</TabsTrigger> 
-          <TabsTrigger value="Appearance" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] data-[state=active]:border-primary '>Appearance</TabsTrigger> 
+          <TabsTrigger value="General" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>General</TabsTrigger> 
+          <TabsTrigger value="Groups" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Groups</TabsTrigger> 
+          <TabsTrigger value="Links" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Links</TabsTrigger> 
+          <TabsTrigger value="Appearance" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Appearance</TabsTrigger> 
         </TabsList>
         <hr className='w-full h-4 relative translate-y-[-2px] z-[-10]'/>
         <TabsContent value="General" className='w-full'>

@@ -62,7 +62,7 @@ const ChangeAvatar = ({userDetails}:Props) => {
           
 
           <div className='h-[5.5rem] w-[5.5rem] p-2'>
-            <Button className='rounded-full bg-bg_hover h-full w-full flex flex-col justify-center items-center'>
+            <Button className='rounded-full bg-bg_hover h-full w-full flex flex-col justify-center items-center hover:bg-[#D9D9FF]'>
               <Image src="/upload-icon-4.svg" alt='profile' width={24} height={24}/>
               <p className='text-primary_font_2 text-sm font-semibold leading-4'>Upload</p>
             </Button>  
@@ -81,7 +81,7 @@ const ChangeAvatar = ({userDetails}:Props) => {
             <p className='text-gray-700 text-sm font-semibold'>@{userDetails?.username}</p>
           </div>
         </div>
-        <Button className="h-8 w-max rounded-full flex items-center gap-2 bg-[#E5EDFF]">
+        <Button className="h-8 w-max rounded-full flex items-center gap-2 bg-[#E5EDFF] hover:bg-[#D9D9FF]">
           <p className='text-primary_font text-xs font-medium leading-4'>Save Changes</p>
         </Button>
       </div>
