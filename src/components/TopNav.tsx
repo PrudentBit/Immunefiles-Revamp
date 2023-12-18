@@ -8,6 +8,9 @@ import { tabStore } from '@/utils/store/leftNavTabStore'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
 
+import UserProfileCard from './UserProfileCard'
+
+
 type Props = {
   currentTab: string;
 }
@@ -42,14 +45,7 @@ const TopNav = ({currentTab}: Props) => {
           <Image src="/notification-icon.svg" alt='notification' width={30} height={30}/>
         </button>
 
-        <div className='flex gap-2 cursor-pointer'>
-          <div className='text-right'>
-            <p className='text-black font-normal text-sm h-4'>Hello</p>
-            <p className='text-primary_font_2 text-lg font-semibold whitespace-nowrap'>{userDetails?.name}</p>
-          </div>
-
-          <Image src="/user.svg" alt='profile' width={45} height={45} className='rounded-lg'/>
-        </div>
+        <UserProfileCard userDetails={userDetails}/>
       </div>
     </nav>
   )
