@@ -185,7 +185,7 @@ const LeftNav = () => {
                         <Image src='/right-arrow-purple.svg' width={10} height={10} alt='Menu'/>
                     </button>
                 </div>
-                <div className='flex flex-col p-7'>
+                <div className='flex flex-col p-7 px-0'>
                     <Link href="/dashboard">
                         <div 
                             className={`flex hover:cursor-pointer ${activeTab === "dashboard" ? "bg-white" : 'hover:bg-bg_hover'}`}

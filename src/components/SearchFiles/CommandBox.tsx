@@ -17,7 +17,6 @@ import { GroupStore } from "@/utils/store/groupDetailsStore"
 import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 import { useRouter } from "next/navigation"
 import { selectedFilesStore } from "@/utils/store/selectFilesStore"
-import FileDetailsAlert from "../Alerts/FileDetailsAlert"
 
 type sortType = 'files' | 'groups' | 'links' | 'internal' | 'all';
 

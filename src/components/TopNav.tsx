@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import SearchBar from '@/components/SearchBar'
+import SearchBar from '@/components/SearchFiles/SearchBar'
 import { ModeToggle } from './ui/toggle-mode'
 import Image from 'next/image'
 import { tabStore } from '@/utils/store/leftNavTabStore'
