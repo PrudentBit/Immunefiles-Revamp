@@ -1,6 +1,8 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import General from './General'
+import Groups from './Groups'
+import Links from './Links'
 
 type Props = {}
 
@@ -14,20 +16,16 @@ const ManageAccount = (props: Props) => {
           <TabsTrigger value="General" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>General</TabsTrigger> 
           <TabsTrigger value="Groups" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Groups</TabsTrigger> 
           <TabsTrigger value="Links" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Links</TabsTrigger> 
-          <TabsTrigger value="Appearance" className='w-[7rem] text-base font-normal borderBottom border-transparent border-solid border-[1px] hover:border-button_hover data-[state=active]:border-primary '>Appearance</TabsTrigger> 
         </TabsList>
         <hr className='w-full h-4 relative translate-y-[-2px] z-[-10]'/>
         <TabsContent value="General" className='w-full'>
           <General/>
         </TabsContent>
         <TabsContent value="Groups">
-          groups
+          <Groups/>
         </TabsContent>
         <TabsContent value="Links">
-          links
-        </TabsContent>
-        <TabsContent value="Appearance">
-          appearance
+          <Links/>
         </TabsContent>
       </Tabs>
     </div>
