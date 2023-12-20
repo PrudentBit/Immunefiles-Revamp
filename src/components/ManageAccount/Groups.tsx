@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import GroupsTopNav from './GroupsTopNav';
-import Image from 'next/image';
 import GroupsRow from './GroupsRow';
 
 const Groups = () => {

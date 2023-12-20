@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import Image from 'next/image'
 
-const GroupsRow = () => {
+const LinksRow = () => {
   const [selected, setSelected] = useState(false);
 
   return (
@@ -15,12 +15,15 @@ const GroupsRow = () => {
           )}
         </button>
         <div className='flex gap-2'>
-          <Image src="/groups-icon.svg" alt='group' width={22} height={22}/>
-          <p className='text-[#7A7AFF] text-lg font-medium leading-5 truncate w-[30rem]'>group name</p>
+          <Image src="/link-icon.svg" alt='link' width={22} height={22}/>
+          <p className='text-[#7A7AFF] text-lg font-medium leading-5 truncate w-[30rem]'>Link name</p>
         </div>
       </div>
 
       <div className='flex gap-6 items-center'>
+        <button title='Logs' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
+          <Image src='/logs-icon.svg' width={17} height={17} alt='logs icon'/>
+        </button>
         <button title='Favourite' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
           <Image src='/favourite-icon-2.svg' width={15} height={15} alt='Fav icon'/>
         </button>
@@ -28,7 +31,7 @@ const GroupsRow = () => {
           <Image src='/download-icon-green.svg' width={18} height={18} alt='Download icon'/>
         </button>
         <button title='Delete' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#FF6161] bg-white hover:bg-[#FFE3E5]'>
-          <Image src='/delete-icon-2.svg' width={16} height={16} alt='Fav icon'/>
+          <Image src='/delete-icon-2.svg' width={16} height={16} alt='delete icon'/>
         </button>
         <button title='Manage' className='flex items-center justify-center rounded-lg h-8 w-20 border border-[#8E8EFF] bg-white hover:bg-[#EAEAFF]'>
           <p className='text-[#8E8EFF]'> Manage </p>
@@ -38,4 +41,4 @@ const GroupsRow = () => {
   )
 }
 
-export default GroupsRow
+export default LinksRow

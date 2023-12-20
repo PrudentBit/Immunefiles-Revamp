@@ -4,9 +4,7 @@ import General from './General'
 import Groups from './Groups'
 import Links from './Links'
 
-type Props = {}
-
-const ManageAccount = (props: Props) => {
+const ManageAccount = () => {
   return (
     <div className='w-full h-full pt-4 flex flex-col gap-6'>
       <p className='text-xl h-[5%]'>ManageAccount</p>
