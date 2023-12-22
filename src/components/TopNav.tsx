@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { tabStore } from '@/utils/store/leftNavTabStore'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
+import SearchBox from './SearchFiles/SearchBox'
 
 import UserProfileCard from './UserProfileCard'
 
@@ -36,7 +37,7 @@ const TopNav = ({currentTab}: Props) => {
 
   return (
     <nav className='flex w-full gap-6 h-12'>
-      <SearchBar/>
+      <SearchBox/>
 
       <div className='flex w-[21rem] min-w-[18rem] justify-between items-center'>
         <ModeToggle/>
