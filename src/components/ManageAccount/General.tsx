@@ -6,6 +6,8 @@ import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import { Button } from '@/components/ui/button'
 import { Switch } from '../ui/switch'
 import ChangeAvatar from './ChangeAvatar'
+import ChangeUsernameModal from '../Modals/ChangeUsernameModal'
+import ChangeUserPassModal from '../Modals/ChangeUserPassModal'
 
 const General = () => {
   const userDetails = UserDetailsStore((state) => state.userDetails)
@@ -19,13 +21,16 @@ const General = () => {
 
         <div className='h-[5.5rem] flex flex-col justify-between'>
           <div className='flex flex-col'>
-            <p className='text-primary_font text-xl font-semibold leading-5'>{userDetails?.name}</p>
+            <div className='flex gap-2 items-center'>
+              <p className='text-primary_font text-xl font-semibold leading-5'>{userDetails?.name}</p>
+              <ChangeUsernameModal/>
+            </div>
             <p className='text-gray-700 text-sm font-semibold'>@{userDetails?.username}</p>
           </div>
-          <Button className="h-8 w-max rounded-xl flex items-center gap-2 bg-bg_hover hover:bg-[#D9D9FF]">
-            <p className='text-primary_font_2 text-xs font-normal leading-4'>Change Password</p>
-          </Button>
+          <ChangeUserPassModal/>
         </div>
+
+        <div className='w-[0.1rem] h-[70%] bg-gray-200'></div>
 
         <div className="flex gap-3 flex-wrap w-[35rem]">
           <div className="pl-2 pr-4 h-7 w-max rounded-full flex items-center  gap-2 bg-[#E5EDFF]">
