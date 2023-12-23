@@ -3,11 +3,10 @@
 import Image from 'next/image'
 import React from 'react'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
-import { Button } from '@/components/ui/button'
-import { Switch } from '../ui/switch'
 import ChangeAvatar from './ChangeAvatar'
 import ChangeUsernameModal from '../Modals/ChangeUsernameModal'
 import ChangeUserPassModal from '../Modals/ChangeUserPassModal'
+import { Switch } from '@/components/ui/switch'
 
 const General = () => {
   const userDetails = UserDetailsStore((state) => state.userDetails)

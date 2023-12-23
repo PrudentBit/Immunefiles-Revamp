@@ -74,16 +74,16 @@ const ChangeUserPassModal = () => {
           <p className='text-sm text-red-400'>Incorrect password</p>
         </AlertDialogDescription>
         <AlertDialogFooter className="flex gap-4">
-            <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]">
-              Save
-            </AlertDialogAction>
-            <AlertDialogCancel
-              className="w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black"
-              onClick={handleCancel}
-            >
-              Cancel
-            </AlertDialogCancel>
-          </AlertDialogFooter>
+          <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]">
+            Save
+          </AlertDialogAction>
+          <AlertDialogCancel
+            className="w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black"
+            onClick={handleCancel}
+          >
+            Cancel
+          </AlertDialogCancel>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
