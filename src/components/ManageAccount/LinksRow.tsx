@@ -21,6 +21,9 @@ const LinksRow = () => {
       </div>
 
       <div className='flex gap-6 items-center'>
+        <button title='Copy link' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
+          <Image src='/copy-icon-2.svg' width={17} height={17} alt='copy icon'/>
+        </button>
         <button title='Logs' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
           <Image src='/logs-icon.svg' width={17} height={17} alt='logs icon'/>
         </button>

@@ -5,7 +5,7 @@ const GroupsRow = () => {
   const [selected, setSelected] = useState(false);
 
   return (
-    <div className='h-[3.8rem] w-full rounded-xl flex items-center justify-between p-4 pr-8 gap-7 bg-primary_bg'>
+    <div className='h-[3.8rem] w-full rounded-xl flex items-center justify-between p-4 pr-8 pl-6 gap-7 bg-primary_bg'>
       <div className='flex gap-4 items-center w-[50%]'>
         <button onClick={()=>setSelected(!selected)} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
           {selected ? (
@@ -21,8 +21,8 @@ const GroupsRow = () => {
       </div>
 
       <div className='flex gap-6 items-center'>
-        <button title='Favourite' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
-          <Image src='/favourite-icon-2.svg' width={15} height={15} alt='Fav icon'/>
+        <button title='Pin' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
+          <Image src='/pin-icon.svg' width={15} height={15} alt='Pin icon'/>
         </button>
         <button title='Download' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#3ABA6E] bg-white hover:bg-[#E1FFED]'>
           <Image src='/download-icon-green.svg' width={18} height={18} alt='Download icon'/>
