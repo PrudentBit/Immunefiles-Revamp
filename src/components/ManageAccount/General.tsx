@@ -7,6 +7,7 @@ import ChangeAvatar from './ChangeAvatar'
 import ChangeUsernameModal from '../Modals/ChangeUsernameModal'
 import ChangeUserPassModal from '../Modals/ChangeUserPassModal'
 import { Switch } from '@/components/ui/switch'
+import Enable2FAModal from '../Modals/Enale2FAModal/Enable2FAModal'
 
 const General = () => {
   const userDetails = UserDetailsStore((state) => state.userDetails)
@@ -68,7 +69,7 @@ const General = () => {
           </div>
         </div>
 
-        <Switch className='scale-[1.2]'/>
+        <Enable2FAModal/>
       </div>
 
       <ChangeAvatar userDetails={userDetails}/>
