@@ -8,9 +8,20 @@ import ChangeUsernameModal from '../Modals/ChangeUsernameModal'
 import ChangeUserPassModal from '../Modals/ChangeUserPassModal'
 import { Switch } from '@/components/ui/switch'
 import Enable2FAModal from '../Modals/Enale2FAModal/Enable2FAModal'
+import toggleUser2FA from '@/utils/api/toggleUser2FAAPI'
 
 const General = () => {
   const userDetails = UserDetailsStore((state) => state.userDetails)
+
+  const handle2FA = async () => {
+    if (userDetails) {
+      const response = await toggleUser2FA(!userDetails.permissions.two_factor)
+      if (!response.ok) {
+        console.log(response.error)
+        return
+      }
+    }
+  }
 
   return (
     <div className='h-full flex flex-col gap-4 justify-between items-center'>
@@ -69,7 +80,11 @@ const General = () => {
           </div>
         </div>
 
-        <Enable2FAModal/>
+        {userDetails?.permissions.two_factor ? (
+            <Switch className='scale-[1.2]' onClick={handle2FA} checked={userDetails?.permissions.two_factor}/>
+          ):(
+            <Enable2FAModal/>
+          )}
       </div>
 
       <ChangeAvatar userDetails={userDetails}/>

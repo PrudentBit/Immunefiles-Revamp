@@ -1,4 +1,4 @@
-type Permissions = {
+type Permission = {
     two_factor: boolean;
 };
 
@@ -7,7 +7,7 @@ type UserDetailsType = {
     email: string;
     is_admin: boolean;
     name: string;
-    permissions: Permissions;
+    permissions: Permission;
     phone_number: string;
     profile_type: string;
     profile_pic: string;

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -14,6 +14,13 @@ import {
 import Image from 'next/image'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
+import Enter2FAOTP from './Enter2FAOTP'
+import recieveOTPonEmail from '@/utils/api/recieveOTPonEmailAPI'
+import recieveOTPonNumber from '@/utils/api/recieveOTPonNumberAPI'
+import { UserDetailsStore } from '@/utils/store/userDetailsStore'
+import confirmEmailOTP from '@/utils/api/confirmEmailOTPAPI'
+import confirmNumberOTP from '@/utils/api/confirmNumberOTPAPI'
+import toggleUser2FA from '@/utils/api/toggleUser2FAAPI'
 
 type getOTPOn = "mail" | "mobile" | "none";
 
@@ -21,54 +28,10 @@ const Enable2FAModal = () => {
   const [mailHover, setMailHover] = useState(false);
   const [mobileHover, setMobileHover] = useState(false);
   const [getOTPOn, setGetOTPOn] = useState<getOTPOn>("none");
-
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [focusedInput, setFocusedInput] = useState<number | null>(null);
-
-  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const value = e.target.value;
-  
-    if (!/^\d*$/.test(value)) {
-      // If the input is not a digit, ignore it
-      return;
-    }
-  
-    const newArr = [...otp];
-    newArr[index] = value;
-  
-    setOtp(newArr);
-  
-    if (value && index < otp.length - 1) {
-      // Move focus to the next input
-      const nextInput = e.target.nextElementSibling as HTMLInputElement;
-      if (nextInput) {
-        nextInput.focus();
-        setFocusedInput(index + 1);
-      }
-    }
-  };
-  
-  
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === "Backspace" && index > 0 && !(e.currentTarget as HTMLInputElement).value) {
-      // Move focus to the previous input on backspace
-      const prevInput = e.currentTarget.previousElementSibling as HTMLInputElement;
-      if (prevInput) {
-        prevInput.focus();
-        setFocusedInput(index - 1);
-      }
-    }
-  };
-  
-  const areAllFieldsFilled = () => {
-    return otp.every((digit) => digit !== "");
-  };
-  
-  const isOtpValid = () => {
-    const enteredOtp = otp.join("");
-    const correctOTP = "123456";
-    return enteredOtp === correctOTP;
-  };
+  const [errors, setErrors] = useState("");
+  const { userDetails } = UserDetailsStore();
 
   const handleGoBack = () => {
     setGetOTPOn("none");
@@ -76,11 +39,77 @@ const Enable2FAModal = () => {
     setFocusedInput(null);
   };
 
+  const handleSendOTP = async (type : string) => {
+    try {
+      if (type === "mail" && userDetails) {
+        const response = await recieveOTPonEmail();
+        setGetOTPOn("mail");
+        if (!response.ok) {
+          setErrors(response.error || "Failed to send OTP" );
+          return;
+        }
+      } else if (type === "mobile" && userDetails) {
+        const response = await recieveOTPonNumber(userDetails.phone_number, userDetails.username);
+        setGetOTPOn("mobile");
+        if (!response.ok) {
+          setErrors(response.error || "Failed to send OTP" );
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setErrors( "An error occurred while processing your request" );
+    }
+  };
+
+  const handleVerification = async () => {
+    try {
+      let confirmResponse;
+
+      if (getOTPOn === "mail" && userDetails) {
+        confirmResponse = await confirmEmailOTP(userDetails.email, otp.join(''));
+      } else if (getOTPOn === "mobile" && userDetails) {
+        confirmResponse = await confirmNumberOTP(userDetails.phone_number, otp.join(''));
+      }
+
+      if (confirmResponse.ok && userDetails) {
+        const toggleResponse = await toggleUser2FA(!userDetails.permissions.two_factor);
+      } else {
+        setErrors(confirmResponse.error || "Failed to verify OTP");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setErrors("An error occurred while processing your request");
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      let response;
+
+      if (getOTPOn === "mail" && userDetails) {
+        response = await recieveOTPonEmail();
+      } else if (getOTPOn === "mobile" && userDetails) {
+        response = await recieveOTPonNumber(userDetails.phone_number, userDetails.username);
+      }
+
+      if (!response.ok) {
+        setErrors(response.error || "Failed to resend OTP");
+        return;
+      }
+
+      setOtp(response.otp.split(''));
+    } catch (error) {
+      console.error("Error:", error);
+      setErrors("An error occurred while processing your request");
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div>
-          <Switch className='scale-[1.2]'/>
+          <Switch className='scale-[1.2]' checked={userDetails?.permissions.two_factor} onCheckedChange={(checked)=>userDetails?.permissions.two_factor}/>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="translate-y-[-135%] p-4 w-[24rem]">
@@ -109,41 +138,18 @@ const Enable2FAModal = () => {
         <AlertDialogDescription className='flex gap-10'>
           { getOTPOn === "none" ? (
             <div className='flex gap-6'>
-              <div onClick={()=>setGetOTPOn("mail")} onMouseEnter={()=>setMailHover(true)} onMouseLeave={()=>setMailHover(false)} className='smoothTransitionFast flex flex-col gap-3 justify-center items-center h-[10rem] w-[10rem] cursor-pointer border-2 border-solid border-[#E5EDFF] rounded-2xl hover:bg-[#E5EDFF] hover:border-primary_font'>
+              <div onClick={()=>handleSendOTP("mail")} onMouseEnter={()=>setMailHover(true)} onMouseLeave={()=>setMailHover(false)} className='smoothTransitionFast flex flex-col gap-3 justify-center items-center h-[10rem] w-[10rem] cursor-pointer border-2 border-solid border-[#E5EDFF] rounded-2xl hover:bg-[#E5EDFF] hover:border-primary_font'>
                 {mailHover ? <Image src="/mail-icon-2-blue.svg" width={40} height={40} alt='mail'/> : <Image src="/mail-icon-2.svg" width={40} height={40} alt='mail'/>}
                 <p className='text-primary_font text-sm'>Send OTP</p>
               </div>
 
-              <div onClick={()=>setGetOTPOn("mobile")} onMouseEnter={()=>setMobileHover(true)} onMouseLeave={()=>setMobileHover(false)} className='smoothTransitionFast flex flex-col gap-3 justify-center items-center h-[10rem] w-[10rem] cursor-pointer border-2 border-solid border-[#E5EDFF] rounded-2xl hover:bg-[#E5EDFF] hover:border-primary_font'>
+              <div onClick={()=>handleSendOTP("mobile")} onMouseEnter={()=>setMobileHover(true)} onMouseLeave={()=>setMobileHover(false)} className='smoothTransitionFast flex flex-col gap-3 justify-center items-center h-[10rem] w-[10rem] cursor-pointer border-2 border-solid border-[#E5EDFF] rounded-2xl hover:bg-[#E5EDFF] hover:border-primary_font'>
                 {mobileHover ? <Image src="/mobile-icon-blue.svg" width={50} height={50} alt='mobile'/> : <Image src="/mobile-icon.svg" width={50} height={50} alt='mail'/>}
                 <p className='text-primary_font text-sm'>Send OTP</p>
               </div>
             </div>
           ):(
-            <div className='flex flex-col gap-6 pb-4 px-3'>
-              <p className='text-primary_font text-xs font-medium'>
-                Enter OTP sent to your {getOTPOn === "mail" ? "mail" : "mobile number"}
-              </p>
-
-              <div className='h-12'>
-                {/* OTP input */}
-                <div className='flex items-center gap-4'>
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    value={digit}
-                    maxLength={1}
-                    onChange={(e) => handleOtpChange(e, index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    className={`border w-10 h-10 text-center text-lg font-semibold text-black rounded-lg border-solid bg-[#F4F4FF] ${
-                      focusedInput === index ? 'border-blue-500' : 'border-[#E5EDFF]'
-                    } ${areAllFieldsFilled() && !isOtpValid() ? 'border-red-500' : ''} outline-none`}
-                    onFocus={() => setFocusedInput(index)}
-                  />
-                ))}
-                </div>
-              </div>
-            </div>
+            <Enter2FAOTP getOTPOn={getOTPOn} setFocusedInput={setFocusedInput} focusedInput={focusedInput} otp={otp} setOtp={setOtp}/>
           )}
         </AlertDialogDescription>
         { !(getOTPOn === "none") && (
@@ -153,10 +159,14 @@ const Enable2FAModal = () => {
               Go back
             </Button>
             <div className='flex gap-3'>
-              <AlertDialogAction className="bg-primary_font text-white rounded-full h-8 px-5 font-normal">
+              <AlertDialogAction className="bg-primary_font text-white rounded-full h-8 px-5 font-normal"
+                onClick={handleVerification}
+              >
                 Verify
               </AlertDialogAction>
-              <AlertDialogAction className="bg-white text-primary_font rounded-full h-8 px-4 font-normal">
+              <AlertDialogAction className="bg-white text-primary_font rounded-full h-8 px-4 font-normal"
+                onClick={(e)=> {handleResend(); e.stopPropagation(); e.preventDefault()}}
+              >
                 Resend
               </AlertDialogAction>
             </div>
