@@ -12,6 +12,7 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
+import changeUserPassword from '@/utils/api/changeUserPaddwordAPI'
 
 const ChangeUserPassModal = () => {
   const [newPassType, setNewPassType] = useState(true);
@@ -20,12 +21,60 @@ const ChangeUserPassModal = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleCancel = () => {
     setNewPassword("");
     setConfirmPassword("");
     setCurrentPassword("");
+    setError("");
+  };
+
+  const handleNewPassChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPassword(e.target.value);
+    setError("");
+
+    if(newPassword !== confirmPassword) setError("New password and confirm password do not match");
+    if(newPassword.length < 6 || confirmPassword.length < 6) setError("Password must be at least 6 characters long");
   }
+
+  const handleConfirmPassChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+    setError("");
+
+    if(newPassword !== confirmPassword) setError("New password and confirm password do not match");
+    if(newPassword.length < 6 || confirmPassword.length < 6) setError("Password must be at least 6 characters long");
+  }
+
+  const handleCurrentPassChange = (e:   React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentPassword(e.target.value);
+    setError("");
+
+    if(currentPassword.length < 6) setError("Password must be at least 6 characters long");
+  }
+
+  const handleSave = async () => {
+    if (newPassword !== confirmPassword) {
+      setError("New password and confirm password do not match");
+      return;
+    }
+
+    try {
+      const response = await changeUserPassword(newPassword, currentPassword);
+
+      if (!response.ok) {
+        // Handle non-2xx response status
+        setError(response.error || 'Incorrect password');
+        return;
+      }
+
+      // Handle success, e.g., close the modal or update UI
+      handleCancel();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred while processing your request');
+    }
+  };
 
   return (
     <AlertDialog>
@@ -46,7 +95,7 @@ const ChangeUserPassModal = () => {
           <div className='flex flex-col gap-2 pt-1'>
             <p className='text-sm text-primary_font'>Enter new password</p>
             <div className='flex w-full h-10 rounded-md pr-3 bg-bg_hover text-gray-800 pb-1'>
-              <input type={newPassType ? "password" : "text"} className='w-full bg-bg_hover h-10 rounded-md px-3 text-gray-800 pb-1' value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+              <input type={newPassType ? "password" : "text"} className='w-full bg-bg_hover h-10 rounded-md px-3 text-gray-800 pb-1' value={newPassword} onChange={(e) => handleNewPassChange(e)}/>
               <button onClick={()=>setNewPassType(!newPassType)}>
                 <Image src="/eye-icon.svg" width={20} height={20} className='pt-1' alt='eye'/>
               </button>
@@ -55,7 +104,7 @@ const ChangeUserPassModal = () => {
           <div className='flex flex-col gap-2 pt-1'>
             <p className='text-sm text-primary_font'>Confirm new password</p>
             <div className='flex w-full h-10 rounded-md pr-3 bg-bg_hover text-gray-800 pb-1'>
-              <input type={confirmPassType ? "password" : "text"} className='w-full h-10 bg-bg_hover rounded-md px-3 text-gray-800 pb-1' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+              <input type={confirmPassType ? "password" : "text"} className='w-full h-10 bg-bg_hover rounded-md px-3 text-gray-800 pb-1' value={confirmPassword} onChange={(e) => handleConfirmPassChange(e)}/>
               <button onClick={()=>setConfirmPassType(!confirmPassType)}>
                 <Image src="/eye-icon.svg" width={20} height={20} className='pt-1' alt='eye'/>
               </button>
@@ -64,17 +113,19 @@ const ChangeUserPassModal = () => {
           <div className='flex flex-col gap-2 pt-1'>
             <p className='text-sm text-primary_font'>Enter current password</p>
             <div className='flex w-full h-10 rounded-md pr-3 bg-bg_hover text-gray-800 pb-1'>
-              <input type={currentPassType ? "password" : "text"} className='w-full h-10 bg-bg_hover rounded-md px-3 text-gray-800 pb-1' value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}/>
+              <input type={currentPassType ? "password" : "text"} className='w-full h-10 bg-bg_hover rounded-md px-3 text-gray-800 pb-1' value={currentPassword} onChange={(e) => handleCurrentPassChange(e)}/>
               <button onClick={()=>setCurrentPassType(!currentPassType)}>
                 <Image src="/eye-icon.svg" width={20} height={20} className='pt-1' alt='eye'/>
               </button>
             </div>
           </div>
 
-          <p className='text-sm text-red-400'>Incorrect password</p>
+          <p className='text-sm text-red-400'>{error}</p>
         </AlertDialogDescription>
         <AlertDialogFooter className="flex gap-4">
-          <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]">
+          <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]"
+            onClick={(e)=>{handleSave(); e.preventDefault(); e.stopPropagation()}}
+          >
             Save
           </AlertDialogAction>
           <AlertDialogCancel
