@@ -25,17 +25,21 @@ const CreateGroupModal = () => {
   const handleSaveAndCreate = async () => {
     try {
       const memberEmails = members.map(member => member.email);
-
       const response = await createGroup(name, description, memberEmails);
-
-      console.log('Group creation response:', response);
-
-      setName('');
-      setDescription('');
-      setMembers([]);
     } catch (error) {
       console.error('Error creating group:', error);
     }
+
+    setName('');
+    setDescription('');
+    setMembers([]);
+  };
+
+  const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setName('');
+    setDescription('');
+    setMembers([]);
+    e.stopPropagation();
   };
 
   return (
@@ -57,7 +61,7 @@ const CreateGroupModal = () => {
               <p className='text-black font-semibold text-base'>Create Group</p>
             </div>
 
-            <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#E5EDFF] mt-0' onClick={(e) => e.stopPropagation()}>
+            <AlertDialogCancel className='w-9 h-9 p-[0.6rem] rounded-full bg-[#E5EDFF] mt-0' onClick={(e)=>handleClose(e)}>
               <Image src="/cross-icon-blue.svg" width={20} height={20} className='rounded-full' alt='close icon'/>
             </AlertDialogCancel>
           </AlertDialogHeader>
