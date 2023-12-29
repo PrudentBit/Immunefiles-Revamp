@@ -4,10 +4,10 @@ import Image from 'next/image'
 import React from 'react'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import ChangeAvatar from './ChangeAvatar'
-import ChangeUsernameModal from '../Modals/ChangeUsernameModal'
-import ChangeUserPassModal from '../Modals/ChangeUserPassModal'
+import ChangeUsernameModal from '../../Modals/ChangeUsernameModal'
+import ChangeUserPassModal from '../../Modals/ChangeUserPassModal'
 import { Switch } from '@/components/ui/switch'
-import Enable2FAModal from '../Modals/Enale2FAModal/Enable2FAModal'
+import Enable2FAModal from '../../Modals/Enale2FAModal/Enable2FAModal'
 import toggleUser2FA from '@/utils/api/toggleUser2FAAPI'
 
 const General = () => {

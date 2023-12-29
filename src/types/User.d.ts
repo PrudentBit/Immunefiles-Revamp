@@ -66,3 +66,12 @@ type AdminSpecificUserType ={
     ];
     is_admin: boolean;
 };
+
+type userSearchQueryType = {
+    email: string;
+    name: string;
+    username: string;
+    date: string;
+    is_admin: boolean;
+    is_active: boolean;
+};

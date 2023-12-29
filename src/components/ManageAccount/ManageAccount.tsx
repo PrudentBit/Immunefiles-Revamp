@@ -1,8 +1,8 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import General from './General'
-import Groups from './Groups'
-import Links from './Links'
+import General from './General/General'
+import Groups from './Groups/Groups'
+import Links from './Links/Links'
 
 const ManageAccount = () => {
   return (

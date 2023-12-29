@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import CreateGroupModal from '@/components/Modals/CreateGroupModal/CreateGroupModal';
 
 type Props = {
   allSelected: boolean,
@@ -56,10 +57,7 @@ const GroupsTopNav = ({allSelected, setAllSelected, selected}: Props) => {
           </motion.div>
         )}
 
-        <Button className="bg-white text-primary_font rounded-md border border-solid border-primary_font flex gap-2 p-[1.1rem] h-8 font-normal text-xs">
-          <Image src="/add-group-icon.svg" width={20} height={20} alt='add groups'/>
-          <p className='text-sm'>Create Group</p>
-        </Button>
+        <CreateGroupModal/>
       </div>
     </div>
   )

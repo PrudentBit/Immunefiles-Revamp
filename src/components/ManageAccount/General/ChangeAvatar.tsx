@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import UploadUserProfileImage from '../Modals/UploadProfileImage/UploadUserProfileImage'
+import UploadUserProfileImage from '../../Modals/UploadProfileImage/UploadUserProfileImage'
 
 type Props = {
   userDetails?: UserDetailsType

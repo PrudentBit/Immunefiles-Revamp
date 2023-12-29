@@ -95,7 +95,7 @@ const ChangeUserPassModal = () => {
           <div className='flex flex-col gap-2 pt-1'>
             <p className='text-sm text-primary_font'>Enter new password</p>
             <div className='flex w-full h-10 rounded-md pr-3 bg-bg_hover text-gray-800 pb-1'>
-              <input type={newPassType ? "password" : "text"} className='w-full bg-bg_hover h-10 rounded-md px-3 text-gray-800 pb-1' value={newPassword} onChange={(e) => handleNewPassChange(e)}/>
+              <input autoComplete='off'  type={newPassType ? "password" : "text"} className='w-full bg-bg_hover h-10 rounded-md px-3 text-gray-800 pb-1' value={newPassword} onChange={(e) => handleNewPassChange(e)}/>
               <button onClick={()=>setNewPassType(!newPassType)}>
                 <Image src="/eye-icon.svg" width={20} height={20} className='pt-1' alt='eye'/>
               </button>
