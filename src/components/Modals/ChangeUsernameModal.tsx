@@ -12,16 +12,29 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
+import changeUsername from '@/utils/api/changeUsernameAPI'
+import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 
 const ChangeUsernameModal = () => {
   const [passType, setPassType] = useState(true);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const { userDetails } = UserDetailsStore();
 
   const handleCancel = () => {
     setName("");
     setPassword("");
   }
+
+  const handleSave = async () => {
+    try {
+      const response = await changeUsername(name);
+
+      setPassword("");
+    } catch (error) {
+      console.error("Error calling API:", error);
+    }
+  };
 
   return (
     <AlertDialog>
@@ -37,7 +50,7 @@ const ChangeUsernameModal = () => {
                 Change your user name
               </AlertDialogTitle>
               <AlertDialogDescription className="text-xs">
-                Current user name : Parth Dwivedy
+                Current user name : {userDetails?.name}
               </AlertDialogDescription>
             </div>
           </div>
@@ -62,7 +75,10 @@ const ChangeUsernameModal = () => {
 
         </AlertDialogDescription>
         <AlertDialogFooter className="flex gap-4">
-            <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]">
+            <AlertDialogAction 
+              className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]" 
+              onClick={handleSave}
+            >
               Save
             </AlertDialogAction>
             <AlertDialogCancel

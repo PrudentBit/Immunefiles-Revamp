@@ -1,7 +1,7 @@
 import React from 'react'
 
 type Props = {
-  getOTPOn: "mail" | "mobile" | "none";
+  getOTPOn: "email" | "phone" | "none";
   setOtp: React.Dispatch<React.SetStateAction<string[]>>;
   otp: string[];
   focusedInput: number | null;
@@ -12,12 +12,7 @@ const Enter2FAOTP = ({getOTPOn, setOtp, otp, focusedInput, setFocusedInput}: Pro
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
-  
-    if (!/^\d*$/.test(value)) {
-      // If the input is not a digit, ignore it
-      return;
-    }
-  
+
     const newArr = [...otp];
     newArr[index] = value;
   
@@ -48,17 +43,11 @@ const Enter2FAOTP = ({getOTPOn, setOtp, otp, focusedInput, setFocusedInput}: Pro
   const areAllFieldsFilled = () => {
     return otp.every((digit) => digit !== "");
   };
-  
-  const isOtpValid = () => {
-    const enteredOtp = otp.join("");
-    const correctOTP = "123456";
-    return enteredOtp === correctOTP;
-  };
 
   return (
     <div className='flex flex-col gap-6 pb-4 px-3'>
       <p className='text-primary_font text-xs font-medium'>
-        Enter OTP sent to your {getOTPOn === "mail" ? "mail" : "mobile number"}
+        Enter OTP sent to your {getOTPOn === "email" ? "email" : "mobile number"}
       </p>
 
       <div className='h-12'>
@@ -72,7 +61,7 @@ const Enter2FAOTP = ({getOTPOn, setOtp, otp, focusedInput, setFocusedInput}: Pro
             onKeyDown={(e) => handleKeyDown(e, index)}
             className={`border w-10 h-10 text-center text-lg font-semibold text-black rounded-lg border-solid bg-[#F4F4FF] ${
               focusedInput === index ? 'border-blue-500' : 'border-[#E5EDFF]'
-            } ${areAllFieldsFilled() && !isOtpValid() ? 'border-red-500' : ''} outline-none`}
+            } ${!areAllFieldsFilled() ? 'border-red-500' : ''} outline-none`}
             onFocus={() => setFocusedInput(index)}
           />
         ))}
