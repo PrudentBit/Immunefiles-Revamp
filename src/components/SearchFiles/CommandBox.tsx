@@ -13,7 +13,6 @@ import {
 import Image from "next/image"
 
 import { useFileAndFolderStore } from "@/utils/store/filesAndFoldersStore"
-import { GroupStore } from "@/utils/store/groupDetailsStore"
 import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 import { useRouter } from "next/navigation"
 import { selectedFilesStore } from "@/utils/store/selectFilesStore"
@@ -30,9 +29,6 @@ export function CommandBox() {
   const [files, folders] = useFileAndFolderStore((state) => [
     state.files,
     state.folders,
-  ])
-  const [groupDetails] = GroupStore((state) => [
-    state.groups
   ])
   const router = useRouter();
   const [removeAllFiles, addFile] = selectedFilesStore((state) => [
@@ -65,13 +61,6 @@ export function CommandBox() {
       removeAllFiles();
       addFile(file)
       router.push(`/filesystem/${file.path || "root"}`);
-      setOpen(false);
-    }
-  }
-
-  const handleGroupClick = () => {
-    return () => {
-      router.push(`/groups`);
       setOpen(false);
     }
   }

@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import ProfileUpload from './ProfileUpload';
-import { Switch } from '@/components/ui/switch';
 
 const UploadUserProfileImage = () => {
   const [uploadedfile, setUploadedfile] = useState<File>();

@@ -26,6 +26,7 @@ const CreateGroupModal = () => {
     try {
       const memberEmails = members.map(member => member.email);
       const response = await createGroup(name, description, memberEmails);
+      console.log(response);
     } catch (error) {
       console.error('Error creating group:', error);
     }

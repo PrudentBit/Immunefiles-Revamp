@@ -18,22 +18,17 @@ import { Select,
   SelectItem 
 } from '@/components/ui/select'
 import { useDropzone } from 'react-dropzone';
-import TrackIssuesModal from './TrackIssuesModal'
 
 const ReportIssueModal = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [failed, setFailed] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] },
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
-        setFailed(false);
         handleFilesChange([...uploadedFiles, ...acceptedFiles]);
-      } else {
-        setFailed(true);
       }
     },
   });
@@ -116,6 +111,7 @@ const ReportIssueModal = () => {
                     <img
                       src={preview}
                       className='rounded-lg min-h-[6rem] h-[6rem] min-w-[6rem] w-[6rem] object-contain bg-primary_bg border-solid border border-[#CDDCFF]'
+                      alt="preview"
                     />
                     <div
                       className='absolute top-0 right-0 cursor-pointer p-1 bg-white rounded-full'

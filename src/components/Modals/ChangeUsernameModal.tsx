@@ -29,6 +29,7 @@ const ChangeUsernameModal = () => {
   const handleSave = async () => {
     try {
       const response = await changeUsername(name);
+      console.log(response);
 
       setPassword("");
     } catch (error) {

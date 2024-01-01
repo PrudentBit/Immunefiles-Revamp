@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +12,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
-import BotLeftAlert from '@/components/BotLeftAlert';
 
 const DeleteGroupAlert = () => {
   return (

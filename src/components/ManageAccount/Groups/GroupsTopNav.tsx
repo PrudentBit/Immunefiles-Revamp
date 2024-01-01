@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import CreateGroupModal from '@/components/Modals/CreateGroupModal/CreateGroupModal';
 
 type Props = {

@@ -1,5 +1,5 @@
 "use client"
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -65,7 +65,7 @@ const Enable2FAModal = () => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div>
-          <Switch className='scale-[1.2]' checked={userDetails?.permissions.two_factor} onCheckedChange={(checked)=>userDetails?.permissions.two_factor}/>
+          <Switch className='scale-[1.2]' checked={userDetails?.permissions.two_factor} onCheckedChange={(_checked)=>userDetails?.permissions.two_factor}/>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="translate-y-[-135%] p-4 w-[24rem]">

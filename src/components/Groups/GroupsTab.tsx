@@ -8,9 +8,7 @@ import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI';
 import { GroupStore } from '@/utils/store/groupDetailsStore';
 import GroupsSortBy from './GroupsSortBy';
 
-type Props = {}
-
-const GroupsTab = (props: Props) => {
+const GroupsTab = () => {
   const [loading, setLoading] = useState(true);
   const { groups, setGroups } = GroupStore();
 
@@ -32,6 +30,7 @@ const GroupsTab = (props: Props) => {
       }
 
       setLoading(false);
+      console.log(loading)
     };
     fetchData();
   }, []);

@@ -94,6 +94,7 @@ const UserSOSModal = () => {
             <AlertDialogAction 
               className='w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]'
               disabled={enteredUsername !== userDetails?.username}
+              onClick={handleApplySOS}
             >
               Apply SOS
             </AlertDialogAction>

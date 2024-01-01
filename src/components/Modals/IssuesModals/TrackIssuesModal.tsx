@@ -18,7 +18,6 @@ import { Select,
   SelectItem 
 } from '@/components/ui/select'
 import IssuesRow from './IssuesRow'
-import ReportIssueModal from './ReportIssueModal'
 
 const TrackIssuesModal = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');

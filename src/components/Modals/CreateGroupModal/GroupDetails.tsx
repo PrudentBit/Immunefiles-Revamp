@@ -5,7 +5,6 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import getEmailSearchQuery from '@/utils/api/getEmailSearchQueryAPI';
 
 type Props = {

@@ -1,8 +1,6 @@
 import Image from "next/image"
 
-type Props = {}
-
-const IssuesRow = (props: Props) => {
+const IssuesRow = () => {
   return (
     <div className='w-full min-h-[7rem] flex flex-col gap-2 p-3 px-4 pr-6 bg-primary_bg rounded-md'>
       <div className='flex justify-between'>
