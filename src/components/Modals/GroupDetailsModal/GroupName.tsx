@@ -15,6 +15,15 @@ const GroupName = ({group}: Props) => {
     setValue(value);
   }
 
+  const formattedDate = new Date(group.created).toLocaleString('en-GB', {
+    day: 'numeric',
+    month: 'numeric',
+    year: '2-digit',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
   return (
     <div className="flex flex-col gap-3 h-[18%] w-full">
       <div className="flex gap-4 justify-between items-center">
@@ -24,7 +33,7 @@ const GroupName = ({group}: Props) => {
         </div >  
         <div className='flex gap-1 h-5'>
           <p className="text-gray-800 leading-5">Created on :</p>
-          <p className='text-gray-900 text-base  leading-5'>{group.created}</p>
+          <p className='text-gray-900 text-base  leading-5'>{formattedDate}</p>
         </div>  
       </div>
 

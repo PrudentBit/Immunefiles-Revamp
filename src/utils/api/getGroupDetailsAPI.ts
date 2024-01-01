@@ -1,6 +1,6 @@
 export default async function fetchGroupDetails() {
 	const res = await fetch(
-		`https://api.immunefiles.com/api/api/auth/group_details?tenant=${
+		`https://api.immunefiles.com/api/api/auth/group/group_details?tenant=${
 			window.location.hostname.split(".")[0]
 		}`,
 		{

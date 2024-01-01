@@ -22,10 +22,10 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
   const { groups } = GroupStore();
 
   const handleGroupSelect = (group: GroupDetailsType) => {
-    if (selectedGroups.includes(group.urlhash)) {
-      setSelectedGroups(selectedGroups.filter(hash => hash !== group.urlhash));
+    if (selectedGroups.includes(group.group_hash)) {
+      setSelectedGroups(selectedGroups.filter(hash => hash !== group.group_hash));
     } else {
-      setSelectedGroups([...selectedGroups, group.urlhash]);
+      setSelectedGroups([...selectedGroups, group.group_hash]);
     }
   };
 
@@ -33,7 +33,7 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
     if (allChecked) {
       setSelectedGroups([]);
     } else {
-      setSelectedGroups(groups!.map(group => group.urlhash));
+      setSelectedGroups(groups!.map(group => group.group_hash));
     }
     setAllChecked(!allChecked);
   };
@@ -75,7 +75,7 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
           {filteredGroups.map((group: GroupDetailsType, index: number) => (
             <div key={index} className='h-10 rounded-sm flex gap-3 px-3 py-2 bg-bg_hover'>
               <button onClick={() => handleGroupSelect(group)} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
-                {selectedGroups.includes(group.urlhash) ? (
+                {selectedGroups.includes(group.group_hash) ? (
                   <Image src="/checked-icon.svg" alt='check' width={28} height={28}/>
                 ):(
                   <Image src="/not-checked-icon.svg" alt='uncheck' width={28} height={28}/>

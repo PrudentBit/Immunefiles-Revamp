@@ -18,7 +18,7 @@ const Groups = ({group}:Props) => {
       <Image src='/groups-icon-4.svg' width={30} height={30} alt='Groups'/>
       
       <div className='flex flex-col items-start justify-center w-[60%] h-[2.5rem]'>
-        <p className='text-[#7A7AFF] font-semibold text-[1rem] leading-5'>{group.name}</p>
+        <p className='text-[#7A7AFF] font-semibold text-[1rem] leading-6 truncate w-[100%]'>{group.name}</p>
         {isHovering && <p className='text-[#7A7AFF] font-normal text-[0.9rem] leading-5'>{group.members.length} members</p>}
       </div>
 
