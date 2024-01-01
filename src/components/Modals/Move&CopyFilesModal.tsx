@@ -262,7 +262,7 @@ const MoveOrCopyFilesModal = ({
                         }}
                       >
                         <Image
-                          src="/folder-icon.svg"
+                          src="/Folder-icon.svg"
                           width={20}
                           height={20}
                           alt="folder icon"
@@ -305,7 +305,7 @@ const MoveOrCopyFilesModal = ({
                           }}
                         >
                           <Image
-                            src="/folder-icon.svg"
+                            src="/Folder-icon.svg"
                             width={20}
                             height={20}
                             alt="folder icon"
@@ -338,7 +338,7 @@ const MoveOrCopyFilesModal = ({
           <AlertDialogFooter className="flex justify-between items-center w-full">
             <button className="flex gap-2 items-center rounded-full hover:bg-primary_bg px-3 py-2">
               <Image
-                src="/add_folder-icon.svg"
+                src="/add_Folder-icon.svg"
                 width={18}
                 height={18}
                 alt="Add folder icon"

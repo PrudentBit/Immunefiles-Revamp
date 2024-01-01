@@ -8,7 +8,7 @@ const FileSectionSkeleton = () => {
       <section className="flex flex-col gap-6">
         <div className="flex gap-2">
           <Image
-            src={`/folder-icon.svg`}
+            src={`/Folder-icon.svg`}
             width={20}
             height={20}
             alt={`folder icon`}
@@ -36,7 +36,7 @@ const FileSectionSkeleton = () => {
       <section className="flex flex-col gap-6">
         <div className="flex gap-2">
           <Image
-            src={`/file-icon.svg`}
+            src={`/File-icon.svg`}
             width={20}
             height={20}
             alt={`file icon`}

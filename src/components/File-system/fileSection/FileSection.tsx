@@ -54,7 +54,6 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
       return next;
     });
   };
-
   console.log(sectionType, 'subFiles', subFiles);
 
   return (

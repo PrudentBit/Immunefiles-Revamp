@@ -37,7 +37,7 @@ const FileDetailsModal = ({ file }: Props) => {
         <AlertDialogDescription className='text-[#7A7AFF] text-md p-2'>
           <div className='flex flex-col gap-2 rounded-xl bg-primary_bg px-5 py-3'>
             <div className='flex gap-2'>
-              <Image src={`${file.is_file ? "/file-icon.svg":"/folder-icon.svg"}`} width={25} height={25}alt='file icon'/>
+              <Image src={`${file.is_file ? "/File-icon.svg":"/Folder-icon.svg"}`} width={25} height={25}alt='file icon'/>
               <p className='text-primary_font text-lg font-semibold w-[70%]'>{file.name}</p>
             </div>
             <div className='flex flex-row gap-2 pl-1'>

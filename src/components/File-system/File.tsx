@@ -14,7 +14,6 @@ type Props = {
   className?: string;
   dataKey: number;
 };
-
 const File = ({ file, className, dataKey }: Props) => {
   const router = useRouter();
   const [files, removeAllFiles] = selectedFilesStore(
@@ -75,7 +74,6 @@ const File = ({ file, className, dataKey }: Props) => {
               {file.name}
             </p>
           </div>
-
           <ThreeDotsMenu file={file} />
         </div>
       </RightClickContextMenu>

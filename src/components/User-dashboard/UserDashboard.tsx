@@ -6,6 +6,7 @@ import UserDashStorage from './UserDashStorage';
 import UserDashFavGroups from './UserDashFavGroups';
 import UserDashCritLinks from './UserDashCritLinks';
 import getUserDetails from '@/utils/api/getUserDashInfoAPI';
+import ReportMenu from './ReportMenu';
 
 const UserDashboard = () => {
   const [userDetails, setUserDetails] = useState<UserDashDetails>();
@@ -27,18 +28,22 @@ const UserDashboard = () => {
   }, []);
 
   return (
-    <div className="flex gap-9 flex-col w-full h-full">
-      <div className="flex gap-10 h-[55%]">
-        <UserLinkAnalytics linkDetails={userDetails?.links} />
+    <div className='relative h-full w-full'>
+      <div className="absolute flex gap-9 flex-col w-full h-full">
+        <div className="flex gap-10 h-[55%]">
+          <UserLinkAnalytics linkDetails={userDetails?.links} />
 
-        <UserDashStorage storageDetails={userDetails?.storage} />
+          <UserDashStorage storageDetails={userDetails?.storage} />
+        </div>
+
+        <div className="flex gap-10 h-[45%]">
+          <UserDashFavGroups />
+
+          <UserDashCritLinks critLinks={userDetails?.critical_links} />
+        </div>
       </div>
 
-      <div className="flex gap-10 h-[45%]">
-        <UserDashFavGroups />
-
-        <UserDashCritLinks critLinks={userDetails?.critical_links} />
-      </div>
+      <ReportMenu />
     </div>
   );
 };
