@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-type Props = {}
-
-const RequestedFile = (props: Props) => {
+const RequestedFile = () => {
   return (
     <div className='h-14 w-[13.6rem] flex justify-center px-3 items-center rounded-lg gap-2 cursor-pointer border-2 border-dashed border-primary_border bg-bg_hover'>
       <Image src='/file-icon-2.svg' width={24} height={24} alt='file'/>

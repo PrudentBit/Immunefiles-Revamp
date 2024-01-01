@@ -1,5 +1,4 @@
 'use client';
-import React, { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +11,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import deleteRequestedFiles from '@/utils/api/deleteRequestedFilesAPI';
 
 type Props = {
@@ -20,7 +18,6 @@ type Props = {
 };
 
 const IgnoreRequestedAlert = ({setReload}: Props) => {
-  const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
 
   const handleIgnore = async () => {
     try {
@@ -82,24 +79,6 @@ const IgnoreRequestedAlert = ({setReload}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {deletedSuccessfully && (
-        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
-              deleted
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              you can restore the items from trash bin whenever needed.
-            </p>
-          </div>
-          <button
-            className="border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg"
-          >
-            undo
-          </button>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

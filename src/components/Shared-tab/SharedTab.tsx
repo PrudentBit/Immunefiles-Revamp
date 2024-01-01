@@ -13,9 +13,7 @@ import PendingRequestsSkeleton from './PendingRequestsSkeleton';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 
-type Props = {}
-
-const sharedTab = (props: Props) => {
+const sharedTab = () => {
   const subFiles: FileOrFolderType[] = [
     {
       date_created: "2023-11-23T10:06:59.000Z",
@@ -135,6 +133,7 @@ const sharedTab = (props: Props) => {
                 <div
                   title={folder.name}
                   className={`w-[13.4rem] select-none h-12 border-primary_bg bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px]`}
+                  key={index}
                 >
                   <div className="flex gap-3">
                     <Image
@@ -156,6 +155,7 @@ const sharedTab = (props: Props) => {
                 <div
                   title={file.name}
                   className={`w-[13.4rem] select-none h-12 border-primary_bg bg-primary_bg hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px]`}
+                  key={index}
                 >
                   <div className="flex gap-3">
                     <Image

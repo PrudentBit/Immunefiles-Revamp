@@ -1,8 +1,6 @@
 import React from 'react'
 
-type Props = {}
-
-const PendingRequestsSkeleton = (props: Props) => {
+const PendingRequestsSkeleton = () => {
   return (
     <div>PendingRequestsSkeleton</div>
   )

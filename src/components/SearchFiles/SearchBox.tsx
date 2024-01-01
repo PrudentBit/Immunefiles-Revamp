@@ -75,7 +75,7 @@ const SearchBox = () => {
                 <p className="text-primary_font  font-normal leading-4">Tags</p>
               </div>
               <button className="flex gap-2 rounded-full items-center justify-center p-[0.3rem] px-2 bg-[#FFE3E5] hover:bg-[#FBD2D5]">
-                <Image src="/close-icon-2.svg" alt='close' width={10} height={10} className="pt-[0.1rem]"/>
+                <Image src="/close-icon-3.svg" alt='close' width={10} height={10} className="pt-[0.1rem]"/>
                 <p className="text-red-400 font-normal text-sm leading-3">clear tags</p>
               </button>
             </div>

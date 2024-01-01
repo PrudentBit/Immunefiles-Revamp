@@ -32,7 +32,7 @@ const AddedMembers = ({ members, setMembers }: Props) => {
               onClick={() => removeMember(index)}
             >
               <Image
-                src="/close-icon-2.svg"
+                src="/close-icon-3.svg"
                 width={8}
                 height={8}
                 alt="Delete icon"
