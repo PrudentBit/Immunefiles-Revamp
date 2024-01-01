@@ -1,4 +1,4 @@
-type Permissions = {
+type Permission = {
     two_factor: boolean;
 };
 
@@ -7,7 +7,7 @@ type UserDetailsType = {
     email: string;
     is_admin: boolean;
     name: string;
-    permissions: Permissions;
+    permissions: Permission;
     phone_number: string;
     profile_type: string;
     profile_pic: string;
@@ -65,4 +65,13 @@ type AdminSpecificUserType ={
         }
     ];
     is_admin: boolean;
+};
+
+type userSearchQueryType = {
+    email: string;
+    name: string;
+    username: string;
+    date: string;
+    is_admin: boolean;
+    is_active: boolean;
 };

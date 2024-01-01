@@ -1,12 +1,15 @@
 "use client"
 
 import React from 'react'
-import SearchBar from '@/components/SearchBar'
 import { ModeToggle } from './ui/toggle-mode'
 import Image from 'next/image'
 import { tabStore } from '@/utils/store/leftNavTabStore'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
+import SearchBox from './SearchFiles/SearchBox'
+
+import UserProfileCard from './UserProfileCard'
+
 
 type Props = {
   currentTab: string;
@@ -33,7 +36,7 @@ const TopNav = ({currentTab}: Props) => {
 
   return (
     <nav className='flex w-full gap-6 h-12'>
-      <SearchBar/>
+      <SearchBox/>
 
       <div className='flex w-[21rem] min-w-[18rem] justify-between items-center'>
         <ModeToggle/>
@@ -42,14 +45,7 @@ const TopNav = ({currentTab}: Props) => {
           <Image src="/notification-icon.svg" alt='notification' width={30} height={30}/>
         </button>
 
-        <div className='flex gap-2 cursor-pointer'>
-          <div className='text-right'>
-            <p className='text-black font-normal text-sm h-4'>Hello</p>
-            <p className='text-primary_font_2 text-lg font-semibold whitespace-nowrap'>{userDetails?.name}</p>
-          </div>
-
-          <Image src="/user.svg" alt='profile' width={45} height={45} className='rounded-lg'/>
-        </div>
+        <UserProfileCard userDetails={userDetails}/>
       </div>
     </nav>
   )

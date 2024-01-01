@@ -2,7 +2,7 @@ import React from 'react'
 import ShadowedCard from '@/components/ShadowedCard'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import UserGroupAndLinksRow from './UserGroupAndLinksRow'
+import UserCriticalLinksRow from './UserCriticalLinksRow'
 
 type Props = {
   critLinks?: UserDashDetails['critical_links']
@@ -22,7 +22,7 @@ const UserDashCritLinks = ({critLinks}: Props) => {
 
       <div className='flex flex-col gap-3 h-[30vh] overflow-y-auto pr-5 pl-3'>
         {critLinks && critLinks.map((link, index) => (
-          <UserGroupAndLinksRow key={index} link={link}/>
+          <UserCriticalLinksRow key={index} link={link}/>
         ))}
       </div>
     </ShadowedCard>
