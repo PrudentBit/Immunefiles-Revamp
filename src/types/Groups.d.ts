@@ -1,4 +1,4 @@
-type Member = {
+type MemberType = {
   can_add_delete_content: boolean;
   can_download_content: boolean;
   can_share_content: boolean;
@@ -18,7 +18,7 @@ type GroupDetailsType = {
   is_favourite: boolean;
   is_owner: boolean;
   is_read: boolean;
-  members: Member[];
+  members: MemberType[];
   name: string;
   owner: string;
   urlhash: string;

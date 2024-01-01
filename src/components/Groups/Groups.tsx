@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import GroupDetailsModal from '../Modals/GroupDetailsModal/GroupDetailsModal'
 
 type Props = {
   group: GroupDetailsType
@@ -8,11 +8,10 @@ type Props = {
 
 const Groups = ({group}:Props) => {
   const [isHovering, setIsHovering] = useState(false)
-  const [isStarHovering, setIsStarHovering] = useState(false)
 
   return (
     <div 
-      className='h-[3.6rem] w-[16rem] flex justify-between items-center gap-2 p-3 rounded-lg bg-primary_bg hover:bg-[#E5E5FF] cursor-pointer'
+      className='h-[3.8rem] w-[16rem] flex justify-between items-center gap-2 p-3 rounded-lg bg-primary_bg hover:bg-[#E5E5FF] cursor-pointer'
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -23,53 +22,10 @@ const Groups = ({group}:Props) => {
         {isHovering && <p className='text-[#7A7AFF] font-normal text-[0.9rem] leading-5'>{group.members.length} members</p>}
       </div>
 
-      <div title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full bg-primary_bg hover:bg-button_hover cursor-pointer'>...</div>
+      <GroupDetailsModal group={group}/>
 
-      <div 
-        onMouseEnter={() => setIsStarHovering(true)}
-        onMouseLeave={() => setIsStarHovering(false)}
-        className='flex h-10 w-10 items-center justify-center relative'
-      >
-        <AnimatePresence>
-          {group.is_favourite ? (
-            <motion.div
-              initial={{ opacity: 0, rotate: 0 }}
-              animate={{ opacity: 1, rotate: 432 }}
-              exit={{ opacity: 0, rotate: 216 }}
-              transition={{ duration: 1 }}
-              key="goldStar"
-              className='flex h-10 w-10 items-center justify-center absolute'
-            >
-              <Image title='Favourite' src='/star-gold.svg' width={35} height={35} alt='Star icon' className='translate-x-[-1px] translate-y-[1px]'/>
-            </motion.div>
-          ):(
-            <>
-              {isStarHovering ? (
-                <motion.div
-                  initial={{ opacity: 0, rotate: 0 }}
-                  animate={{ opacity: 1, rotate: 216 }}
-                  exit={{ opacity: 0, rotate: 216 }}
-                  transition={{ duration: 0.5 }}
-                  key="blueStar"
-                  className='flex h-10 w-10 items-center justify-center absolute'
-                >
-                  <Image title='Favourite' src='/star-blue.svg' width={25} height={25} alt='Star icon' className='rotate-[-2deg] translate-x-[1px] translate-y-[1px]'/>
-                </motion.div>
-              ):(
-                <motion.div
-                  initial={{ opacity: 0, rotate: 0 }}
-                  animate={{ opacity: 1, rotate: 216 }}
-                  exit={{ opacity: 0, rotate: 216 }}
-                  transition={{ duration: 0.5 }}
-                  key="emptyStar"
-                  className='flex h-10 w-10 items-center justify-center absolute'
-                >
-                  <Image title='Favourite' src='/star-empty.svg' width={25} height={25} alt='Star icon'/>
-                </motion.div>
-              )}
-            </>
-          )}
-        </AnimatePresence>
+      <div className='absolute translate-x-[14.3rem] translate-y-[-1.5rem] cursor-pointer rounded-full h-6 w-6 flex items-center justify-center bg-primary_font'>
+        <Image src='/pin-icon-solid.svg' width={16} height={16} alt='pinned' className='mb-[0.2rem] ml-[0.2rem]'/>
       </div>
     </div>
   )

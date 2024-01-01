@@ -64,8 +64,9 @@ const Enable2FAModal = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <div>
-          <Switch className='scale-[1.2]' checked={userDetails?.permissions.two_factor} onCheckedChange={(_checked)=>userDetails?.permissions.two_factor}/>
+        <div className='relative right-10 bottom-2 cursor-pointer'>
+          <div className='absolute h-5 w-10'></div>
+          <Switch className='absolute scale-[1.2] z-[-100]' checked={userDetails?.permissions.two_factor} onCheckedChange={(checked)=>userDetails?.permissions.two_factor}/>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="translate-y-[-135%] p-4 w-[24rem]">
