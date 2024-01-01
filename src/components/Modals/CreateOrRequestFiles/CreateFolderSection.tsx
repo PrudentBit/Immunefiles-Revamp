@@ -16,7 +16,7 @@ const CreateFolderSection = ({ folderName, setFolderName }: Props) => {
       <div className="flex gap-3 flex-col">
         <div className="flex gap-2">
           <Image
-            src="/folder-icon.svg"
+            src="/Folder-icon.svg"
             width={18}
             height={18}
             alt="Folder icon"

@@ -10,7 +10,6 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  console.log('FileSection called');
   const sectionType = type === "folder" ? "Folders" : "Files";
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
   console.log('selected', selected);
