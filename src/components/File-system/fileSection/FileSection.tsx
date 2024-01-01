@@ -11,6 +11,7 @@ type FileSectionProps = {
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
+  console.log(type, sectionType);
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
   console.log('selected', selected);
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
