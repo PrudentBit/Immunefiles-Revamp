@@ -18,12 +18,21 @@ const GroupsTab = (props: Props) => {
     const fetchData = async () => {
       setLoading(true);
 
-      const groupData = await fetchGroupDetails();
-      setGroups(groupData);
+      try {
+        const response = await fetchGroupDetails();
+
+        if (!response.ok) {
+          console.log(response);
+        }
+
+        const groupData = await response.json();
+        setGroups(groupData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
 
       setLoading(false);
     };
-
     fetchData();
   }, []);
 
@@ -56,11 +65,13 @@ const GroupsTab = (props: Props) => {
           <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As admin</p>
         </div>
 
-        <div className='flex flex-wrap gap-4 p-1'>
-          {groups?.filter(group => group.admin).map(group => (
-            <Groups key={group.urlhash} group={group}/>
-          ))}
-        </div>
+        {groups && Array.isArray(groups) && (
+          <div className='flex flex-wrap gap-4 p-1'>
+            {groups.filter(group => group.admin).map(group => (
+              <Groups key={group.urlhash} group={group}/>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className='flex flex-col gap-4'>
@@ -75,11 +86,13 @@ const GroupsTab = (props: Props) => {
           <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As member</p>
         </div>
 
-        <div className='flex flex-wrap gap-4 p-1'>
-          {groups?.filter(group => !group.admin).map(group => (
-            <Groups key={group.urlhash} group={group}/>
-          ))}
-        </div>
+        {groups && Array.isArray(groups) && (
+          <div className='flex flex-wrap gap-4 p-1'>
+            {groups.filter(group => !group.admin).map(group => (
+              <Groups key={group.urlhash} group={group}/>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

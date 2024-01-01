@@ -64,6 +64,7 @@ const SearchBox = () => {
       <PopoverTrigger className='flex items-center gap-2 border-solid rounded-[1.2rem] border-2 border-primary_border px-4 py-2 w-[75%]'>
         <Image src="/search.png" alt='search' width={20} height={25}/>
         <input type="text" placeholder='Search..' className='w-full'/>
+        <p className="text-gray-400 whitespace-nowrap pr-2"> (ctrl+k) </p>
       </PopoverTrigger>
       <PopoverContent className="w-[50rem] h-[27rem] py-6 px-8 rounded-3xl flex flex-col gap-4">
         <div className="flex flex-col gap-4">

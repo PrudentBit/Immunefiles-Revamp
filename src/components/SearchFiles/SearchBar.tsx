@@ -10,7 +10,7 @@ const SearchBar = () => {
       </button>
       <input type="text" placeholder='Search..' className='w-full'/>
 
-      <p className="text-gray-400 whitespace-nowrap">( ctrl+k )</p>
+      <p className="text-gray-400 whitespace-nowrap"> ctrl+k </p>
     </div>
   )
 }

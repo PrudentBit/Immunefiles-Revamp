@@ -137,24 +137,7 @@ export function CommandBox() {
         </div>
         <hr/>
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          
-          {groupDetails && (groupsOnly || allActive) && (
-            <CommandGroup >
-              {groupDetails.map((group) => (
-                <CommandItem key={group.urlhash} className="flex gap-2">
-                  <Image src="/groups-icon.svg" height={22} width={22} alt="temp"></Image>
-                  <span className="w-[70%] truncate mr-16" onClick={handleGroupClick()}>{group.name}</span>
-
-                  <div className="w-16 p-1 rounded-full flex items-center justify-center border-[1px] border-solid border-primary_font">
-                    <p className='text-primary_font_2 text-xs font-normal leading-4'>Group</p>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          )}
-
-          <CommandSeparator/>
+          <CommandEmpty>No results found.</CommandEmpty>  
 
           {(filesOnly || allActive) && (
             <>
