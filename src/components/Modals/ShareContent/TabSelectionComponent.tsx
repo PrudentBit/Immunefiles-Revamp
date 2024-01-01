@@ -10,7 +10,10 @@ const TabSelectionComponent = ({ tab, setTab }: Props) => {
         className={`rounded-full w-[23%] h-8 flex items-center justify-center ${
           tab === 'link' ? 'bg-primary_font_2 text-white' : ' text-[#333333]'
         }`}
-        onClick={() => setTab('link')}
+        onClick={(e) => {
+          setTab('link'),
+          e.stopPropagation()
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +37,10 @@ const TabSelectionComponent = ({ tab, setTab }: Props) => {
         className={`rounded-full w-[23%] h-8 flex items-center justify-center ${
           tab === 'email' ? 'bg-primary_font_2 text-white' : ' text-[#333333]'
         }`}
-        onClick={() => setTab('email')}
+        onClick={(e) => {
+          setTab('email'),
+          e.stopPropagation()
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +71,10 @@ const TabSelectionComponent = ({ tab, setTab }: Props) => {
             ? 'bg-primary_font_2 text-white'
             : ' text-[#333333]'
         }`}
-        onClick={() => setTab('internal')}
+        onClick={(e) => {
+          setTab('internal'),
+          e.stopPropagation()
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +98,10 @@ const TabSelectionComponent = ({ tab, setTab }: Props) => {
         className={`rounded-full w-[23%] h-8 flex items-center justify-center ${
           tab === 'groups' ? 'bg-primary_font_2 text-white' : ' text-[#333333]'
         }`}
-        onClick={() => setTab('groups')}
+        onClick={(e) => {
+          setTab('groups'),
+          e.stopPropagation()
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

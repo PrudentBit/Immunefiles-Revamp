@@ -15,7 +15,7 @@ type Props = {
 
 const InternalShareSection = ({shareEmail, setShareEmail, settings, setSettings}: Props) => {
   return (
-    <div className='w-full h-[54%] rounded-lg px-5 py-4 pr-2 border-[1px] border-solid border-[#7A7AFF] '>
+    <div className='w-[46rem] h-[54%] rounded-lg px-5 py-4 pr-2 border-[1px] border-solid border-[#7A7AFF] '>
       <div className='flex flex-col gap-4 h-full pr-2 overflow-auto'>
         <input 
           type="email" 

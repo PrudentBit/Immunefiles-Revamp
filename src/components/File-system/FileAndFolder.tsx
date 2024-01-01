@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FileSection from '@/components/File-system/fileSection/FileSection';
 import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
 import getFiles from '@/utils/api/getFilesAPI';
@@ -25,11 +25,18 @@ const FileAndFolder = ({ root }: Props) => {
     setFolders,
     forceRefresh,
     toggleForceRefresh,
+    sortFiles,
+    sortFolders,
   } = useFileAndFolderStore();
   const { setGroups } = GroupStore();
   const [loading, setLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
   const [uploadedFolders, setUploadedFolders] = useState<FileWithPath[]>([]);
+
+  useEffect(() => {
+    sortFiles();
+    sortFolders();
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     noClick: true,
@@ -85,15 +92,17 @@ const FileAndFolder = ({ root }: Props) => {
     const fetchData = async () => {
       setLoading(true);
       const fileData = await getFiles(root);
-      const decryptedData = decryptData(fileData.ciphertext);
+      if (fileData){
+        const decryptedData = decryptData(fileData.ciphertext);
 
-      setFolders(decryptedData.children);
-      setFiles(decryptedData.files);
+        setFolders(decryptedData.children);
+        setFiles(decryptedData.files);
 
-      const groupData = await fetchGroupDetails();
-      setGroups(groupData);
+        const groupData = await fetchGroupDetails();
+        setGroups(groupData);
 
-      setLoading(false);
+        setLoading(false);
+      }
     };
 
     fetchData();

@@ -6,6 +6,7 @@ import FileSelectOptions from './FileSelectOptions';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import UploadFileModal from '@/components/Modals/UploadFileModal';
+import FilesSortBy from './FilesSortBy';
 
 const FileOperations = () => {
   const [addFile, setAddFile] = React.useState(false);
@@ -38,9 +39,12 @@ const FileOperations = () => {
         <AnimatePresence>{addFile && <AddFile />}</AnimatePresence>
       </div>
 
-      <AnimatePresence>
-        {files.length > 0 && <FileSelectOptions />}
-      </AnimatePresence>
+      <div className='flex gap-4 items-center'>
+        <AnimatePresence>
+          {files.length > 0 && <FileSelectOptions />}
+        </AnimatePresence>
+        <FilesSortBy/>
+      </div>
     </div>
   );
 };
