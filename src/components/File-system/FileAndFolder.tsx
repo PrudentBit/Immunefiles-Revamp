@@ -98,12 +98,6 @@ const FileAndFolder = ({ root }: Props) => {
         setFolders(decryptedData.children);
         setFiles(decryptedData.files);
 
-        const groupData = await fetchGroupDetails();
-        if (groupData) {
-          const decryptedGroupData = decryptData(groupData.ciphertext);
-          setGroups(decryptedGroupData.groups);
-        }
-
         setLoading(false);
       }
     };

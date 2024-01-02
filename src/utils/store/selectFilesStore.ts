@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type File = FileOrFolderType;
+type File = FileOrFolderType | groupFileandFolderType;
 
 type State = {
   files: File[];

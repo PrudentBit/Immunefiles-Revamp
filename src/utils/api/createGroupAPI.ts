@@ -19,5 +19,7 @@ export default async function createGroup(name: string, description: string, mem
 		}
   );
 
-  return await res.json();
+	const jsonData = await res.json();
+
+  return {data: jsonData, status: res.status};
 }

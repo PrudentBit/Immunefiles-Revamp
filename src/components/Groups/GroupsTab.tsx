@@ -19,23 +19,19 @@ const GroupsTab = () => {
 
       try {
         const response = await fetchGroupDetails();
-        console.log(response.status);
 
-        if (response.status !== 200) {
-          console.log(response);
-          
+        if(response.status === 200) {
+          const decryptedGroupData = decryptData(response.data.ciphertext);
+          console.log(decryptedGroupData);
+          setGroups(decryptedGroupData.groups);
         }
-        const decryptedGroupData = decryptData(response.ciphertext);
-        console.log(decryptedGroupData);
-        setGroups(decryptedGroupData.groups);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
 
       setLoading(false);
     };
-
-    console.log('fetching data');
 
     fetchData();
   }, [forceRefresh]);

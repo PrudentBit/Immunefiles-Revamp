@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import Image from 'next/image'
 import GroupDetailsModal from '../Modals/GroupDetailsModal/GroupDetailsModal'
+import { useRouter } from 'next/navigation';
 
 type Props = {
   group: GroupDetailsType
@@ -9,11 +10,17 @@ type Props = {
 const Groups = ({group}:Props) => {
   const [isHovering, setIsHovering] = useState(false)
 
+  const router = useRouter();
+  const handleOpenGroup = () => {
+    router.push(`/groups/${group.group_hash}/root`);
+  }
+
   return (
     <div 
       className='h-[3.8rem] w-[16rem] flex justify-between items-center gap-2 p-3 rounded-lg bg-primary_bg hover:bg-[#E5E5FF] cursor-pointer'
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onClick={handleOpenGroup}
     >
       <Image src='/groups-icon-4.svg' width={30} height={30} alt='Groups'/>
       

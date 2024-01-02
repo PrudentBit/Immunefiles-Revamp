@@ -42,3 +42,19 @@ type SharedFilesType = {
   hash_path: null | string;
   path: null | string;
 };
+
+type groupFileandFolderType = {
+  name: string;
+  urlhash: string;
+  url?: string;
+  shared_by: string;
+  date_uploaded?: string;
+  size?: string;
+  permissions: {
+    can_share: boolean;
+    can_download: boolean;
+    can_delete: boolean;
+    editable: boolean;
+    proctored: boolean;
+  };
+}

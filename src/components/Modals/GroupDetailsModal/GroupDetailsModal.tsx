@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useEffect } from 'react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -40,8 +39,8 @@ const GroupDetailsModal = ({ group }: Props) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-      <div title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full bg-primary_bg hover:bg-button_hover cursor-pointer'>...</div>
+      <AlertDialogTrigger asChild onClick={(e)=>e.stopPropagation()}>
+        <div title='Menu' className='text-secondary_font font-medium text-2xl leading-[0px] pb-[1.3rem] p-[0.3rem] px-1 text-center rounded-full bg-primary_bg hover:bg-button_hover cursor-pointer'>...</div>
       </AlertDialogTrigger>
       <AlertDialogContent className='w-[50rem]'>
         <AlertDialogHeader className='flex flex-row justify-between h-10'>

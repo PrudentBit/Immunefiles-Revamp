@@ -16,17 +16,22 @@ import { Button } from '@/components/ui/button'
 import GroupDetails from './GroupDetails'
 import AddedMembers from './AddedMembers'
 import createGroup from '@/utils/api/createGroupAPI'
+import { GroupStore } from '@/utils/store/groupDetailsStore'
 
 const CreateGroupModal = () => {
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [members, setMembers] = useState<userSearchQueryType[]>([])
+  const { toggleForceRefresh } = GroupStore();
 
   const handleSaveAndCreate = async () => {
     try {
       const memberEmails = members.map(member => member.email);
       const response = await createGroup(name, description, memberEmails);
-      console.log(response);
+      if (response.status === 200) {
+        console.log(response.data);
+        toggleForceRefresh();
+      }
     } catch (error) {
       console.error('Error creating group:', error);
     }

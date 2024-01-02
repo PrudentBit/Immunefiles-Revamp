@@ -3,13 +3,15 @@ import Image from "next/image";
 import SelectionArea, {SelectionEvent} from '@viselect/react';
 import File from "@/components/File-system/File";
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
+import GroupFile from '@/components/Groups/GroupFile';
 
 type FileSectionProps = {
-  subFiles: FileOrFolderType[];
+  subFiles: FileOrFolderType[] | groupFileandFolderType[];
   type: string;
+  group_hash?: string;
 }
 
-const FileSection = ({ subFiles, type }: FileSectionProps) => {
+const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
   console.log(type, sectionType);
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
@@ -57,6 +59,11 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
   };
   console.log(sectionType, 'subFiles', subFiles);
 
+  const isFileAndFolderType = (file: FileOrFolderType | groupFileandFolderType): file is FileOrFolderType => {
+    console.log((file as FileOrFolderType).owner !== undefined)
+    return (file as FileOrFolderType).owner !== undefined;
+  };
+
   return (
     <SelectionArea  
       className="flex flex-col" 
@@ -75,10 +82,18 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
         <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{sectionType}</p>
       </div>
       <div className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5">
-        {subFiles.map((folder, index) => (
-          <File dataKey={index} key={index} file={folder} type={type} className="selectable"/>
+        {subFiles.map((file, index) => (
+          isFileAndFolderType(file) ? (
+            <File dataKey={index} key={index} file={file} type={type} className="selectable"/>
+          ) : (
+            <>
+              {group_hash && (
+                <GroupFile dataKey={index} key={index} file={file} type={type} group_hash={group_hash} className="selectable"/>
+              )}
+            </>
+          )
         ))}
-      </div>
+      </div>  
     </SelectionArea>
   );
 };
