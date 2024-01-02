@@ -1,6 +1,7 @@
 type MemberType = {
   is_admin: boolean;
   name: string;
+  email: string;
 };
 
 type GroupDetailsType = {

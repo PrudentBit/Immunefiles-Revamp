@@ -83,7 +83,7 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
               </button>
               <div className='flex gap-2' onClick={() => handleGroupSelect(group)}>
                 <Image src="/groups-icon.svg" alt='check' width={18} height={18}/>
-                <p className='text-[#7A7AFF]'>
+                <p className='text-[#7A7AFF] w-[17rem] truncate'>
                   {group.name}
                 </p>
               </div>
@@ -118,12 +118,12 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
             setChecked={(value) => {setSettings({...settings, downloadable: value});}}
           />
 
-          {/* <SwitchFields 
+          <SwitchFields 
             label='Proctored' 
             svg='/proctor-icon.svg' 
             checked={settings.proctored} 
             setChecked={(value) => {setSettings({...settings, proctored: value});}}
-          /> */}
+          />
         </div>
       </div>
     </div>

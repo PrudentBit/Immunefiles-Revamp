@@ -21,7 +21,7 @@ const GroupMembers = ({ group }: Props) => {
       <div className="h-[11.2rem] w-full border border-solid border-primary_font_2 rounded-lg p-3">
         <div className="h-[9.7rem] pr-3 overflow-auto flex flex-col gap-4">
           {group.members.map((member, index) => (
-            <MemberRow key={index} member={member} />
+            <MemberRow key={index} member={member} group={group}/>
           ))}
         </div>
       </div>

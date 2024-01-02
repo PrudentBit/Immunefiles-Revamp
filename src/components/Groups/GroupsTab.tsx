@@ -11,7 +11,7 @@ import { decryptData } from '@/utils/helper/decryptFiles';
 
 const GroupsTab = () => {
   const [ loading, setLoading ] = useState(true);
-  const { groups, setGroups } = GroupStore();
+  const { groups, setGroups, forceRefresh } = GroupStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,9 +19,11 @@ const GroupsTab = () => {
 
       try {
         const response = await fetchGroupDetails();
+        console.log(response.status);
 
         if (response.status !== 200) {
           console.log(response);
+          
         }
         const decryptedGroupData = decryptData(response.ciphertext);
         console.log(decryptedGroupData);
@@ -33,8 +35,10 @@ const GroupsTab = () => {
       setLoading(false);
     };
 
+    console.log('fetching data');
+
     fetchData();
-  }, []);
+  }, [forceRefresh]);
 
   return (
     <div className='h-full w-full flex flex-col gap-7'>

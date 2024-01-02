@@ -24,9 +24,11 @@ const Groups = ({group}:Props) => {
 
       <GroupDetailsModal group={group}/>
 
-      <div className='absolute translate-x-[14.3rem] translate-y-[-1.5rem] cursor-pointer rounded-full h-6 w-6 flex items-center justify-center bg-primary_font'>
-        <Image src='/pin-icon-solid.svg' width={16} height={16} alt='pinned' className='mb-[0.2rem] ml-[0.2rem]'/>
-      </div>
+      {group.is_favorite && (
+        <div className='absolute translate-x-[14.3rem] translate-y-[-1.5rem] cursor-pointer rounded-full h-6 w-6 flex items-center justify-center bg-primary_font'>
+          <Image src='/pin-icon-solid.svg' width={16} height={16} alt='pinned' className='mb-[0.2rem] ml-[0.2rem]'/>
+        </div>
+      )}
     </div>
   )
 }

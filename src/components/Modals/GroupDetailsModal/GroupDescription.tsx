@@ -1,6 +1,9 @@
 import {useState} from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import editGroup from '@/utils/api/editGroupAPI'
+import { decryptData } from '@/utils/helper/decryptFiles'
+import { GroupStore } from '@/utils/store/groupDetailsStore'
 
 type Props = {
   group: GroupDetailsType
@@ -9,10 +12,24 @@ type Props = {
 const GroupDescription = ({ group }: Props) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
+  const { toggleForceRefresh } = GroupStore();
+  const [groupDesc, setGroupDesc] = useState(group.description);
 
   const handleNameEdit = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value= e.target.value;
     setValue(value);
+  }
+
+  const handleSave = async () => {
+    const response = await editGroup({action: "rename", group_hash: group.group_hash, description: value});
+    if (response.status === 200) {
+      setEdit(false);
+      setGroupDesc(value);
+      toggleForceRefresh();
+    }
+    else{
+      console.log(decryptData(response.data.ciphertext));
+    }
   }
 
   return (
@@ -31,7 +48,10 @@ const GroupDescription = ({ group }: Props) => {
             onChange={(e)=>handleNameEdit(e)}
           >
           </textarea>
-          <Button className='h-6 px-3 bg-[#8E8EFF] hover:bg-[#9797FF] rounded-full font-normal'>
+          <Button 
+            className='h-6 px-3 bg-[#8E8EFF] hover:bg-[#9797FF] rounded-full font-normal'
+            onClick={handleSave}
+          >
             Save
           </Button>
           <div
@@ -49,7 +69,7 @@ const GroupDescription = ({ group }: Props) => {
       ) : (
         <div className="w-full h-full flex justify-between px-2 bg-primary_bg rounded-lg">
           <div className='h-[4.5rem] px-3 overflow-auto max-w-[95%] self-center'>
-            <p className=' text-primary_font text-sm font-normal leading-4'>{group.description}</p>
+            <p className=' text-primary_font text-sm font-normal leading-4 break-words max-w-[40rem]'>{groupDesc}</p>
           </div>
           <div className="p-1 h-8 w-8 flex justify-center items-center rounded-md hover:bg-bg_hover cursor-pointer mt-2" onClick={()=>setEdit(true)}>
             <Image src='/rename-icon-2.svg' width={20} height={20} alt="edit icon"/>

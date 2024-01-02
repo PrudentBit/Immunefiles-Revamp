@@ -1,11 +1,28 @@
 import React from 'react'
 import Image from 'next/image'
+import editGroup from '@/utils/api/editGroupAPI'
+import { decryptData } from '@/utils/helper/decryptFiles'
+import { GroupStore } from '@/utils/store/groupDetailsStore'
 
 type Props = {
   member: MemberType
+  group: GroupDetailsType
 }
 
-const MemberRow = ({ member }: Props) => {
+const MemberRow = ({ member, group }: Props) => {
+  const { toggleForceRefresh } = GroupStore();
+
+  const handleRemove = async () => {
+    const response = await editGroup({action: "remove", group_hash: group.group_hash, email: member.email});
+    if (response.status === 200) {
+      console.log("Member removed");
+      toggleForceRefresh();
+    }
+    else{
+      console.log(decryptData(response.data.ciphertext));
+    }
+  }
+
   return (
     <div className="min-h-[3rem] w-full flex items-center px-3 gap-2 justify-between bg-[#E5EDFF] rounded-lg">
       <Image src='/user-icon-2-blue.svg' width={24} height={24} alt="user"/>
@@ -21,9 +38,12 @@ const MemberRow = ({ member }: Props) => {
       )}
 
       {!member.is_admin ? (
-        <div className="flex items-center justify-center gap-2 w-[12%] py-1">
+        <button 
+          className="flex items-center justify-center gap-2 w-[12%] py-1 hover:bg-[#FFE3E5] rounded-lg"
+          onClick={handleRemove}
+        >
           <p className="text-red-400 text-sm font-normal leading-4">Remove</p>
-        </div>
+        </button>
       ):(
         <div className='w-[12%]'></div>
       )}

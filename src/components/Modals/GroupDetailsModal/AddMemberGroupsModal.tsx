@@ -20,6 +20,10 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import getEmailSearchQuery from '@/utils/api/getEmailSearchQueryAPI';
+import editGroup from '@/utils/api/editGroupAPI';
+import { decryptData } from '@/utils/helper/decryptFiles';
+import { GroupStore } from '@/utils/store/groupDetailsStore';
+
 
 type Props = {
   group: GroupDetailsType
@@ -30,6 +34,7 @@ const AddMemberGroupsModal = ({ group }: Props) => {
   const [searchResults, setSearchResults] = useState<userSearchQueryType[]>([]);
   const [value, setValue] = useState('');
   const [members, setMembers] = useState<userSearchQueryType[]>([]);
+  const { toggleForceRefresh } = GroupStore();
 
   const getUsers = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -63,6 +68,23 @@ const AddMemberGroupsModal = ({ group }: Props) => {
       updatedMembers.splice(index, 1);
       return updatedMembers;
     });
+  };
+
+  const handleSave = async () => {
+    const selectedMemberEmails = members.map((member) => member.email);
+  
+    const response = await editGroup({
+      action: "add",
+      group_hash: group.group_hash,
+      email: selectedMemberEmails,
+    });
+  
+    if (response.status === 200) {
+      setIsOpen(false);
+      toggleForceRefresh();
+    } else {
+      console.log(decryptData(response.data.ciphertext));
+    }
   };
 
   return (
@@ -113,6 +135,7 @@ const AddMemberGroupsModal = ({ group }: Props) => {
               className="p-2 px-5 w-full text-secondary_font bg-[#E5EDFF] placeholder:text-gray-400 rounded-sm"
               autoComplete="off"
               id='email'
+              placeholder='Enter email'
               title='Enter email'
               onFocus={()=> setIsOpen(true)}
               onChange={(e)=> getUsers(e)}
@@ -144,6 +167,7 @@ const AddMemberGroupsModal = ({ group }: Props) => {
         <AlertDialogFooter className='flex items-center justify-end'>
           <AlertDialogAction 
             className="w-[30%] rounded-full bg-primary_font text-white hover:bg-[#9F9FFF]" 
+            onClick={handleSave}
           >
             Save & continue
           </AlertDialogAction>

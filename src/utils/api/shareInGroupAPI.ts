@@ -5,16 +5,17 @@ export default async function groupShare(
   groupSelectedFolder: string[]
 ) {
   const groupData = {
-    group_hash: groupUrlHashes,
-    file_hash: groupSelectedFile?.map((content) => content),
-    folder_hash: groupSelectedFolder?.map((content) => content),
-    can_share_content: settings.shareable,
-    can_download_content: settings.downloadable,
-    can_delete_content: settings.modifyable,
+    groups: groupUrlHashes,
+    files: groupSelectedFile,
+    folders: groupSelectedFolder,
+    shareable: settings.shareable,
+    downloadable: settings.downloadable,
+    editable: settings.modifyable,
+    proctored: settings.proctored,
   };
 
   const res = await fetch(
-    `https://api.immunefiles.com/api/api/auth/group/add/file_folder?tenant=${
+    `https://api.immunefiles.com/api/api/auth/share/group?tenant=${
       window.location.hostname.split('.')[0]
     }`,
     {

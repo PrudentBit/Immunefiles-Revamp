@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import editGroup from '@/utils/api/editGroupAPI'
+import { decryptData } from '@/utils/helper/decryptFiles'
+import { GroupStore } from '@/utils/store/groupDetailsStore'
 
 type Props = {
   group: GroupDetailsType
@@ -9,6 +12,8 @@ type Props = {
 const GroupName = ({group}: Props) => {
   const [rename, setRename] = useState(false);
   const [value, setValue] = useState(group.name);
+  const { toggleForceRefresh } = GroupStore();
+  const [groupName, setGroupName] = useState(group.name);
 
   const handleNameEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value= e.target.value;
@@ -23,6 +28,20 @@ const GroupName = ({group}: Props) => {
     minute: 'numeric',
     hour12: true,
   });
+
+  const handleSave = async () => {
+    const response = await editGroup({action: "rename", group_hash: group.group_hash, name: value});
+    const decryptedResponse = decryptData(response.data.ciphertext);
+    console.log(response)
+    if (response.status == 200) {
+      setRename(false);
+      setGroupName(value);
+      toggleForceRefresh();
+    }
+    else{
+      console.log(decryptedResponse);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-3 h-[18%] w-full">
@@ -47,7 +66,10 @@ const GroupName = ({group}: Props) => {
             onChange={(e)=>handleNameEdit(e)}
           >
           </input>
-          <Button className='h-6 px-3 bg-[#8E8EFF] hover:bg-[#9797FF] rounded-full font-normal'>
+          <Button 
+            className='h-6 px-3 bg-[#8E8EFF] hover:bg-[#9797FF] rounded-full font-normal'
+            onClick={handleSave}
+          >
             Save
           </Button>
           <div
@@ -64,7 +86,7 @@ const GroupName = ({group}: Props) => {
         </div>
       ) : (
         <div className="w-full h-full flex items-center justify-between px-2 bg-primary_bg rounded-lg">
-          <p className='text-primary_font text-base font-medium leading-5 p-2'>{group.name}</p>
+          <p className='text-primary_font text-base font-medium leading-5 p-2'>{groupName}</p>
           <div className="p-1 rounded-md hover:bg-bg_hover cursor-pointer" onClick={()=>setRename(true)}>
             <Image src='/rename-icon-2.svg' width={20} height={20} alt="edit icon"/>
           </div>
