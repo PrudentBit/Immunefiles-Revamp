@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
 type Store = {
-  groups: GroupDetailsType[] | null;
+  groups: GroupDetailsType[];
   setGroups: (_groups: GroupDetailsType[]) => void;
 };
 
 export const GroupStore = create<Store>((set) => ({
-  groups: null,
+  groups: [],
   setGroups: (groups) => set({ groups }),
 }));

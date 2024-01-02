@@ -47,7 +47,7 @@ const RequestForm = ({ request, requests, setRequests }: Props) => {
         <div className="flex justify-between">
           <div className="flex gap-2">
             <Image
-              src="/file-icon.svg"
+              src="/File-icon.svg"
               width={18}
               height={18}
               alt="Folder icon"

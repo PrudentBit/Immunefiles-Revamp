@@ -47,7 +47,7 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
   );
 
   return (
-    <div className='flex gap-4 h-[54%]'>
+    <div className='flex gap-4 h-[54%] w-[46rem]'>
       <div className='w-[55%] rounded-lg p-3 flex flex-col gap-3 border-[1px] border-solid border-[#7A7AFF] '>
         <div className='flex gap-3 items-center h-[20%]'>
           <button onClick={handleAllSelect} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>

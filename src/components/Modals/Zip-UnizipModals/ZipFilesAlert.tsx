@@ -52,7 +52,7 @@ const ZipFilesAlert = () => {
           <AlertDialogHeader className="flex flex-row items-center gap-3">
             <div className="rounded-full w-10 h-10 flex items-center justify-center bg-primary_bg">
               <Image
-                src="/zip-folder-icon.svg"
+                src="/zip-Folder-icon.svg"
                 width={20}
                 height={20}
                 alt="zip icon"

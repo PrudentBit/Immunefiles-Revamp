@@ -13,11 +13,9 @@ import {
 import Image from "next/image"
 
 import { useFileAndFolderStore } from "@/utils/store/filesAndFoldersStore"
-import { GroupStore } from "@/utils/store/groupDetailsStore"
 import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 import { useRouter } from "next/navigation"
 import { selectedFilesStore } from "@/utils/store/selectFilesStore"
-import FileDetailsAlert from "../Alerts/FileDetailsAlert"
 
 type sortType = 'files' | 'groups' | 'links' | 'internal' | 'all';
 
@@ -31,9 +29,6 @@ export function CommandBox() {
   const [files, folders] = useFileAndFolderStore((state) => [
     state.files,
     state.folders,
-  ])
-  const [groupDetails] = GroupStore((state) => [
-    state.groups
   ])
   const router = useRouter();
   const [removeAllFiles, addFile] = selectedFilesStore((state) => [
@@ -66,13 +61,6 @@ export function CommandBox() {
       removeAllFiles();
       addFile(file)
       router.push(`/filesystem/${file.path || "root"}`);
-      setOpen(false);
-    }
-  }
-
-  const handleGroupClick = () => {
-    return () => {
-      router.push(`/groups`);
       setOpen(false);
     }
   }
@@ -138,24 +126,7 @@ export function CommandBox() {
         </div>
         <hr/>
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          
-          {groupDetails && (groupsOnly || allActive) && (
-            <CommandGroup >
-              {groupDetails.map((group) => (
-                <CommandItem key={group.urlhash} className="flex gap-2">
-                  <Image src="/groups-icon.svg" height={22} width={22} alt="temp"></Image>
-                  <span className="w-[70%] truncate mr-16" onClick={handleGroupClick()}>{group.name}</span>
-
-                  <div className="w-16 p-1 rounded-full flex items-center justify-center border-[1px] border-solid border-primary_font">
-                    <p className='text-primary_font_2 text-xs font-normal leading-4'>Group</p>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          )}
-
-          <CommandSeparator/>
+          <CommandEmpty>No results found.</CommandEmpty>  
 
           {(filesOnly || allActive) && (
             <>

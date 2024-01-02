@@ -2,7 +2,7 @@ import LeftNav  from '@/components/LeftNav'
 import './globals.css'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-proivder';
-import { CommandBox } from '@/components/command/CommandBox';
+import { CommandBox } from '@/components/SearchFiles/CommandBox';
 
 export const metadata: Metadata = {
   title: "Immunefiles",

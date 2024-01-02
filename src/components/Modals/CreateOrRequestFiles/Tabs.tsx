@@ -12,10 +12,10 @@ const Tabs = ({tabName, className, onClick}: Props) => {
 
   useEffect(() => {
     if(tabName === 'Create File'){
-      setImage('/add_file-icon.svg')
+      setImage('/add_File-icon.svg')
     }
     else if(tabName === 'Create Folder'){
-      setImage('/add_folder-icon.svg')
+      setImage('/add_Folder-icon.svg')
     }
     else if(tabName === 'Request File'){
       setImage('/request-icon.svg')

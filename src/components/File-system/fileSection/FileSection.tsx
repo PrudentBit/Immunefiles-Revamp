@@ -10,8 +10,8 @@ type FileSectionProps = {
 }
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
-  console.log('FileSection called');
   const sectionType = type === "folder" ? "Folders" : "Files";
+  console.log(type, sectionType);
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
   console.log('selected', selected);
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
@@ -37,7 +37,6 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
   };
 
   const onMove = ({ store: {changed: {added, removed}}}: SelectionEvent) => {
-    console.log('onMove called');
     setSelected(prev => {
       const next = new Set(prev);
       extractIds(added).forEach(id => {
@@ -56,9 +55,15 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
       return next;
     });
   };
+  console.log(sectionType, 'subFiles', subFiles);
 
   return (
-    <section className="flex flex-col">
+    <SelectionArea  
+      className="flex flex-col" 
+      onStart={onStart}
+      onMove={onMove}
+      selectables=".selectable"
+    >
       <div className="flex gap-2">
         <Image
           src={`/${type}-icon.svg`}
@@ -69,15 +74,12 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
         />
         <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">{sectionType}</p>
       </div>
-        <SelectionArea className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5"
-          onStart={onStart}
-          onMove={onMove}
-          selectables=".selectable">
-          {subFiles.map((folder, index) => (
-            <File dataKey={index} key={index} file={folder} type={type} className="selectable"/>
-          ))}
-        </SelectionArea>
-    </section>
+      <div className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5">
+        {subFiles.map((folder, index) => (
+          <File dataKey={index} key={index} file={folder} type={type} className="selectable"/>
+        ))}
+      </div>
+    </SelectionArea>
   );
 };
 

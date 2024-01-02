@@ -1,5 +1,5 @@
 import LeftNav from "./LeftNav";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchFiles/SearchBar";
 import File from "./File-system/File";
 import FileOperations from "./File-system/menus/FileOperations";
 import TopNav from "./TopNav";

@@ -1,8 +1,8 @@
 import React from 'react';
 import ShadowedCard from '@/components/ShadowedCard';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import UserDashLinkGraph from './UserDashLinkGraph';
+import UserSOSModal from '@/components/Modals/UserSOSModal';
 
 type Props = {
   linkDetails?: UserDashDetails['links'];
@@ -85,12 +85,7 @@ const UserLinkAnalytics = ({ linkDetails }: Props) => {
           </div>
         </div>
 
-        <Button
-          variant="destructive"
-          className="w-[25%] h-10 rounded-full bg-transparent text-red-500 border-[1px] border-solid border-red-500 hover:text-white"
-        >
-          Apply SOS
-        </Button>
+        <UserSOSModal />
       </div>
     </ShadowedCard>
   );

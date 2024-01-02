@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import UploadUserProfileImage from '../../Modals/UploadProfileImage/UploadUserProfileImage'
 
 type Props = {
   userDetails?: UserDetailsType
@@ -61,12 +62,7 @@ const ChangeAvatar = ({userDetails}:Props) => {
           </div>
           
 
-          <div className='h-[5.5rem] w-[5.5rem] p-2'>
-            <Button className='rounded-full bg-bg_hover h-full w-full flex flex-col justify-center items-center hover:bg-[#D9D9FF]'>
-              <Image src="/upload-icon-4.svg" alt='profile' width={24} height={24}/>
-              <p className='text-primary_font_2 text-sm font-semibold leading-4'>Upload</p>
-            </Button>  
-          </div>
+          <UploadUserProfileImage/>
         </div>
       </div>
 
