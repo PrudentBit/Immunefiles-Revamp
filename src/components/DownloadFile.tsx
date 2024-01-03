@@ -2,13 +2,13 @@ import downloadResource from '@/utils/api/getDowloadBlob';
 import React from 'react'
 
 type Props = {
-  file: FileOrFolderType;
+  file: FileOrFolderType | groupFileandFolderType;
 }
 
 const DownloadFile = ({file}: Props) => {
 
   const handleDownload = async () => {
-    if (file.is_file && file.url) {
+    if (file.url) {
       try {
         const blob = await downloadResource(file.url);
         const url = window.URL.createObjectURL(blob);

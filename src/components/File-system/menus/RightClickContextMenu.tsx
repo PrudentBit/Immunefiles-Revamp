@@ -11,6 +11,7 @@ import MoveOrCopyFilesModal from '@/components/Modals/Move&CopyFilesModal';
 import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
 import UnzipFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipFilesAlert';
 import UnziptoFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipToFilesModal';
+import { useRouter } from 'next/router';
 
 type Props = {
   children: React.ReactNode;
@@ -19,6 +20,17 @@ type Props = {
 
 const RightClickContextMenu = ({children, file}: Props) => {
   const isZip = file.name.endsWith('.zip');
+  const type = file.is_file ? 'file' : 'folder';
+  const router = useRouter();
+
+  const handleOpen = () => {
+    if (type==='folder') {
+      router.push(`/filesystem/${file.urlhash}`);
+    }
+    else {
+      window.open(`https://${window.location.hostname.split(".")[0]}.immunefiles.com/file/view/${file.urlhash}`, '_blank');
+    }
+  };
 
   return (
     <ContextMenu>
@@ -36,7 +48,7 @@ const RightClickContextMenu = ({children, file}: Props) => {
             </ContextMenuItem>
           </>
         )}
-        <ContextMenuItem className="flex gap-2 items-center">
+        <ContextMenuItem className="flex gap-2 items-center" onClick={handleOpen}>
           <Image src='/open-icon.svg' width={16} height={16} alt='Open icon'/>
           Open
         </ContextMenuItem>
@@ -46,7 +58,7 @@ const RightClickContextMenu = ({children, file}: Props) => {
         </ContextMenuItem>
         <ContextMenuItem className="flex gap-2 items-center">
           <Image src='/details-icon.svg' width={16} height={16} alt='Details icon'/>
-          <FileDetailsModal file={file}/>
+          <FileDetailsModal file={file} type={type}/>
         </ContextMenuItem>
         <ContextMenuItem className="flex gap-2 items-center">
           <Image src='/move-icon.svg' width={16} height={16} alt='Move icon'/>
@@ -58,11 +70,11 @@ const RightClickContextMenu = ({children, file}: Props) => {
         </ContextMenuItem>
         <ContextMenuItem className='flex gap-2 text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert multiplefiles={false}/>
+          <DeleteFileAlert multiplefiles={false} type={type}/>
         </ContextMenuItem>
         <ContextMenuItem className="flex gap-2 items-center">
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false} currFile={file}/>
+          <ShareContentModal multiplefiles={false} currFile={file} type={type}/>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>

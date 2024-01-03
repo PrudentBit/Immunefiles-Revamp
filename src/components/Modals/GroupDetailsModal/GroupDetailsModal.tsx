@@ -54,7 +54,7 @@ const GroupDetailsModal = ({ group }: Props) => {
             <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full ' alt='close icon'/>
           </AlertDialogCancel>
         </AlertDialogHeader>
-        <AlertDialogDescription className='h-[28rem] flex flex-col gap-4 px-2'>
+        <AlertDialogDescription className='h-[28rem] flex flex-col gap-4 px-2' onClick={(e)=>e.stopPropagation()}>
 
           <GroupName group={group}/>
 

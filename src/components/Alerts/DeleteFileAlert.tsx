@@ -20,9 +20,10 @@ import BotLeftAlert from '@/components/BotLeftAlert';
 
 type Props = {
   multiplefiles: boolean;
+  type: string;
 };
 
-const DeleteFileAlert = ({ multiplefiles }: Props) => {
+const DeleteFileAlert = ({ multiplefiles, type }: Props) => {
   const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
   const [deletedFiles, setDeletedFiles] = useState<string[]>([]);
   const [deletedFolders, setDeletedFolders] = useState<string[]>([]);
@@ -46,8 +47,8 @@ const DeleteFileAlert = ({ multiplefiles }: Props) => {
   ) => {
     e.stopPropagation();
 
-    const files = file.filter((item) => item.is_file);
-    const folders = file.filter((item) => !item.is_file);
+    const files = file.filter((item) => type);
+    const folders = file.filter((item) => type);
 
     const fileUrls = files.map((item) => item.urlhash);
     const folderUrls = folders.map((item) => item.urlhash);

@@ -44,7 +44,7 @@ const GroupName = ({group}: Props) => {
   }
 
   return (
-    <div className="flex flex-col gap-3 h-[18%] w-full">
+    <div className="flex flex-col gap-3 h-[18%] w-full" onClick={(e)=>e.stopPropagation()}>
       <div className="flex gap-4 justify-between items-center">
         <div className='flex gap-3 h-5'>
           <Image src='/groups-icon.svg' width={24} height={24} alt="group"/>

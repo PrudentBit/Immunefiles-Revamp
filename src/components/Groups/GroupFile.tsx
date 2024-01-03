@@ -6,6 +6,8 @@ import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import { useRouter } from 'next/navigation';
 import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
 import ThreeDotsMenu from '@/components/File-system/menus/ThreeDotsMenu';
+import GroupThreeDotsMenu from './menus/GroupThreeDotsMenu';
+import GroupRightClickMenu from './menus/GroupRightClickMenu';
 
 type Props = {
   file: groupFileandFolderType;
@@ -51,7 +53,7 @@ const GroupFile = ({ file, className, dataKey, type, group_hash }: Props) => {
     : '/folder-icon-filled.svg';
 
   return (
-    <>
+    <GroupRightClickMenu file={file} type={type} group_hash={group_hash}>
       <div
         title={file.name}
         onDoubleClick={handleDoubleClick}
@@ -74,9 +76,9 @@ const GroupFile = ({ file, className, dataKey, type, group_hash }: Props) => {
             {file.name}
           </p>
         </div>
-        <ThreeDotsMenu file={file} />
+        <GroupThreeDotsMenu file={file} type={type} group_hash={group_hash}/>
       </div>
-    </>
+    </GroupRightClickMenu>
   );
 };
 

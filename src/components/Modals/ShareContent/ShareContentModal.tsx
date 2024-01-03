@@ -28,7 +28,8 @@ import groupShare from '@/utils/api/shareInGroupAPI';
 
 type Props = {
   multiplefiles: boolean;
-  currFile: FileOrFolderType;
+  currFile: FileOrFolderType | groupFileandFolderType;
+  type: string;
 };
 
 type responseType = {
@@ -37,7 +38,7 @@ type responseType = {
   data: any;
 };
 
-const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
+const ShareContentModal = ({ multiplefiles, currFile, type }: Props) => {
   const [tab, setTab] = useState<'link' | 'email' | 'internal' | 'groups'>(
     'link'
   );
@@ -92,8 +93,8 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
 
   const handleShare = async () => {
     try {
-      const file = files.filter((item) => item.is_file);
-      const folder = files.filter((item) => !item.is_file);
+      const file = files.filter((item) => type);
+      const folder = files.filter((item) => !type);
 
       const fileUrls = file.map((item) => item.urlhash);
       const folderUrls = folder.map((item) => item.urlhash);

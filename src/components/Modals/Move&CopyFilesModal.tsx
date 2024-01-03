@@ -27,7 +27,7 @@ import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedF
 type Props = {
   multiplefiles: boolean;
   moveORcopy: string;
-  currFile?: FileOrFolderType;
+  currFile?: FileOrFolderType | groupFileandFolderType;
 };
 
 const MoveOrCopyFilesModal = ({
