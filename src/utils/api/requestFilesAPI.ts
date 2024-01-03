@@ -1,18 +1,17 @@
 type Request = {
-  fileName: string;
+  fileName: string[];
   email: string;
-  isEmailValid: boolean;
 };
 
 export default async function requestFiles(
-  requests: Request[],
+  request: Request,
   currentFolder: string
 ) {
-  const requestData = requests.map((request) => ({
+  const requestData ={
     file_name: request.fileName,
     user_from: '',
     user_to: request.email,
-  }));
+  };
 
   const res = await fetch(
     `https://api.immunefiles.com/api/api/content/request/create_request/${currentFolder}?tenant=${

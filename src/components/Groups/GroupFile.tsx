@@ -13,31 +13,14 @@ type Props = {
   file: groupFileandFolderType;
   type: string;
   className?: string;
-  dataKey: number;
   group_hash: string;
 };
 
-const GroupFile = ({ file, className, dataKey, type, group_hash }: Props) => {
+const GroupFile = ({ file, className, type, group_hash }: Props) => {
   const router = useRouter();
-  const [files, removeAllFiles] = selectedFilesStore(
-    (state) => [
-      state.files,
-      state.removeAllFiles,
-    ]
-  );
-  const [isSelected, setIsSelected] = useState(false);
-
-  useEffect(() => {
-    if (files.includes(file)) {
-      setIsSelected(true);
-    } else {
-      setIsSelected(false);
-    }
-  }, [files]);
 
   const handleDoubleClick = () => {
     if (type==='folder') {
-      removeAllFiles();
       router.push(`/groups/${group_hash}/${file.urlhash}`);
     }
     else {
@@ -57,12 +40,7 @@ const GroupFile = ({ file, className, dataKey, type, group_hash }: Props) => {
       <div
         title={file.name}
         onDoubleClick={handleDoubleClick}
-        data-key={dataKey}
-        className={`${className} w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center border-solid border-[1px] ${
-          (isSelected)
-            ? 'border-primary_font bg-[#EFEFFD]'
-            : 'border-primary_bg bg-primary_bg'
-        }`}
+        className={`${className} w-[13.4rem] select-none h-12 hover:bg-bg_hover cursor-pointer rounded-md flex justify-between p-3 items-center bg-primary_bg`}
       >
         <div className="flex gap-3">
           <Image

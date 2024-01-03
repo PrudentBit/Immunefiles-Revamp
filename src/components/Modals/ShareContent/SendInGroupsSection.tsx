@@ -1,7 +1,9 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import SwitchFields from '../../SwitchFields'
 import Image from 'next/image'
 import { GroupStore } from '@/utils/store/groupDetailsStore'
+import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI'
+import { decryptData } from '@/utils/helper/decryptFiles'
 
 type Props = {
   settings: InternalShareSettings
@@ -18,8 +20,8 @@ type Props = {
 }
 
 const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelectedGroups, allChecked, setAllChecked}: Props) => {
-  const [searchTerm, setSearchTerm] = React.useState<string>('');
-  const { groups } = GroupStore();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const { groups, setGroups } = GroupStore();
 
   const handleGroupSelect = (group: GroupDetailsType) => {
     if (selectedGroups.includes(group.group_hash)) {
@@ -45,6 +47,26 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
   const filteredGroups = groups!.filter(group =>
     group.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchGroupDetails();
+
+        if(response.status === 200) {
+          const decryptedGroupData = decryptData(response.data.ciphertext);
+          console.log(decryptedGroupData);
+          setGroups(decryptedGroupData.groups);
+        }
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <div className='flex gap-4 h-[54%] w-[46rem]'>

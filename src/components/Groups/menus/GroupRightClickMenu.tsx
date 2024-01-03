@@ -5,9 +5,9 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import Image from 'next/image'
-import DeleteFileAlert from '@/components/Alerts/DeleteFileAlert';
+import DeleteGroupFilesAlert from "@/components/Alerts/DeleteGroupFilesAlert";
 import FileDetailsModal from '@/components/Modals/FileDetailsModal';
-import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
+import ShareGroupContentModal from '@/components/Modals/ShareContent/ShareGroupContentModal';
 import DownloadFile from '@/components/DownloadFile';
 import { useRouter } from 'next/navigation';
 
@@ -54,13 +54,13 @@ const GroupRightClickMenu = ({file, type, group_hash, children}: Props) => {
           disabled={!file.permissions.can_delete}
         >
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          
+          <DeleteGroupFilesAlert file={file} type={type} group_hash={group_hash}/>
         </ContextMenuItem>
         <ContextMenuItem
           disabled={!file.permissions.can_share}
         >
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false} currFile={file} type={type}/>
+          <ShareGroupContentModal currFile={file} type={type}/>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>

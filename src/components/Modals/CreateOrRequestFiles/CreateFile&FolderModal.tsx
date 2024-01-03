@@ -17,7 +17,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Tabs from '@/components/Modals/CreateOrRequestFiles/Tabs'
 import CreateFileSection from '@/components/Modals/CreateOrRequestFiles/CreateFileSection'
 import CreateFolderSection from '@/components/Modals/CreateOrRequestFiles/CreateFolderSection'
-import RequestFileSection from '@/components/Modals/CreateOrRequestFiles/RequestFileSection'
+import RequestFileSection from '@/components/Modals/CreateOrRequestFiles/RequestFile/RequestFileSection'
 import createFile from '@/utils/api/createFilesAPI'
 import createFolder from '@/utils/api/createFolderAPI'
 import requestFiles from '@/utils/api/requestFilesAPI'
@@ -26,6 +26,14 @@ import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
 type Props = {
   propTab:string;
 }
+
+type Request = {
+  id: string;
+  fileName: string[];
+  email: string;
+  requestType: string;
+};
+
 
 const CreateFileOrFolder = ({propTab}:Props) => {
   const [tab, setTab] = useState(propTab);
@@ -37,13 +45,8 @@ const CreateFileOrFolder = ({propTab}:Props) => {
 
   const [folderName, setFolderName] = useState('');
 
-  const [requestType, setRequestType] = useState<'internal' | 'external'>('internal');
-  const [requests, setRequests] = useState([{id:'', fileName: '', email: '', isEmailValid: true, requestType : 'internal'}]);
-  const handleAddRequest = () => {
-    const id = new Date().getTime().toString();
-    setRequests([...requests, { id, fileName: '', email: '', isEmailValid: true, requestType }]);
-  };
-  
+  const [requestType, setRequestType] = useState<'internal' | 'external' | 'none'>('none');
+  const [request, setRequest] = useState<Request>({id:'', fileName: [""], email: '', requestType : 'internal'});
 
   const handleCreateFile = async () => {
     try {
@@ -67,7 +70,7 @@ const CreateFileOrFolder = ({propTab}:Props) => {
 
   const handleRequestFiles = async () => {
     try {
-      const result = await requestFiles(requests, 'root');
+      const result = await requestFiles(request, 'root');
       console.log(result);
       toggleForceRefresh();
     } catch (error) {
@@ -98,7 +101,7 @@ const CreateFileOrFolder = ({propTab}:Props) => {
               <Image src="/cross-icon.svg" width={20} height={20} className='rounded-full' alt='close icon'/>
             </AlertDialogCancel>
           </AlertDialogHeader>
-        <AlertDialogDescription className={`text-[#7A7AFF] text-md p-2 relative ${tab === "Request File" ? ("h-[19rem]") : ("h-[8rem]")} w-full`}>
+        <AlertDialogDescription className={`text-[#7A7AFF] text-md p-2 relative ${tab === "Request File" ? ("h-[16rem]") : ("h-[8rem]")} w-full`}>
           <AnimatePresence initial={false} >
             <motion.div
               variants={variants}
@@ -122,7 +125,7 @@ const CreateFileOrFolder = ({propTab}:Props) => {
               )}
 
               {tab === 'Request File' && (
-                <RequestFileSection requests={requests} setRequests={setRequests} requestType={requestType} setRequestType={setRequestType}/>
+                <RequestFileSection request={request} setRequest={setRequest} requestType={requestType} setRequestType={setRequestType}/>
               )}
             </motion.div>
           </AnimatePresence>
@@ -152,13 +155,9 @@ const CreateFileOrFolder = ({propTab}:Props) => {
 
           {tab === 'Request File' && (
             <div className='w-full flex justify-between'>
-              <button className='flex gap-2 items-center rounded-full hover:bg-primary_bg pr-3' onClick={handleAddRequest}>
-                <Image src='/add-row-icon.svg' width={18} height={18} alt='Add row' className='rounded-full bg-primary_bg h-8 w-8 p-[0.35rem]'/>
-                <p className=' text-[#7A7AFF] font-medium text-sm'>Add request</p>
-              </button>
               <AlertDialogAction
                 onClick={handleRequestFiles}
-                disabled={requests.some(request => !request.fileName || !request.email || !request.isEmailValid)}
+                disabled={!request.email || (request.fileName.length < 0)}
                 title="Fields might be missing or incorrect"
                 className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
               >

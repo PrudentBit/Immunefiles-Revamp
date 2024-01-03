@@ -17,13 +17,12 @@ import deleteGroupFiles from '@/utils/api/deleteGroupFilesAPI';
 import { group } from 'console';
 
 type Props = {
-  multiplefiles: boolean;
   type: string;
   group_hash: string;
   file: groupFileandFolderType;
 };
 
-const DeleteGroupFilesAlert = ({ multiplefiles, type, group_hash, file }: Props) => {
+const DeleteGroupFilesAlert = ({ type, group_hash, file }: Props) => {
   const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
 
   const deleteSelected = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,19 +46,9 @@ const DeleteGroupFilesAlert = ({ multiplefiles, type, group_hash, file }: Props)
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          {multiplefiles ? (
-            <Image
-              src="/delete-icon.svg"
-              onClick={(e) => e.stopPropagation()}
-              width={16}
-              height={16}
-              alt="Delete icon"
-            />
-          ) : (
-            <p onClick={(e) => e.stopPropagation()} className="w-full">
-              Delete
-            </p>
-          )}
+          <p onClick={(e) => e.stopPropagation()} className="w-full">
+            Delete
+          </p>
         </AlertDialogTrigger>
         <AlertDialogContent className="translate-y-[-210%]">
           <AlertDialogHeader className="flex flex-row items-center gap-3">
@@ -72,9 +61,7 @@ const DeleteGroupFilesAlert = ({ multiplefiles, type, group_hash, file }: Props)
             />
             <div className="flex flex-col h-full">
               <AlertDialogTitle className="font-medium text-md">
-                {multiplefiles
-                  ? 'Do you want to delete these items?'
-                  : 'Do you want to delete this item?'}
+                Do you want to delete this item?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-xs">
                 You can restore deleted items from trash

@@ -6,7 +6,7 @@ import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import GroupFile from '@/components/Groups/GroupFile';
 
 type FileSectionProps = {
-  subFiles: FileOrFolderType[] | groupFileandFolderType[];
+  subFiles: FileOrFolderType[];
   type: string;
   group_hash?: string;
 }
@@ -88,7 +88,7 @@ const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
           ) : (
             <>
               {group_hash && (
-                <GroupFile dataKey={index} key={index} file={file} type={type} group_hash={group_hash} className="selectable"/>
+                <GroupFile key={index} file={file} type={type} group_hash={group_hash} className="selectable"/>
               )}
             </>
           )

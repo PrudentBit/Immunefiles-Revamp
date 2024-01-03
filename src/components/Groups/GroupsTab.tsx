@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import Image from 'next/image'
 import Groups from './Groups';
 import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI';

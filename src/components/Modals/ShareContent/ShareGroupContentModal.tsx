@@ -14,8 +14,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedFilesDisplay';
-import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import TabSelectionComponent from './TabSelectionComponent';
 import GenerateLinkSection from './GenerateLinkSection';
 import SendMailSection from './SendMailSection';
@@ -27,8 +25,8 @@ import internalShare from '@/utils/api/internalShareAPI';
 import groupShare from '@/utils/api/shareInGroupAPI';
 
 type Props = {
-  multiplefiles: boolean;
-  currFile?: FileOrFolderType;
+  currFile: groupFileandFolderType;
+  type: string;
 };
 
 type responseType = {
@@ -37,15 +35,10 @@ type responseType = {
   data: any;
 };
 
-const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
+const ShareGroupContentModal = ({ type, currFile }: Props) => {
   const [tab, setTab] = useState<'link' | 'email' | 'internal' | 'groups'>(
     'link'
   );
-  const [files, removeFile ,addFile] = selectedFilesStore((state) => [
-    state.files,
-    state.removeFile,
-    state.addFile
-  ]);
   const [linkName, setLinkName] = useState<string>('');
   const [shareEmail, setShareEmail] = useState<string>('');
   const [sharedSuccessfully, setSharedSuccessfully] = useState<boolean>(false);
@@ -74,29 +67,21 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
       modifyable: false,
     });
 
-  const removeFileFromSelection = (indexToRemove: number) => {
-    removeFile(files[indexToRemove].urlhash);
-  };
-
   const onCloseAlert = () => {
     setSharedSuccessfully(false);
     setResponse(null);
   };
 
   const alertDialogCancelRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (files.length === 0 && alertDialogCancelRef.current) {
-      alertDialogCancelRef.current.click();
-    }
-  }, [files]);
+  const handleRemoveFile = () => {
+    alertDialogCancelRef.current?.click();
+  }
 
   const handleShare = async () => {
     try {
-      const file = files.filter((item) => item.is_file);
-      const folder = files.filter((item) => !item.is_file);
 
-      const fileUrls = file.map((item) => item.urlhash);
-      const folderUrls = folder.map((item) => item.urlhash);
+      const fileUrls = [type==='file' ? currFile.urlhash : ""];
+      const folderUrls = [type==='file' ? "" : currFile.urlhash];
 
       let shareResponse;
       if (tab === 'internal') {
@@ -160,31 +145,20 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
     closed: { opacity: 0, scale: 0.9 },
   };
 
-  const onOpenWithThreeDots = (
-    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
-    if (currFile) {
-      addFile(currFile);
-    }
-  };
+  const fileIcon = () => {
+    const extension = type==="file" ? currFile.name.split('.').pop() : '';
+    const iconSrc = type === "file"
+      ? `/FileIcons/${extension}.svg`
+      : '/folder-icon-filled.svg';
+    return iconSrc;
+  }
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        {multiplefiles ? (
-          <Image
-            src="/share-icon.svg"
-            onClick={(e) => e.stopPropagation()}
-            width={20}
-            height={20}
-            alt="Share icon"
-          />
-        ) : (
-          <p onClick={onOpenWithThreeDots} className="w-full">
-            Share
-          </p>
-        )}
+      <AlertDialogTrigger asChild onClick={(e)=>e.stopPropagation()}>
+        <p className="w-full">
+          Share
+        </p>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[50rem] gap-1" onClick={(e)=> e.stopPropagation()}>
         <AlertDialogHeader className="flex flex-row h-10 justify-between">
@@ -213,10 +187,30 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
           </AlertDialogCancel>
         </AlertDialogHeader>
         <AlertDialogDescription className="h-[26rem] text-md p-2 w-[47rem]">
-          <SelectedFilesDisplay
-            file={files}
-            removeFileFromSelection={removeFileFromSelection}
-          />
+          <div className="w-full h-[16%] rounded-lg px-4 py-3 border-[1px] border-solid border-[#7A7AFF]">
+            <div
+              className="h-10 max-w-[30%] flex gap-2 items-center p-2 bg-primary_bg rounded-md"
+            >
+              <Image
+                src={fileIcon()}
+                width={18}
+                height={18}
+                alt={`${type==="file" ? 'file' : 'folder'} icon`}
+              />
+              <p className="truncate pr-2">{currFile.name}</p>
+              <button
+                className="shrink-0 bg-white h-5 w-5 flex items-center justify-center rounded-sm hover:bg-slate-100"
+                onClick={handleRemoveFile}
+              >
+                <Image
+                  src="/cross-icon.svg"
+                  width={14}
+                  height={14}
+                  alt="remove"
+                />
+              </button>
+            </div>
+          </div>
 
           <TabSelectionComponent tab={tab} setTab={setTab} />
 
@@ -232,7 +226,7 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
                 damping: 20,
               }}
               key={tab}
-              className="absolute h-[25rem] w-[46rem]"
+              className="absolute h-[31rem] w-[46rem]"
             >
               {tab === 'link' && (
                 <GenerateLinkSection
@@ -386,4 +380,4 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
   );
 };
 
-export default ShareContentModal;
+export default ShareGroupContentModal;
