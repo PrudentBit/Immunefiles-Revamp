@@ -1,3 +1,5 @@
+"use client"
+
 import {
   ContextMenu,
   ContextMenuContent,
@@ -11,7 +13,7 @@ import MoveOrCopyFilesModal from '@/components/Modals/Move&CopyFilesModal';
 import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModal';
 import UnzipFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipFilesAlert';
 import UnziptoFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipToFilesModal';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   children: React.ReactNode;

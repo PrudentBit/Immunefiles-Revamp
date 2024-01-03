@@ -14,7 +14,7 @@ import ShareContentModal from '@/components/Modals/ShareContent/ShareContentModa
 import UnzipFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipFilesAlert';
 import UnziptoFilesAlert from '@/components/Modals/Zip-UnizipModals/UnzipToFilesModal';
 import DownloadFile from '../../DownloadFile';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   file: FileOrFolderType;

@@ -1,5 +1,6 @@
 "use client"
 
+import Manage from "@/app/(home)/manageaccount/page"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,6 +14,7 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { useState, useEffect } from "react"
+import ManageShared from "./ManageSharedModal/ManageSharedModal"
 
 type Props = {
   file?: FileOrFolderType ;
@@ -94,6 +96,17 @@ const FileDetailsModal = ({ file, groupFile, type }: Props) => {
             
           </div>
         </AlertDialogDescription>
+        {file?.owner && (
+          <AlertDialogFooter className=''>
+            <AlertDialogAction className='rounded-full text-white gap-2 font-normal bg-primary_font hover:text-primary_font border-[1px] border-solid border-primary_font'>
+              Rename
+              <Image src="/rename-icon.svg" width={15} height={15} alt='rename icon'/>
+            </AlertDialogAction>
+            <AlertDialogAction className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'>
+              <ManageShared file={file} type={type}/>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   )
