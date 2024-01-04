@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import {toast} from 'sonner';
 
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
@@ -21,7 +22,6 @@ import moveFiles from '@/utils/api/movefilesAPI';
 import copyFiles from '@/utils/api/copyFilesAPI';
 import getFiles from '@/utils/api/getFilesAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedFilesDisplay';
 
 type Props = {
@@ -64,8 +64,9 @@ const MoveOrCopyFilesModal = ({
       const filesHash = file.map((item) => item.urlhash);
       const result = await moveFiles(filesHash, '', selectedFolder);
       if (result.success) {
-        console.log('Files moved successfully');
-        setApiSuccess(true);
+        toast.success('Files moved successfully', {
+          description: 'You can find them in the selected folder',
+        });
         toggleForceRefresh();
         removeAllFiles();
       } else {
@@ -75,8 +76,9 @@ const MoveOrCopyFilesModal = ({
       const filesHash = file.map((item) => item.urlhash);
       const result = await copyFiles(filesHash, [], selectedFolder);
       if (result.success) {
-        console.log('Files copied successfully');
-        setApiSuccess(true);
+        toast.success('Files copied successfully',{
+          description: 'You can find them in the selected folder',
+        });
         toggleForceRefresh();
         removeAllFiles();
       } else {
@@ -364,29 +366,6 @@ const MoveOrCopyFilesModal = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {apiSuccess && (
-        <BotLeftAlert image="/task-completed-icon.svg" imagebg="bg-[#E5EDFF]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-primary_font font-semibold text-base leading-4  ">
-              Files {moveORcopy === 'Move' ? 'Moved' : 'Copied'} successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              you can now view your {moveORcopy === 'Move' ? 'moved' : 'copied'}{' '}
-              items in file system.
-            </p>
-          </div>
-          <button
-            onClick={() => {
-              setApiSuccess(false);
-              removeAllFiles();
-            }}
-            className="text-primary_font px-2 mb-8 text-lg"
-          >
-            x
-          </button>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

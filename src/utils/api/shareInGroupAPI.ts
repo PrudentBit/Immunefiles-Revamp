@@ -28,10 +28,6 @@ export default async function groupShare(
     }
   );
 
-  if (res.ok) {
-    const jsonData = await res.json();
-    return { success: true, message: 'Successfully Shared', data: jsonData };
-  } else {
-    throw new Error('Error sharing with group');
-  }
+  const jsonData = await res.json();
+  return { status: res.status, data: jsonData };
 }

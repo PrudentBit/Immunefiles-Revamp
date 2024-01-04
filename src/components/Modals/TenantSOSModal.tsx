@@ -11,11 +11,10 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import removeAllTenantLinks from '@/utils/api/sosTenantLinks';
+import { toast } from 'sonner';
 
 const TenantSOSModal = () => {
-  const [sosAppliedSuccessfully, setSosAppliedSuccessfully] = useState(false);
   const [progress, setProgress] = useState(0);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [buttonHeld, setButtonHeld] = useState(false);
@@ -49,12 +48,14 @@ const TenantSOSModal = () => {
   const handleSOS = async () => {
     try {
       const result = await removeAllTenantLinks();
-      if (result.success) {
-        setSosAppliedSuccessfully(true);
-        setTimeout(() => setSosAppliedSuccessfully(false), 5000);
+      if (result.status === 200) {
+        toast.success('SOS applied successfully');
+      }
+      else {
+        toast.error(result.data.message);
       }
     } catch (error) {
-      console.error(error);
+      toast.error('Something went wrong');
     }
   };
 
@@ -141,19 +142,6 @@ const TenantSOSModal = () => {
           </AlertDialogDescription>
         </AlertDialogContent>
       </AlertDialog>
-
-      {sosAppliedSuccessfully && (
-        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
-              SOS applied successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              All links have been expired.
-            </p>
-          </div>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

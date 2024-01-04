@@ -21,20 +21,14 @@ import GenerateLinkSection from './GenerateLinkSection';
 import SendMailSection from './SendMailSection';
 import InternalShareSection from './InternalShareSection';
 import SendInGroupsSection from './SendInGroupsSection';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import shareLinkOrMail from '@/utils/api/shareLinkOrMailAPI';
 import internalShare from '@/utils/api/internalShareAPI';
 import groupShare from '@/utils/api/shareInGroupAPI';
+import { toast } from 'sonner';
 
 type Props = {
   multiplefiles: boolean;
   currFile?: FileOrFolderType;
-};
-
-type responseType = {
-  message: string;
-  success: boolean;
-  data: any;
 };
 
 const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
@@ -48,8 +42,6 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
   ]);
   const [linkName, setLinkName] = useState<string>('');
   const [shareEmail, setShareEmail] = useState<string>('');
-  const [sharedSuccessfully, setSharedSuccessfully] = useState<boolean>(false);
-  const [response, setResponse] = useState<responseType | null>(null);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [allChecked, setAllChecked] = useState<boolean>(false);
 
@@ -76,11 +68,6 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
 
   const removeFileFromSelection = (indexToRemove: number) => {
     removeFile(files[indexToRemove].urlhash);
-  };
-
-  const onCloseAlert = () => {
-    setSharedSuccessfully(false);
-    setResponse(null);
   };
 
   const alertDialogCancelRef = useRef<HTMLButtonElement>(null);
@@ -147,9 +134,19 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
       setLinkName('');
       setShareEmail('');
 
-      console.log(shareResponse);
-      setResponse(shareResponse);
-      setSharedSuccessfully(true);
+      if (shareResponse.status === 200) {
+        console.log(shareResponse.data);
+        if (tab === 'link'){
+          toast.success("Share link generated", {
+            description: shareResponse.data.message,
+          });
+        } else {
+          toast.success(shareResponse.data.message);
+        }
+      }
+      else{
+        toast.error(shareResponse.data.message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -318,70 +315,6 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
           )}
         </AlertDialogFooter>
       </AlertDialogContent>
-
-      {sharedSuccessfully && tab === 'link' && (
-        <BotLeftAlert
-          image="/task-completed-icon.svg"
-          imagebg="bg-[#E5EDFF]"
-          className="w-fit"
-        >
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-primary_font font-semibold text-base leading-4  ">
-              Files/Folders shared successfully
-            </p>
-            <p
-              className="text-[#979797] font-[400] text-sm leading-[1.1rem]"
-              title="link"
-            >
-              Link: {response?.data.data.link}
-            </p>
-          </div>
-          <button
-            onClick={onCloseAlert}
-            className="text-primary_font px-2 mb-8 text-lg"
-          >
-            x
-          </button>
-        </BotLeftAlert>
-      )}
-
-      {sharedSuccessfully && tab === 'email' && (
-        <BotLeftAlert image="/task-completed-icon.svg" imagebg="bg-[#E5EDFF]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-primary_font font-semibold text-base leading-4  ">
-              Files/Folders shared successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              
-            </p>
-          </div>
-          <button
-            onClick={onCloseAlert}
-            className="text-primary_font px-2 mb-8 text-lg"
-          >
-            x
-          </button>
-        </BotLeftAlert>
-      )}
-
-      {sharedSuccessfully && tab === 'groups' && (
-        <BotLeftAlert image="/task-completed-icon.svg" imagebg="bg-[#E5EDFF]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-primary_font font-semibold text-base leading-4  ">
-              Files/Folders shared successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              
-            </p>
-          </div>
-          <button
-            onClick={onCloseAlert}
-            className="text-primary_font px-2 mb-8 text-lg"
-          >
-            x
-          </button>
-        </BotLeftAlert>
-      )}
     </AlertDialog>
   );
 };

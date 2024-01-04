@@ -13,25 +13,26 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import editUser from '@/utils/api/editUserAPI';
+import { toast } from 'sonner';
 
 type Props = {
   user?: AdminSpecificUserType;
 };
 
 const DeleteUserModal = ({ user }: Props) => {
-  const [deletedSuccessfully, setDeletedSuccessfully] = useState(false);
-
   const handleDelete = async () => {
     if (user) {
       try {
         const result = await editUser(user.username, 'delete');
-        if (result.success) {
-          setDeletedSuccessfully(true);
+        if (result.status === 200) {
+          toast.success(result.data.message);
+        } else {
+          toast.error(result.data.message);
         }
       } catch (error) {
         console.error(error);
+        toast.error('Something went wrong');
       }
     }
   };
@@ -103,19 +104,6 @@ const DeleteUserModal = ({ user }: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {deletedSuccessfully && (
-        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
-              User deleted successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              The user&apos;s account has been removed permanently.
-            </p>
-          </div>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

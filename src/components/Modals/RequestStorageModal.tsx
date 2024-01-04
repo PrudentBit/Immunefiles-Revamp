@@ -12,7 +12,6 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import { Progress } from '@/components/ui/progress' 
 
 type Props = {
@@ -91,18 +90,6 @@ const RequestStorageModal = ({storage}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {emailSent &&
-        <BotLeftAlert className='w-[26rem]' image='/mail-sent-icon.svg' imagebg='bg-[#D0FFE3]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#3ABA6E] font-semibold text-base leading-4  '>Request mail sent!</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>Mail has been sent concerning your request. you’ll get an update on your mail box.</p>
-          </div>
-          <button className='text-primary_font h-full flex items-start text-lg' onClick={()=>setEmailSent(!emailSent)}>
-            <Image src="/close-icon.svg" height={35} width={35} alt='close'/>
-          </button>
-        </BotLeftAlert>
-      }
     </>
   )
 }

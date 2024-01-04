@@ -12,8 +12,8 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import editUser from '@/utils/api/editUserAPI'
+import { toast } from 'sonner'
 
 type Props = {
   user?: AdminSpecificUserType;
@@ -23,7 +23,6 @@ const AddUserStorageModal = ({ user }: Props) => {
   const [visualTotalStorage, setVisualTotalStorage] = useState(
     parseInt(user?.storage.total_storage || '0')
   );
-  const [storageIncreased, setStorageIncreased] = useState(false);
 
   const handleAddStorage = () => {
     setVisualTotalStorage((prevStorage) => prevStorage + 1);
@@ -41,12 +40,15 @@ const AddUserStorageModal = ({ user }: Props) => {
           'add_extra',
           visualTotalStorage - parseInt(user?.storage.total_storage || '0')
         );
-        if (result.success) {
-          setStorageIncreased(true);
-          setTimeout(() => setStorageIncreased(false), 5000);
+        if (result.status === 200) {
+          toast.success(result.data.message);
+        }
+        else {
+          toast.error(result.data.message);
         }
       } catch (error) {
         console.error(error);
+        toast.error('Something went wrong');
       }
     }
   };
@@ -117,19 +119,6 @@ const AddUserStorageModal = ({ user }: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {storageIncreased && (
-        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
-              User storage increased to {visualTotalStorage}
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              The user will now be able to utilize {visualTotalStorage}GB.
-            </p>
-          </div>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

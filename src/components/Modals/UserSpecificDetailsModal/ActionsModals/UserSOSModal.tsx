@@ -13,26 +13,28 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import editUser from '@/utils/api/editUserAPI'
+import { toast } from 'sonner'
 
 type Props = {
 	user?: AdminSpecificUserType
 }
 
 const UserSOSModal = ({user}: Props) => {
-	
-	const [sosAppliedSuccessfully, setSosAppliedSuccessfully] = useState(false);
-
   const handleSOS = async () => {
     if(user){
 			try {
 				const result = await editUser(user.username, 'sos');
-				if (result.success) {
-					setSosAppliedSuccessfully(true);
-				}
+				
+        if (result.status === 200) {
+          toast.success(result.data.message);
+        }
+        else {
+          toast.error(result.data.message);
+        }
 			} catch (error) {
 				console.error(error);
+        toast.error('Something went wrong');
 			}
 		}
   }
@@ -73,15 +75,6 @@ const UserSOSModal = ({user}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {sosAppliedSuccessfully &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>SOS applied successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>All links by this user have been expired.</p>
-          </div>
-        </BotLeftAlert>
-      }
     </>
   )
 }

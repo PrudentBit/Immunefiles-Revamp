@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-proivder';
 import { CommandBox } from '@/components/SearchFiles/CommandBox';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: "Immunefiles",
@@ -22,6 +23,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
         >
+          <Toaster richColors closeButton/>
           <CommandBox />
           <LeftNav />
           {children}

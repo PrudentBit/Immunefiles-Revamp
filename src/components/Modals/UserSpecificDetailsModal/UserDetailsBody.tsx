@@ -11,9 +11,9 @@ import RestrictUserModal from './ActionsModals/RestrictUserModal'
 import DeleteUserModal from './ActionsModals/DeleteUserModal'
 import AllowUserModal from './ActionsModals/AllowUserModal'
 import UserMakeAdminModal from './ActionsModals/UserMakeAdminModal'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import editUser from '@/utils/api/editUserAPI'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
+import { toast } from 'sonner'
 
 type Props = {
   username: AdminUsersType['username']
@@ -22,8 +22,6 @@ type Props = {
 const UserDetailsBody = ({username}: Props) => {
   const [userDetails, setUserDetails] = useState<AdminSpecificUserType>();
   const [update, setUpdate] = useState(false);
-  const [FAApplied, setFAApplied] = useState(false);
-  const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -45,26 +43,32 @@ const UserDetailsBody = ({username}: Props) => {
   const handle2FASwitch = async () => {
       try {
         const result = await editUser(username, '2FA');
-        if (result.success) {
+        if (result.status === 200) {
           setUpdate(prevState => !prevState);
-          setFAApplied(true);
-          setTimeout(() => setFAApplied(false), 5000);
+          toast.success(result.data.message);
+        }
+        else {
+          toast.error(result.data.message);
         }
       } catch (error) {
         console.error(error);
+        toast.error("Something went wrong");
       }
   }
 
   const handleResetPassword = async () => {
     try {
       const result = await editUser(username, 'reset');
-      if (result.success) {
+      if (result.status === 200) {
         setUpdate(prevState => !prevState);
-        setResetSent(true);
-        setTimeout(() => setResetSent(false), 5000);
+        toast.success(result.data.message);
+      }
+      else {
+        toast.error(result.data.message);
       }
     } catch (error) {
       console.error(error);
+      toast.error("Something went wrong");
     }
   }
   
@@ -140,23 +144,6 @@ const UserDetailsBody = ({username}: Props) => {
           </div>
         </div>
       </div>
-      {FAApplied &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>2FA set successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will now be required to use two-factor authentication.</p>
-          </div>
-        </BotLeftAlert>
-      }
-
-      {resetSent &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4'>Reset password email has been sent</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user can change their password through their email.</p>
-          </div>
-        </BotLeftAlert>
-      }
     </>
   )
 }

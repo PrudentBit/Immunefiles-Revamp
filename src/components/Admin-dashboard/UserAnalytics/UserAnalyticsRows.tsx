@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch'
 import Image from 'next/image'
 import UserSpecificDetails from '@/components/Modals/UserSpecificDetailsModal/UserSpecificDetailsModal'
 import editUser from '@/utils/api/editUserAPI'
-import BotLeftAlert from '@/components/BotLeftAlert'
+import {toast} from 'sonner'
 
 type Props = {
 	user: AdminUsersType
@@ -13,15 +13,13 @@ type Props = {
 }
 
 const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Props) => {
-	const [showAlert, setShowAlert] = React.useState(false);
 
 	const handle2FASwitch = async () => {
     try {
       const result = await editUser(user.username, '2FA');
       if (result.success) {
         setUpdate(prevState => !prevState);
-        setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 5000);
+				toast.success(result.data.message);
       }
     } catch (error) {
       console.error(error);
@@ -82,14 +80,6 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 
 				<UserSpecificDetails user={user}/>
 			</div>
-			{showAlert &&
-				<BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-					<div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-						<p className='text-[#FF6161] font-semibold text-base leading-4  '>2FA set successfully</p>
-						<p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will now be required to use two-factor authentication.</p>
-					</div>
-				</BotLeftAlert>
-			}
 		</>
   )
 }

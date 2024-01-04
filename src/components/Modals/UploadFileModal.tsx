@@ -17,8 +17,8 @@ import Image from 'next/image';
 import uploadFiles from '@/utils/api/uploadFilesAPI';
 import uploadFolders from '@/utils/api/uploadFoldersAPI';
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore';
-import BotLeftAlert from '../BotLeftAlert';
 import { FileWithPath, useDropzone } from 'react-dropzone';
+import { toast } from 'sonner';
 
 const UploadFileModal = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
@@ -54,11 +54,8 @@ const UploadFileModal = () => {
   //workaround
   console.log(fileProgress);
 
-  const [isUploaded, setIsUploaded] = useState<boolean>(false);
-
   const startUpload = async () => {
     try {
-      // Upload individual files
       const fileProgress = await uploadFiles(
         uploadedFiles,
         'root',
@@ -87,10 +84,10 @@ const UploadFileModal = () => {
       console.log(fileProgress, folderProgress);
 
       toggleForceRefresh();
-      setIsUploaded(true);
+      toast.success('Files uploaded successfully');
     } catch (error) {
       console.error(error);
-      setIsUploaded(false);
+      toast.error('Error uploading files');
     } finally {
       setUploadedFiles([]);
       setUploadedFolders([]);
@@ -228,25 +225,6 @@ const UploadFileModal = () => {
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
-
-      {isUploaded && (
-        <BotLeftAlert image="/task-completed-icon.svg" imagebg="bg-[#E5EDFF]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-primary_font font-semibold text-base leading-4  ">
-              Files/Folders uploaded successfully
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              you can now view your uploaded items in file system.
-            </p>
-          </div>
-          <button
-            onClick={() => setIsUploaded(false)}
-            className="text-primary_font px-2 mb-8 text-lg"
-          >
-            x
-          </button>
-        </BotLeftAlert>
-      )}
     </AlertDialog>
   );
 };

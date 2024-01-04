@@ -16,6 +16,8 @@ export default async function deleteFiles(files: string[], folders: string[]) {
             body: JSON.stringify(data),
         }
     );
+    
+    const jsonData = await res.json();
 
-    return await res.json();
+    return { status: res.status, data: jsonData};
     }

@@ -13,26 +13,27 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import editUser from '@/utils/api/editUserAPI'
+import { toast } from 'sonner'
 
 type Props = {
 	user?: AdminSpecificUserType
 }
 
 const UserMakeAdminModal = ({user}: Props) => {
-
-  const [adminCreatedSuccessfully, setAdminCreatedSuccessfully] = useState(false);
-
   const handleAdminCreation = async () => {
     if(user){
       try {
         const result = await editUser(user.username, 'admin');
-        if (result.success) {
-          setAdminCreatedSuccessfully(true);
+        if (result.status === 200) {
+          toast.success(result.data.message);
+        }
+        else {
+          toast.error(result.data.message);
         }
       } catch (error) {
         console.error(error);
+        toast.error('Something went wrong');
       }
     }
   }
@@ -76,15 +77,6 @@ const UserMakeAdminModal = ({user}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {adminCreatedSuccessfully &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>Admin created successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>This user now has all the privileges of an admin.</p>
-          </div>
-        </BotLeftAlert>
-      }
     </>
   )
 }

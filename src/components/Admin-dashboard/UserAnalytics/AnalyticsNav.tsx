@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import set2FA from '@/utils/api/user2FASetAPI'
-import BotLeftAlert from '@/components/BotLeftAlert'
 import AddUserModal from '@/components/Modals/AddUserModal/AddUserModal'
+import { toast } from 'sonner'
 
 type Props = {
 	selectedUsers: string[]
@@ -14,8 +14,6 @@ type Props = {
 }
 
 const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSearchTerm, setUpdate}: Props) => {
-
-  const [showAlert, setShowAlert] = React.useState(false);
   const allUsers2FA = users?.every(user => user.FA);
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +25,8 @@ const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSe
       const result = await set2FA(selectedUsers);
       if (result.success) {
         setUpdate(prevState => !prevState);
-        setShowAlert(true);
+        toast.success(result.data.message);
         setSelectedUsers([]);
-        setTimeout(() => setShowAlert(false), 5000);
       }
     } catch (error) {
       console.error(error);
@@ -43,9 +40,8 @@ const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSe
       const result = await set2FA(allUsernames);
       if (result.success) {
         setUpdate(prevState => !prevState);
-        setShowAlert(true);
+        toast.success(result.data.message);
         setSelectedUsers([]);
-        setTimeout(() => setShowAlert(false), 5000);
       }
     } catch (error) {
       console.error(error);
@@ -126,14 +122,6 @@ const AnalyticsNav = ({users, selectedUsers, setSelectedUsers, searchTerm, setSe
           </>
         )}
       </div>
-      {showAlert &&
-        <BotLeftAlert image='/delete-icon.svg' imagebg='bg-[#FFE3E5]'>
-          <div className='flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]'>
-            <p className='text-[#FF6161] font-semibold text-base leading-4  '>2FA set successfully</p>
-            <p className='text-[#979797] font-[400] text-sm leading-[1.1rem]'>The user will now be required to use two-factor authentication.</p>
-          </div>
-        </BotLeftAlert>
-      }
     </>
   )
 }

@@ -12,23 +12,19 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
+import {toast} from 'sonner';
 import deleteFiles from '@/utils/api/deleteFileAPI';
 import recoverDeletedFiles from '@/utils/api/recoverDeletedFilesAPI';
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore';
-import BotLeftAlert from '@/components/BotLeftAlert';
 
 type Props = {
   multiplefiles: boolean;
 };
 
 const DeleteFileAlert = ({ multiplefiles}: Props) => {
-  const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
   const [deletedFiles, setDeletedFiles] = useState<string[]>([]);
   const [deletedFolders, setDeletedFolders] = useState<string[]>([]);
-  const [undoMessage, setUndoMessage] = useState<string>(
-    'Items moved to trash.'
-  );
   const [file, removeAllFiles, removeFile, addFile] = selectedFilesStore(
     (state) => [
       state.files,
@@ -54,8 +50,13 @@ const DeleteFileAlert = ({ multiplefiles}: Props) => {
 
     const result = await deleteFiles(fileUrls, folderUrls);
 
-    if (result.message === 'success') {
-      setDeletedSuccessfully(true);
+    if (result.status === 200) {
+      toast.error('Your file is deleted successfully', {
+        action: {
+          label: 'Undo',
+          onClick: () => recoverDeleted(),
+        },
+      })
       setDeletedFiles(fileUrls);
       setDeletedFolders(folderUrls);
       for (let i = 0; i < fileUrls.length; i++) {
@@ -71,17 +72,19 @@ const DeleteFileAlert = ({ multiplefiles}: Props) => {
       });
       toggleForceRefresh();
       setTimeout(() => {
-        setDeletedSuccessfully(false);
         removeAllFiles();
       }, 5000);
+    }
+    else {
+      toast.error(result.data.message)
     }
   };
 
   const recoverDeleted = async () => {
-    setUndoMessage('Recovering files...');
+    toast.warning('File recovery is under process.')
     const result = await recoverDeletedFiles(deletedFiles, deletedFolders);
     if (result.message === 'successfully recovered') {
-      setUndoMessage('Items recovered successfully.');
+      toast.success('Files recovered successfully.')
       removeAllFiles();
       toggleForceRefresh();
     }
@@ -141,25 +144,6 @@ const DeleteFileAlert = ({ multiplefiles}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {deletedSuccessfully && (
-        <BotLeftAlert image="/delete-icon.svg" imagebg="bg-[#FFE3E5]">
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#FF6161] font-semibold text-base leading-4  ">
-              {undoMessage}
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              you can restore the items from trash bin whenever needed.
-            </p>
-          </div>
-          <button
-            onClick={recoverDeleted}
-            className="border-2 border-solid border-primary_font text-primary_font px-2 py-[0.1rem] rounded-lg"
-          >
-            undo
-          </button>
-        </BotLeftAlert>
-      )}
     </>
   );
 };

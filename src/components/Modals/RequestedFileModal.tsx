@@ -13,13 +13,12 @@ import {
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
-import BotLeftAlert from '@/components/BotLeftAlert';
 import UploadedFileDisplay from '@/components/UploadedFileDisplay';
 import uploadRequestedFile from '@/utils/api/uploadRequestedFileAPI';
+import {toast} from 'sonner';
 
 type Props = {
   request: RequestType;
-  
 }
 
 const RequestedFileModal = ({request}: Props) => {
@@ -42,11 +41,14 @@ const RequestedFileModal = ({request}: Props) => {
       if (requestedFile) {
         const response = await uploadRequestedFile(requestedFile, request.request_hash);
         if (response.status === 200) {
-          console.log('File uploaded successfully');
+          toast.success('File uploaded successfully');
+        }
+        else {
+          toast.error('File upload failed');
         }
       }
       else {
-        console.log('No file selected');
+        toast.error('Please upload a file');
       }
     } catch (error) {
       console.error(error);
@@ -150,27 +152,6 @@ const RequestedFileModal = ({request}: Props) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {false && (
-        <BotLeftAlert
-          className="w-[26rem]"
-          image="/mail-sent-icon.svg"
-          imagebg="bg-[#D0FFE3]"
-        >
-          <div className="flex flex-col items-start text-left leading-[0.2rem] gap-[0.35rem]">
-            <p className="text-[#3ABA6E] font-semibold text-base leading-4  ">
-              Request mail sent!
-            </p>
-            <p className="text-[#979797] font-[400] text-sm leading-[1.1rem]">
-              Mail has been sent concerning your request. you&apos;ll get an
-              update on your mail box.
-            </p>
-          </div>
-          <button className="text-primary_font h-full flex items-start text-lg">
-            <Image src="/close-icon.svg" height={35} width={35} alt="close" />
-          </button>
-        </BotLeftAlert>
-      )}
     </>
   );
 };
