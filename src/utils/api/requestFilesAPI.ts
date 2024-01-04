@@ -4,17 +4,26 @@ type Request = {
 };
 
 export default async function requestFiles(
-  request: Request,
-  currentFolder: string
-) {
-  const requestData ={
-    file_name: request.fileName,
-    user_from: '',
-    user_to: request.email,
-  };
+    request: Request,
+    request_type: 'internal' | 'external'
+  ) {
+
+  let requestData = {};
+  if (request_type === 'internal') {
+    requestData ={
+      file_name: request.fileName[0],
+      user_to: request.email,
+    };
+  }
+  else {
+    requestData ={
+      file_name: request.fileName,
+      user_to: request.email,
+    };
+  }
 
   const res = await fetch(
-    `https://api.immunefiles.com/api/api/content/request/create_request/${currentFolder}?tenant=${
+    `https://api.immunefiles.com/api/api/content/create/request/${request_type}?tenant=${
       window.location.hostname.split('.')[0]
     }`,
     {

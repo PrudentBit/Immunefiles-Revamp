@@ -34,7 +34,6 @@ const GroupFileAndFolder = ({ group_hash, folder_hash }: Props) => {
       const response = await getGroupFiles(group_hash, folder_hash);
       const decryptedData = decryptData(response.data.ciphertext);
       if (response.status === 200) {
-        console.log(decryptedData);
         setFiles(decryptedData.files);
         setFolders(decryptedData.folders);
         setLoading(false);

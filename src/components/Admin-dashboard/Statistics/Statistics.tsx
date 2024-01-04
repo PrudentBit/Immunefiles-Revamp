@@ -13,7 +13,6 @@ const Statistics = () => {
     async function fetchData() {
       try {
         const analyticsData = await getAnalytics();
-        console.log(analyticsData);
         setAnalytics(analyticsData);
       } catch (error) {
         console.error(error);

@@ -35,7 +35,6 @@ const UserSOSModal = () => {
     if (enteredUsername === userDetails?.username) {
       try {
         const response = await applyUserSOS();
-        console.log(response);
         setEnteredUsername("");
       } catch (error) {
         console.error("Error calling API:", error);

@@ -13,9 +13,7 @@ type FileSectionProps = {
 
 const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
-  console.log(type, sectionType);
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
-  console.log('selected', selected);
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
     (state) => [
       state.files,
@@ -57,10 +55,8 @@ const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
       return next;
     });
   };
-  console.log(sectionType, 'subFiles', subFiles);
 
   const isFileAndFolderType = (file: FileOrFolderType | groupFileandFolderType): file is FileOrFolderType => {
-    console.log((file as FileOrFolderType).owner !== undefined)
     return (file as FileOrFolderType).owner !== undefined;
   };
 

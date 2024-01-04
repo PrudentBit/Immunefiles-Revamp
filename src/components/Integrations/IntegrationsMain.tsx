@@ -9,7 +9,6 @@ const IntegrationsMain = () => {
   const fetchIntegrations = async () => {
     try {
       const integrations = await getIntegrations();
-      console.log(integrations);
     } catch (error) {
       console.error(error);
     }

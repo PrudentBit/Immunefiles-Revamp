@@ -16,7 +16,6 @@ const UserAnalytics = () => {
     async function fetchData() {
       try {
         const users = await getUsers();
-        console.log(users);
         setUsers(users.users);
       } catch (error) {
         console.error(error);

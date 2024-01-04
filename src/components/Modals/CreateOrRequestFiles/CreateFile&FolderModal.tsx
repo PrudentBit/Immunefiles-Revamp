@@ -69,12 +69,14 @@ const CreateFileOrFolder = ({propTab}:Props) => {
   }
 
   const handleRequestFiles = async () => {
-    try {
-      const result = await requestFiles(request, 'root');
-      console.log(result);
-      toggleForceRefresh();
-    } catch (error) {
-      console.error(error);
+    if(!(requestType === 'none')) {
+      try {
+        const result = await requestFiles(request, requestType);
+        console.log(result);
+        toggleForceRefresh();
+      } catch (error) {
+        console.error(error);
+      }
     }
   }  
 

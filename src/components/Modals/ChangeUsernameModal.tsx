@@ -30,7 +30,6 @@ const ChangeUsernameModal = () => {
     try {
       const response = await changeUsername(name);
       console.log(response);
-
       setPassword("");
     } catch (error) {
       console.error("Error calling API:", error);

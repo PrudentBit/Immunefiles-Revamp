@@ -27,7 +27,7 @@ import SelectedFilesDisplay from '@/components/Modals/Modal-components/SelectedF
 type Props = {
   multiplefiles: boolean;
   moveORcopy: string;
-  currFile?: FileOrFolderType | groupFileandFolderType;
+  currFile?: FileOrFolderType;
 };
 
 const MoveOrCopyFilesModal = ({
@@ -92,7 +92,6 @@ const MoveOrCopyFilesModal = ({
     setSelectedFolder('');
     setFolderStack([]);
     setRoot('');
-    console.log('close modal');
   };
 
   const traverseFile = (urlhash: string) => {

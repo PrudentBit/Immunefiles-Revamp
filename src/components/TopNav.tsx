@@ -22,7 +22,6 @@ const TopNav = ({currentTab}: Props) => {
     try {
         const userDetails = await getUserDetails();
         setUserDetails(userDetails);
-        console.log(userDetails);
     } catch (error) {
         console.error(error);
     }

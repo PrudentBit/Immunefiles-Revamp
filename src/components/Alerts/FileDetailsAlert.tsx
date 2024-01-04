@@ -18,7 +18,6 @@ type Props = {
 }
 
 const FileDetailsAlert = ({ file }: Props) => {
-  console.log(file)
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
