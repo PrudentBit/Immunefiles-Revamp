@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 import { useRouter } from 'next/navigation';
 import { lowerCaseExtensions } from '../../../public/FileIcons/fileExtensions';
-import ThreeDotsMenu from '@/components/File-system/menus/ThreeDotsMenu';
 import GroupThreeDotsMenu from './menus/GroupThreeDotsMenu';
 import GroupRightClickMenu from './menus/GroupRightClickMenu';
 

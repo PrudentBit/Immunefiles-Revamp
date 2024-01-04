@@ -17,14 +17,8 @@ const GroupFileAndFolder = ({ group_hash, folder_hash }: Props) => {
   const { files,
     folders, 
     forceRefresh, 
-    addFile, 
-    addFolder, 
-    removeFile, 
-    removeFolder, 
     setFiles, 
     setFolders, 
-    removeAll, 
-    toggleForceRefresh 
   } = useGroupFilesAndFoldersStore();
   const [loading, setLoading] = useState(true);
 

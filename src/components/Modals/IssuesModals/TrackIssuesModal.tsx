@@ -4,9 +4,7 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogAction,
   AlertDialogTrigger,
   AlertDialogOverlay,
 } from "@/components/ui/alert-dialog"

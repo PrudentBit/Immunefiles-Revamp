@@ -22,16 +22,15 @@ type Props = {
 }
 
 const RequestedFileModal = ({request}: Props) => {
-  const [failed, setFailed] = useState(false);
   const [requestedFile, setRequestedFile] = useState<File | undefined>(undefined);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         setRequestedFile(acceptedFiles[0]);
-        setFailed(false);
-      } else {
-        setFailed(true);
+      }
+      else{
+        toast.error('Error selecting this file');
       }
     },
   });

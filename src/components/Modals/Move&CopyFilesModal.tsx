@@ -57,8 +57,6 @@ const MoveOrCopyFilesModal = ({
     removeFile(file[indexToRemove].urlhash);
   };
 
-  const [apiSuccess, setApiSuccess] = useState<boolean>(false);
-
   const handleMoveClick = async () => {
     if (moveORcopy === 'Move') {
       const filesHash = file.map((item) => item.urlhash);

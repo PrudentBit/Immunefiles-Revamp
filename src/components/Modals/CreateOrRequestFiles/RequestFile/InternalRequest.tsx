@@ -13,7 +13,7 @@ type Request = {
 type Props = {
   request: Request;
   setRequest: (_value: Request) => void;
-  setRequestType: (value: 'internal' | 'external' | 'none') => void;
+  setRequestType: (_value: 'internal' | 'external' | 'none') => void;
 };
 
 const InternalRequest = ({
@@ -24,7 +24,6 @@ const InternalRequest = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<userSearchQueryType[]>([]);
   const [value, setValue] = useState('');
-  const [fileName, setFileName] = useState('');
 
   const getUsers = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;

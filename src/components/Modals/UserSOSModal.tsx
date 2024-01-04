@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { UserDetailsStore } from '@/utils/store/userDetailsStore';
 import applyUserSOS from '@/utils/api/applyUserSOSAPI';
+import { toast } from 'sonner';
 
 const UserSOSModal = () => {
   const [error, setError] = useState("");
@@ -36,11 +37,18 @@ const UserSOSModal = () => {
       try {
         const response = await applyUserSOS();
         setEnteredUsername("");
+        if (response.status === 200) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
       } catch (error) {
         console.error("Error calling API:", error);
+        toast.error("Something went wrong");
       }
     } else {
       setError("Username does not match");
+      toast.error("Username does not match");
     }
   };
 

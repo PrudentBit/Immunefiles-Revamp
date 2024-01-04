@@ -1,6 +1,5 @@
 "use client"
 
-import Manage from "@/app/(home)/manageaccount/page"
 import {
     AlertDialog,
     AlertDialogAction,

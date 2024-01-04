@@ -1,8 +1,6 @@
 import Image from "next/image"
 
-type Props = {}
-
-const ManageLinkShares = (props: Props) => {
+const ManageLinkShares = () => {
   return (
     <div className="w-full h-[13.5rem] flex flex-col gap-2 p-4 mt-4 border border-solid border-[#7A7AFF] rounded-2xl">
       <div className='w-full h-14 flex justify-between items-center px-4 cursor-pointer border border-solid border-[#CEDDFF] hover:bg-[#F5F8FF] rounded-lg'>

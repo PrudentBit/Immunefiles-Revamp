@@ -14,49 +14,6 @@ import { decryptData } from '@/utils/helper/decryptFiles';
 import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 
 const sharedTab = () => {
-  const subFiles: FileOrFolderType[] = [
-    {
-      date_created: "2023-11-23T10:06:59.000Z",
-      date_modified: "2023-11-23T10:06:59.000Z",
-      is_file: true,
-      name: "Placeholder File 1",
-      owner: "testuser1@example.com",
-      shared_with: [
-        {
-          can_add_delete_content: true,
-          can_download_content: true,
-          can_share_content: true,
-          email: "testuser2@example.com",
-          is_proctored: false,
-          username: "Test User 2"
-        }
-      ],
-      size: "1 MB",
-      url: "https://example.com/placeholder-file-1",
-      urlhash: "placeholderfile1"
-    },
-    {
-      date_created: "2023-11-23T10:06:59.000Z",
-      date_modified: "2023-11-23T10:06:59.000Z",
-      is_file: true,
-      name: "Placeholder File 2",
-      owner: "testuser1@example.com",
-      shared_with: [
-        {
-          can_add_delete_content: true,
-          can_download_content: true,
-          can_share_content: true,
-          email: "testuser2@example.com",
-          is_proctored: false,
-          username: "Test User 2"
-        }
-      ],
-      size: "2 MB",
-      url: "https://example.com/placeholder-file-2",
-      urlhash: "placeholderfile2"
-    }
-  ]  
-
   const [requests, setRequests] = useState<RequestsType>();
   const [reload, setReload] = useState(false);
   const [sharedFiles, setSharedFiles] = useState<SharedFilesType>();

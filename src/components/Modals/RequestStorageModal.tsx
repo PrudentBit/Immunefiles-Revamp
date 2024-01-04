@@ -19,7 +19,6 @@ type Props = {
 }
 
 const RequestStorageModal = ({storage}: Props) => {
-  const [emailSent, setEmailSent] = useState(false);
   const [storageRequested, setStorageRequested] = useState(0);
 
   const handleStorageInput = (e: React.ChangeEvent<HTMLInputElement>) => {

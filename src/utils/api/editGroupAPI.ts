@@ -20,12 +20,7 @@ type EditGroupParams =
       email: string;
     };
 
-type EditGroupResponse = {
-  data: any;
-  status: number;
-};
-
-export default async function editGroup(params: EditGroupParams): Promise<EditGroupResponse> {
+export default async function editGroup(params: EditGroupParams) {
   const res = await fetch(
     `https://api.immunefiles.com/api/api/auth/group/group_details?tenant=${
       window.location.hostname.split(".")[0]
