@@ -17,7 +17,7 @@ type UserDashDetails = {
   storage: {
     storage_used: number;
     total_storage: number;
-    perecentage: {
+    percentage: {
       media: string;
       docs: string;
       images: string;

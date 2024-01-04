@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,17 +15,40 @@ import { Button } from '@/components/ui/button'
 import { Select,
   SelectTrigger, 
   SelectContent, 
-  SelectItem 
+  SelectItem,
+  SelectValue
 } from '@/components/ui/select'
 import IssuesRow from './IssuesRow'
+import getIssues from '@/utils/api/getIssuesAPI'
+
+type issueType = 'Bug' | 'Feature Request' | 'General Feedback' | 'none';
 
 const TrackIssuesModal = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [issueType, setIssueType] = useState<issueType>('none');
+  const [issues, setIssues] = useState<reportedIssueType[]>([]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  useEffect(() => {
+    const getReportedIssues = async () => {
+      const response = await getIssues();
+      if (response.status === 200) {
+        setIssues(response.data);
+      }
+    }
+    getReportedIssues();
+  },[])
+
+  const filteredIssues = issues.filter((issue) => {
+    const isTypeMatch = issueType === 'none' || issue.issue_type === issueType;
+    const isSearchMatch =
+      issue.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return isTypeMatch && isSearchMatch;
+  });
 
   return (
     <>
@@ -51,7 +74,7 @@ const TrackIssuesModal = () => {
             </AlertDialogCancel>
           </AlertDialogHeader>
 
-          <AlertDialogDescription className='h-[25rem] flex flex-col gap-4 mr-2'>
+          <AlertDialogDescription className='h-[25rem] flex flex-col gap-4 mr-2 mb-2'>
             <div className='flex gap-4'>
               <form action="" className='flex items-center gap-4 w-full h-10 px-3 rounded-md justify-between bg-[#F0F0F0]'>
                 <button>
@@ -66,35 +89,28 @@ const TrackIssuesModal = () => {
                 />
               </form>
 
-              <Select>
+              <Select onValueChange={(value:issueType)=>setIssueType(value)}>
                 <SelectTrigger className='w-[10rem] h-10 flex items-center justify-between bg-bg_hover'>
-                  <p className='text-[#7A7AFF] pl-2 text-base font-medium'>Sort by</p>
+                  <SelectValue className='text-[#7A7AFF] pl-2 text-base font-medium' placeholder="Issue Type"/>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bug">Bug</SelectItem>
-                  <SelectItem value="feature">Feature</SelectItem>
-                  <SelectItem value="question">Question</SelectItem>
+                  <SelectItem value="none">All</SelectItem>
+                  <SelectItem value="Bug">Bug</SelectItem>
+                  <SelectItem value="Feature Request">Feature</SelectItem>
+                  <SelectItem value="General Feedback">Feedback</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className='h-[21.5rem] p-2 border border-solid border-[#C6D8FF] rounded-xl'>
               <div className='h-full w-full p-1 px-2 pr-4 flex flex-col gap-4 overflow-auto'>
-                <IssuesRow/>
-                <IssuesRow/>
-                <IssuesRow/>
-                <IssuesRow/>
-                <IssuesRow/>
-                <IssuesRow/>
-                <IssuesRow/>
+                {filteredIssues.map((issue, index) => (
+                  <IssuesRow key={index} issue={issue} />
+                ))}
               </div>
             </div>
 
           </AlertDialogDescription>
-
-          <AlertDialogFooter className='flex justify-end'>
-            <AlertDialogAction className='rounded-full px-4 text-white font-normal text-base bg-primary_font hover:text-primary_font border-2 border-solid border-primary_font'>Send Report</AlertDialogAction>
-          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>

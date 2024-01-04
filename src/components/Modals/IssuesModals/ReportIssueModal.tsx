@@ -18,9 +18,17 @@ import { Select,
   SelectItem 
 } from '@/components/ui/select'
 import { useDropzone } from 'react-dropzone';
+import reportIssue from '@/utils/api/reportIssueAPI'
+import { SelectValue } from '@radix-ui/react-select'
+import {toast} from 'sonner'
+
+type issueType = 'Bug' | 'Feature Request' | 'General Feedback' | 'none';
 
 const ReportIssueModal = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [heading, setHeading] = useState<string>('');
+  const [explanation, setExplanation] = useState<string>('');
+  const [issueType, setIssueType] = useState<issueType>('none');
   const [previews, setPreviews] = useState<string[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -49,6 +57,26 @@ const ReportIssueModal = () => {
     setPreviews(updatedPreviews);
   };
 
+  const handleReportIssue = async () => {
+    const response = await reportIssue(heading, explanation, issueType, uploadedFiles);
+
+    if (response.status === 200) {
+      setUploadedFiles([]);
+      setPreviews([]);
+      setHeading('');
+      setExplanation('');
+      setIssueType('none');
+      toast.success('Issue reported successfully', {
+        description: response.data.message,
+      });
+    }
+    else{
+      toast.error('Error', {
+        description: response.data.message,
+      });
+    }
+  }
+
   return (
     <>
       <AlertDialog>
@@ -75,14 +103,14 @@ const ReportIssueModal = () => {
 
           <AlertDialogDescription className='h-[20rem] mr-2 border border-solid border-[#C6D8FF] rounded-xl p-3 pr-2'>
             <div className='h-[17.5rem] w-full flex flex-col gap-4 p-2 pr-3 overflow-auto'>
-              <Select>
+              <Select onValueChange={(value:issueType)=>setIssueType(value)}>
                 <SelectTrigger className='w-full h-11 flex items-center justify-between bg-primary_bg'>
-                  <p className='text-gray-400 pl-2'>Select issue type</p>
+                  <SelectValue className='text-gray-950 font-medium pl-2' placeholder="Select issue type"/>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bug">Bug</SelectItem>
-                  <SelectItem value="feature">Feature</SelectItem>
-                  <SelectItem value="question">Question</SelectItem>
+                  <SelectItem value="Bug">Bug</SelectItem>
+                  <SelectItem value="Feature Request">Feature Request</SelectItem>
+                  <SelectItem value="General Feedback">General Feedback</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -91,6 +119,8 @@ const ReportIssueModal = () => {
                 className="p-3 px-5 w-full text-secondary_font bg-primary_bg placeholder:text-gray-400 rounded-sm border-solid border border-[#E5EDFF] focus:border-[#C8D9FF]"
                 placeholder="Issue heading"
                 autoComplete="off"
+                value={heading}
+                onChange={(e) => setHeading(e.target.value)}
                 id='heading'
                 title='Issue heading'
               />
@@ -100,6 +130,8 @@ const ReportIssueModal = () => {
                 placeholder="Issue explanation"
                 autoComplete="off"
                 id='explanation'
+                value={explanation}
+                onChange={(e) => setExplanation(e.target.value)}
                 title='Issue explanation'
               />
 
@@ -151,7 +183,13 @@ const ReportIssueModal = () => {
           </AlertDialogDescription>
 
           <AlertDialogFooter className='flex justify-end'>
-            <AlertDialogAction className='rounded-full px-4 text-white font-normal text-base bg-primary_font hover:text-primary_font border-2 border-solid border-primary_font'>Send Report</AlertDialogAction>
+            <AlertDialogAction 
+              className='rounded-full px-4 text-white font-normal text-base bg-primary_font hover:text-primary_font border-2 border-solid border-primary_font'
+              onClick={() => {handleReportIssue()}}
+              disabled={issueType === 'none' || heading === '' || explanation === ''}
+            >
+              Send Report
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

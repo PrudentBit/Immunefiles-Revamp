@@ -3,7 +3,11 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import UserFavGroupsRow from './UserFavGroupsRow'
 
-const UserDashFavGroups = () => {
+type Props = {
+  pinnedGroups?: UserDashDetails['favourite_group']
+}
+
+const UserDashFavGroups = ({pinnedGroups} : Props) => {
   return (
     <ShadowedCard className="w-[50%] h-full gap-3">
       <div className="flex h-[15%] justify-between items-start">
@@ -20,12 +24,9 @@ const UserDashFavGroups = () => {
       </div>
 
       <div className='flex flex-col gap-3 h-[30vh] overflow-y-auto pr-5 pl-3'>
-        <UserFavGroupsRow/>
-        <UserFavGroupsRow/>
-        <UserFavGroupsRow/>
-        <UserFavGroupsRow/>
-        <UserFavGroupsRow/>
-        <UserFavGroupsRow/>
+        {pinnedGroups && pinnedGroups.map((group, index) => (
+          <UserFavGroupsRow key={index} group={group}/>
+        ))}
       </div>
     </ShadowedCard>
   );

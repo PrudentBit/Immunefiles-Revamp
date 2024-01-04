@@ -37,7 +37,7 @@ const UserDashboard = () => {
         </div>
 
         <div className="flex gap-10 h-[45%]">
-          <UserDashFavGroups />
+          <UserDashFavGroups pinnedGroups={userDetails?.favourite_group}/>
 
           <UserDashCritLinks critLinks={userDetails?.critical_links} />
         </div>
