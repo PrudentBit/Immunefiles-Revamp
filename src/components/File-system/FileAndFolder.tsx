@@ -6,12 +6,11 @@ import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectio
 import getFiles from '@/utils/api/getFilesAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore';
-import fetchGroupDetails from '@/utils/api/getGroupDetailsAPI';
-import { GroupStore } from '@/utils/store/groupDetailsStore';
 import { useDropzone } from 'react-dropzone';
 import uploadFiles from '@/utils/api/uploadFilesAPI';
 import uploadFolders from '@/utils/api/uploadFoldersAPI';
 import { FileWithPath } from 'react-dropzone';
+import { toast } from 'sonner';
 
 type Props = {
   root: string;
@@ -28,7 +27,6 @@ const FileAndFolder = ({ root }: Props) => {
     sortFiles,
     sortFolders,
   } = useFileAndFolderStore();
-  const { setGroups } = GroupStore();
   const [loading, setLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
   const [uploadedFolders, setUploadedFolders] = useState<FileWithPath[]>([]);
@@ -53,8 +51,9 @@ const FileAndFolder = ({ root }: Props) => {
 
   React.useEffect(() => {
     const startUpload = async () => {
-      try {
-        const fileProgress = await uploadFiles(
+      let fileProgress;
+      if (uploadedFiles.length > 0) {
+        fileProgress = await uploadFiles(
           uploadedFiles,
           'root',
           (progress) => {
@@ -62,24 +61,35 @@ const FileAndFolder = ({ root }: Props) => {
             return progress;
           }
         );
-
-        const folderProgress = await uploadFolders(
+      }
+      let folderProgress;
+      if (uploadedFolders.length > 0) {
+        folderProgress = await uploadFolders(
           uploadedFolders,
           (progress) => {
             console.log(`Folder upload progress: ${progress}%`);
             return progress;
           }
         );
-
-        console.log(fileProgress, folderProgress);
-
+      }
+      
+      if (fileProgress) {
+        if (fileProgress.status === 200){
+          setUploadedFiles([]);
         toggleForceRefresh();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setUploadedFiles([]);
-        setUploadedFolders([]);
+          toast.success('Files uploaded successfully');
+        } else {
+          toast.error('Error uploading files');
+        }
+      }
+      if (folderProgress) {
+        if (folderProgress.status === 200){
+          setUploadedFolders([]);
         toggleForceRefresh();
+          toast.success('Folders uploaded successfully');
+        } else {
+          toast.error('Error uploading folders');
+        }
       }
     };
 

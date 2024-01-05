@@ -78,6 +78,7 @@ const DeleteFileAlert = ({ multiplefiles}: Props) => {
     }
     else {
       toast.error(result.data.message)
+      toggleForceRefresh();
     }
   };
 
