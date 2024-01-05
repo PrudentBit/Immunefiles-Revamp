@@ -16,7 +16,7 @@ type Props = {
 
 const TopNav = ({currentTab}: Props) => {
 
-  const [userDetails, setUserDetails ] = UserDetailsStore((state) => [state.userDetails, state.setUserDetails]);
+  const [userDetails, setUserDetails, forceRefresh ] = UserDetailsStore((state) => [state.userDetails, state.setUserDetails, state.forceRefresh]);
   const fetchUserDetails = async () => {
     try {
         const userDetails = await getUserDetails();
@@ -30,7 +30,7 @@ const TopNav = ({currentTab}: Props) => {
   React.useEffect(() => {
     setTab(currentTab);
     fetchUserDetails();
-  }, []);
+  }, [forceRefresh]);
 
   return (
     <nav className='flex w-full gap-6 h-12'>

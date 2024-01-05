@@ -55,42 +55,44 @@ const UploadFileModal = () => {
   console.log(fileProgress);
 
   const startUpload = async () => {
-    try {
-      const fileProgress = await uploadFiles(
+    let fileProgress;
+    if (uploadedFiles.length > 0) {
+      fileProgress = await uploadFiles(
         uploadedFiles,
         'root',
         (progress) => {
-          console.log(`File upload progress: ${progress}%`);
           return progress;
         }
       );
+    }
 
-      setFileProgress((prevState) => ({
-        ...prevState,
-        batch: [...prevState.batch, 'files'],
-        progress: [...prevState.progress, fileProgress.progress],
-      }));
-
-      // Upload folders
-      const folderProgress = await uploadFolders(
+    // Upload folders
+    let folderProgress;
+    if (uploadedFolders.length > 0) {
+      folderProgress = await uploadFolders(
         uploadedFolders,
         (progress) => {
-          console.log(`Folder upload progress: ${progress}%`);
           return progress;
         }
       );
+    }
 
-      //workaround
-      console.log(fileProgress, folderProgress);
-
-      toggleForceRefresh();
+    if (fileProgress?.status === 200){
       toast.success('Files uploaded successfully');
-    } catch (error) {
-      console.error(error);
-      toast.error('Error uploading files');
-    } finally {
       setUploadedFiles([]);
+      toggleForceRefresh();
+    }
+    else if(fileProgress?.status && !(fileProgress?.status === 200)){
+      toast.error('Files upload failed');
+    }
+
+    if (folderProgress?.status === 200){
+      toast.success('Folders uploaded successfully');
       setUploadedFolders([]);
+      toggleForceRefresh();
+    }
+    else if(folderProgress?.status && !(folderProgress?.status === 200)){
+      toast.error('Folders upload failed');
     }
   };
 

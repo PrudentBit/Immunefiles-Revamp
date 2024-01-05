@@ -17,10 +17,10 @@ const UserProfileCard = ({userDetails}: Props) => {
       return userDetails?.proile_pic
     }
     else if(userDetails?.profile_type === "default") {
-      return `/Avatar/${userDetails?.proile_pic}.svg`
+      return `/Avatars/${userDetails?.proile_pic}`
     }
     else {
-      return `/Avatar/${userDetails?.proile_pic}.png`
+      return `/Avatars/${userDetails?.proile_pic}`
     }
   }
 
@@ -28,7 +28,9 @@ const UserProfileCard = ({userDetails}: Props) => {
     <Popover>
       <PopoverTrigger >
         <div className='flex gap-2 cursor-pointer'>
-          <Image src={getProfileImage()} alt='profile' width={45} height={45} className='rounded-lg'/>
+          <div className="h-12 w-12">
+            <img src={getProfileImage()} alt='profile' className='rounded-lg object-cover h-full w-full'/>
+          </div>
           <div className='text-left'>
             <p className='text-black font-normal text-sm h-4'>Hello</p>
             <p className='text-primary_font_2 text-lg font-semibold whitespace-nowrap'>{userDetails?.name}</p>
@@ -37,8 +39,8 @@ const UserProfileCard = ({userDetails}: Props) => {
       </PopoverTrigger>
       <PopoverContent className="mr-4 rounded-2xl w-[18.5rem] flex flex-col gap-5 p-5">
         <div className='flex gap-3 cursor-pointer w-full'>
-          <div className="min-w-[6rem]">
-            <Image src={getProfileImage()} alt='profile' width={90} height={90} className='rounded-lg'/>
+          <div className="min-w-[6rem] max-w-[6rem] rounded-lg">
+            <img src={getProfileImage()} alt='profile' className='rounded-lg object-cover h-full w-full'/>
           </div>
           <div className='text-left h-[5.3rem] w-[9rem] flex flex-col justify-between'>
             <p className='text-lg font-semibold whitespace-nowrap leading-6 truncate'>{userDetails?.name}</p>

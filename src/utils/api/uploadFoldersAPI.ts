@@ -48,7 +48,7 @@ export default async function uploadFolders(
       config
     );
 
-    return res.data;
+    return { data: res.data, status: res.status};
   } catch (error) {
     console.error(error);
   }

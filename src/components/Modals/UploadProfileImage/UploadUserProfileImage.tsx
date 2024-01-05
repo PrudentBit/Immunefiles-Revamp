@@ -100,7 +100,7 @@ const UploadUserProfileImage = ({ uploadedFile, setUploadedFile, setSelectedAvat
 
           <AlertDialogFooter className="flex gap-4">
             <AlertDialogAction className="w-[50%] rounded-full bg-primary_font_2 text-white hover:bg-[#9F9FFF]">
-              Save
+              Select
             </AlertDialogAction>
             <AlertDialogCancel
               className="w-[50%] rounded-full hover:bg-[#D2D4DA] hover:text-black"

@@ -39,10 +39,10 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
       return user.profile_pic
     }
     else if(user?.profile_type === "default") {
-      return `/Avatar/${user?.profile_pic}.svg`
+      return `/Avatars/${user?.profile_pic}`
     }
     else {
-      return `/Avatar/${user?.profile_pic}.png`
+      return `/Avatars/${user?.profile_pic}`
     }
   }
 	

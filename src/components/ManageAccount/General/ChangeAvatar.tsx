@@ -4,15 +4,17 @@ import { useEffect, useState } from 'react'
 import UploadUserProfileImage from '../../Modals/UploadProfileImage/UploadUserProfileImage'
 import changeAvatar from '@/utils/api/changeAvatarAPI'
 import { toast } from 'sonner'
+import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 
 type Props = {
   userDetails?: UserDetailsType
 }
 
 const ChangeAvatar = ({userDetails}:Props) => {
-  const [selectedAvatar, setSelectedAvatar] = useState<string>(userDetails?.proile_pic || "")
+  const [selectedAvatar, setSelectedAvatar] = useState<string>("")
   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
   const [isUploaded, setIsUploaded] = useState<boolean>(false);
+  const {toggleForceRefresh} = UserDetailsStore();
 
   const getPreview = (file: File) => {
     return URL.createObjectURL(file);
@@ -38,25 +40,41 @@ const ChangeAvatar = ({userDetails}:Props) => {
       setSelectedAvatar("custom");
     }
     else {
-      setSelectedAvatar(userDetails?.proile_pic || "");
+      if(userDetails?.profile_type === "custom") {
+        setSelectedAvatar(userDetails?.proile_pic)
+      }
+      else{
+        setSelectedAvatar(`/Avatars/${userDetails?.proile_pic}` || "");
+      }
       setIsUploaded(false);
     }
   }, [userDetails, uploadedFile]);
 
   const handleSave = async () => {
     let response;
-    if (selectedAvatar === "custom" && uploadedFile) {
-      response = await changeAvatar("custom", undefined, uploadedFile);
-    }
-    else {
-      response = await changeAvatar("default", selectedAvatar, undefined);
-    }
-
-    if (response.status === 200) {
-      toast.success("Avatar changed successfully");
-    }
-    else {
-      toast.error(response.data.message);
+    if (userDetails) {
+      let avatarToSend = selectedAvatar;
+  
+      if (selectedAvatar !== "custom") {
+        const fileName = selectedAvatar.split('/').pop();
+        avatarToSend = fileName || selectedAvatar;
+      }
+  
+      if (selectedAvatar === "custom" && uploadedFile) {
+        console.log("custom");
+        console.log(uploadedFile);
+        response = await changeAvatar("custom", userDetails.username, undefined, uploadedFile);
+      } else {
+        console.log("default");
+        response = await changeAvatar("default", userDetails.username, avatarToSend, undefined);
+      }
+  
+      if (response.status === 200) {
+        toast.success("Avatar changed successfully");
+        toggleForceRefresh();
+      } else {
+        toast.error(response.data.message);
+      }
     }
   }
 
@@ -114,7 +132,7 @@ const ChangeAvatar = ({userDetails}:Props) => {
             </div>
           ):(
             <div className='h-[5.2rem] w-[5.2rem] rounded-xl pb-1'>
-              <Image src={selectedAvatar} alt='profile' width={90} height={90} className='rounded-xl'/>
+              <img src={selectedAvatar} alt='profile' className='rounded-xl object-cover h-full w-full'/>
             </div>
           )}
           <div className='flex flex-col justify-center items-center pt-1'>

@@ -38,7 +38,7 @@ export default async function uploadFiles(
       config
     );
 
-    return res.data;
+    return { data: res.data, status: res.status};
   } catch (error) {
     console.error(error);
   }

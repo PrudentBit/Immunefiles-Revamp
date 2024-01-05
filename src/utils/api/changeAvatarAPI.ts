@@ -1,22 +1,27 @@
-export default async function changeAvatar(profile_type:string, profile_image?:string, uploaded_image?:File) {
-  const data = {
-		profile_type: profile_type,
-    profile_image: profile_image || uploaded_image,
-  };
+export default async function changeAvatar(profile_type: string, username: string, profile_image?: string, uploaded_image?: File) {
+  console.log(profile_type, username, profile_image, uploaded_image);
+
+  const formData = new FormData();
+
+  formData.append("profile_type", profile_type);
+  formData.append("username", username);
+
+  if (profile_image) {
+    formData.append("profile_pic", profile_image);
+  } else if (uploaded_image) {
+    formData.append("profile_pic", uploaded_image);
+  }
+
+  console.log(formData);
+
   const res = await fetch(
-		`https://api.immunefiles.com/api/api/auth/upload_profile_pic?tenant=${
-		window.location.hostname.split(".")[0]
-		}`,
-		{
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
-			},
-			body: JSON.stringify(data),
-		}
+    `https://api.immunefiles.com/api/api/auth/upload_profile_pic?tenant=${window.location.hostname.split(".")[0]}`,
+    {
+      method: "PUT",
+      body: formData,
+    }
   );
 
-	const json = await res.json();
-	return { data: json, status: res.status}
+  const json = await res.json();
+  return { data: json, status: res.status };
 }
