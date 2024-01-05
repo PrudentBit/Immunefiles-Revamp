@@ -14,6 +14,19 @@ type Props = {
 };
 
 const UserSpecificDetails = ({ user }: Props) => {
+
+  const getProfileImage = () => {
+    if(user?.profile_type === "custom") {
+      return user.profile_pic
+    }
+    else if(user?.profile_type === "default") {
+      return `/Avatar/${user?.profile_pic}.svg`
+    }
+    else {
+      return `/Avatar/${user?.profile_pic}.png`
+    }
+  }
+	
   return (
     <AlertDialog>
       <AlertDialogTrigger
@@ -26,7 +39,7 @@ const UserSpecificDetails = ({ user }: Props) => {
         <AlertDialogHeader className="flex flex-row justify-between gap-[6.5rem]">
           <div className="flex gap-4">
             <Image
-              src="/user.svg"
+              src={getProfileImage()}
               alt="profile"
               width={70}
               height={70}

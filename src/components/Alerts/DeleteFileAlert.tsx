@@ -56,6 +56,7 @@ const DeleteFileAlert = ({ multiplefiles}: Props) => {
           label: 'Undo',
           onClick: () => recoverDeleted(),
         },
+        description: 'Click undo to recover your files'
       })
       setDeletedFiles(fileUrls);
       setDeletedFolders(folderUrls);

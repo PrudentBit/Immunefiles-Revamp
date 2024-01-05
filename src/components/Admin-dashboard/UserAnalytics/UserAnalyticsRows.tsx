@@ -17,7 +17,7 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 	const handle2FASwitch = async () => {
     try {
       const result = await editUser(user.username, '2FA');
-      if (result.success) {
+      if (result.status === 200) {
         setUpdate(prevState => !prevState);
 				toast.success(result.data.message);
       }
@@ -33,6 +33,18 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 			setSelectedUsers([...selectedUsers, user.username]);
 		}
 	};
+
+	const getProfileImage = () => {
+    if(user?.profile_type === "custom") {
+      return user.profile_pic
+    }
+    else if(user?.profile_type === "default") {
+      return `/Avatar/${user?.profile_pic}.svg`
+    }
+    else {
+      return `/Avatar/${user?.profile_pic}.png`
+    }
+  }
 	
   return (
     <>
@@ -45,7 +57,7 @@ const UserAnalyticRows = ({user, setUpdate, selectedUsers, setSelectedUsers}: Pr
 					)}
 				</button>
 				<div className='flex gap-2 w-[32%]'>
-					<Image src="/user.svg" alt='profile' width={40} height={40} className='rounded-full'/>
+					<Image src={getProfileImage()} alt='profile' width={40} height={40} className='rounded-full'/>
 					<div>
 						<p className='text-[#7A7AFF] text-lg font-medium leading-5'>{user.name}</p>
 						<p className='text-[#7A7AFF] text-sm font-normal leading-4'>{user.email}</p>

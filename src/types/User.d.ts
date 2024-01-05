@@ -10,7 +10,7 @@ type UserDetailsType = {
     permissions: Permission;
     phone_number: string;
     profile_type: string;
-    profile_pic: string;
+    proile_pic: string;
     username: string;
 };
 

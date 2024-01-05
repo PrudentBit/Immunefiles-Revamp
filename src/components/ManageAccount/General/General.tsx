@@ -23,11 +23,23 @@ const General = () => {
     }
   }
 
+  const getProfileImage = () => {
+    if(userDetails?.profile_type === "custom") {
+      return userDetails?.proile_pic
+    }
+    else if(userDetails?.profile_type === "default") {
+      return `/Avatar/${userDetails?.proile_pic}.svg`
+    }
+    else {
+      return `/Avatar/${userDetails?.proile_pic}.png`
+    }
+  }
+
   return (
     <div className='h-full flex flex-col gap-4 justify-between items-center'>
       <div className='w-full h-[8rem] px-6 flex items-center gap-6 border-2 border-solid border-button_hover rounded-2xl'>
         <div className='h-[5rem] w-[5rem] rounded-xl'>
-          <Image src="/user.svg" alt='profile' width={90} height={90}/>
+          <Image src={getProfileImage()} alt='profile' width={90} height={90}/>
         </div>
 
         <div className='h-[5.5rem] flex flex-col justify-between'>

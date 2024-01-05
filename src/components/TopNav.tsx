@@ -7,7 +7,6 @@ import { tabStore } from '@/utils/store/leftNavTabStore'
 import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
 import SearchBox from './SearchFiles/SearchBox'
-
 import UserProfileCard from './UserProfileCard'
 
 

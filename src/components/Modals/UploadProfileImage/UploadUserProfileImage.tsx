@@ -12,17 +12,23 @@ import {
 import Image from 'next/image';
 import ProfileUpload from './ProfileUpload';
 
-const UploadUserProfileImage = () => {
-  const [uploadedfile, setUploadedfile] = useState<File>();
+type Props = {
+  uploadedFile?: File | undefined;
+  setUploadedFile: (file: File | undefined) => void;
+  setSelectedAvatar?: (avatar: string) => void;
+};
+
+const UploadUserProfileImage = ({ uploadedFile, setUploadedFile, setSelectedAvatar }: Props) => {
   const [preview, setPreview] = useState<string>();
 
   const handleCancel = () => {
-    setUploadedfile(undefined);
+    setUploadedFile(undefined);
     setPreview(undefined);
+    setSelectedAvatar && setSelectedAvatar('');
   };
 
   const handleFileChange = (file: File) => {
-    setUploadedfile(file);
+    setUploadedFile(file);
     setPreview(URL.createObjectURL(file));
   };
 
@@ -53,14 +59,14 @@ const UploadUserProfileImage = () => {
           </AlertDialogHeader>
 
           <AlertDialogDescription>
-                {uploadedfile ? (
+                {uploadedFile ? (
                   <div className="h-[11rem] w-full flex justify-center items-center bg-[#E5EDFF] rounded-lg">
                     <div className="relative h-[9rem] w-[7.5rem] mt-2">
                       <div className="absolute h-[9rem] w-[7.5rem] flex flex-col justify-center items-center gap-1 rounded-xl">
                         {preview && (
                           <img
                             src={preview}
-                            alt={uploadedfile.name}
+                            alt={uploadedFile.name}
                             className='rounded-xl h-[7.5rem] w-[7.5rem] object-cover'
                           />
                         )}
