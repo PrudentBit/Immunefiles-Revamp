@@ -2,6 +2,9 @@ import {useState} from 'react'
 import Image from 'next/image'
 import GroupDetailsModal from '../Modals/GroupDetailsModal/GroupDetailsModal'
 import { useRouter } from 'next/navigation';
+import { GroupStore } from '@/utils/store/groupDetailsStore';
+import favouriteGroup from '@/utils/api/favouriteGroupsAPI';
+import {toast} from 'sonner'
 
 type Props = {
   group: GroupDetailsType
@@ -9,10 +12,23 @@ type Props = {
 
 const Groups = ({group}:Props) => {
   const [isHovering, setIsHovering] = useState(false)
+  const {toggleForceRefresh} = GroupStore()
 
   const router = useRouter();
   const handleOpenGroup = () => {
     router.push(`/groups/${group.group_hash}/root`);
+  }
+
+  const handleToggleFavorite = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    const response = await favouriteGroup(group.group_hash);
+    if (response.status === 200) {
+      toggleForceRefresh();
+      toast.success('Group unpinned successfully');
+    }
+    else {
+      toast.error('Something went wrong');
+    }
   }
 
   return (
@@ -32,7 +48,7 @@ const Groups = ({group}:Props) => {
       <GroupDetailsModal group={group}/>
 
       {group.is_favorite && (
-        <div className='absolute translate-x-[14.3rem] translate-y-[-1.5rem] cursor-pointer rounded-full h-6 w-6 flex items-center justify-center bg-primary_font'>
+        <div onClick={(e)=>handleToggleFavorite(e)} className='absolute translate-x-[14.3rem] translate-y-[-1.5rem] cursor-pointer rounded-full h-6 w-6 flex items-center justify-center hover:bg-[#4b8be5] bg-primary_font'>
           <Image src='/pin-icon-solid.svg' width={16} height={16} alt='pinned' className='mb-[0.2rem] ml-[0.2rem]'/>
         </div>
       )}

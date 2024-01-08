@@ -19,6 +19,8 @@ import AddMemberGroupsModal from './AddMemberGroupsModal';
 import editGroup from '@/utils/api/editGroupAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import { GroupStore} from '@/utils/store/groupDetailsStore';
+import favouriteGroup from '@/utils/api/favouriteGroupsAPI';
+import { toast } from 'sonner';
 
 type Props = {
   group: GroupDetailsType
@@ -31,9 +33,24 @@ const GroupDetailsModal = ({ group }: Props) => {
     const response = await editGroup({action: "delete", group_hash: group.group_hash});
     if (response.status === 200) {
       toggleForceRefresh();
+      toast.success('Group deleted successfully');
     }
     else{
-      console.log(decryptData(response.data.ciphertext));
+      toast.error('Something went wrong', {
+        description: decryptData(response.data.ciphertext)
+      });
+    }
+  }
+
+  const handleToggleFavorite = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    const response = await favouriteGroup(group.group_hash);
+    if (response.status === 200) {
+      toggleForceRefresh();
+      toast.success('Group pinned successfully');
+    }
+    else {
+      toast.error('Something went wrong');
     }
   }
 
@@ -86,7 +103,11 @@ const GroupDetailsModal = ({ group }: Props) => {
           </div>
 
           <div className='flex gap-5 items-center'>
-            <button title='Pin' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
+            <button 
+              title='Pin'
+              className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'
+              onClick={(e)=>handleToggleFavorite(e)}
+            >
               <Image src='/pin-icon.svg' width={15} height={15} alt='Pin icon'/>
             </button>
             <AddMemberGroupsModal group={group}/>

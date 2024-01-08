@@ -22,6 +22,7 @@ import createFile from '@/utils/api/createFilesAPI'
 import createFolder from '@/utils/api/createFolderAPI'
 import requestFiles from '@/utils/api/requestFilesAPI'
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore'
+import {toast} from 'sonner'
 
 type Props = {
   propTab:string;
@@ -51,20 +52,22 @@ const CreateFileOrFolder = ({propTab}:Props) => {
   const handleCreateFile = async () => {
     try {
       const result = await createFile(fileName, selectedExtension, 'root');
-      console.log(result);
       toggleForceRefresh();
+      toast.success('File created successfully');
     } catch (error) {
       console.error(error);
+      toast.error('File creation failed');
     }
   }
 
   const handleCreateFolder = async () => {
     try {
       const result = await createFolder(folderName, 'root');
-      console.log(result);
+      toast.success('Folder created successfully');
       toggleForceRefresh();
     } catch (error) {
       console.error(error);
+      toast.error('Folder creation failed');
     }
   }
 
@@ -72,10 +75,11 @@ const CreateFileOrFolder = ({propTab}:Props) => {
     if(!(requestType === 'none')) {
       try {
         const result = await requestFiles(request, requestType);
-        console.log(result);
+        toast.success('Request sent successfully');
         toggleForceRefresh();
       } catch (error) {
         console.error(error);
+        toast.error('Request failed');
       }
     }
   }  

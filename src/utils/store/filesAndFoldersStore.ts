@@ -1,16 +1,15 @@
 import { create } from 'zustand';
 /* eslint-disable  no-unused-vars */
 
-type SortByOptions = '' | 'extension' | 'dateAsc' | 'dateDesc' | 'sizeAsc' | 'sizeDesc' | 'alphabetical';
+type sortBy = "name" | "size" | "created" | "modified";
+type order = "asc" | "dsc";
 
 type Store = {
   files: FileOrFolderType[];
   folders: FileOrFolderType[];
   forceRefresh: boolean;
-  sortBy: SortByOptions;
-  setSortBy: (sortBy: SortByOptions) => void;
-  sortFiles: () => void;
-  sortFolders: () => void;
+  sortBy: sortBy;
+  order: order;
   addFile: (file: FileOrFolderType) => void;
   addFolder: (folder: FileOrFolderType) => void;
   removeFile: (hash: string) => void;
@@ -19,58 +18,16 @@ type Store = {
   setFolders: (folders: FileOrFolderType[]) => void;
   removeAll(): void;
   toggleForceRefresh(): void;
+  setSortBy(sortBy: sortBy): void;
+  setOrder(order: order): void;
 };
 
 export const useFileAndFolderStore = create<Store>((set, get) => ({
   files: [],
   folders: [],
   forceRefresh: false,
-  sortBy: '',
-
-  setSortBy: (sortBy) => set(() => ({ sortBy })),
-
-  sortFiles: () => {
-    const { files, sortBy } = get();
-    const sortedFiles = [...files];
-    switch (sortBy) {
-      case 'extension':
-        sortedFiles.sort((a, b) => (a.name.split('.').pop() || '').localeCompare(b.name.split('.').pop() || ''));
-        break;
-      case 'dateAsc':
-        sortedFiles.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime());
-        break;
-      case 'dateDesc':
-        sortedFiles.sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime());
-        break;
-      case 'sizeAsc':
-        sortedFiles.sort((a, b) => parseInt(a.size || '0') - parseInt(b.size || '0'));
-        break;
-      case 'sizeDesc':
-        sortedFiles.sort((a, b) => parseInt(b.size || '0') - parseInt(a.size || '0'));
-        break;
-      case 'alphabetical':
-        sortedFiles.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-    }
-    set(() => ({ files: sortedFiles }));
-  },
-
-  sortFolders: () => {
-    const { folders, sortBy } = get();
-    const sortedFolders = [...folders];
-    switch (sortBy) {
-      case 'dateAsc':
-        sortedFolders.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime());
-        break;
-      case 'dateDesc':
-        sortedFolders.sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime());
-        break;
-      case 'alphabetical':
-        sortedFolders.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-    }
-    set(() => ({ folders: sortedFolders }));
-  },
+  sortBy: "name",
+  order: "asc",
 
   addFile: (file) => set((state) => ({ files: [...state.files, file] })),
 
@@ -95,4 +52,7 @@ export const useFileAndFolderStore = create<Store>((set, get) => ({
 
   toggleForceRefresh: () =>
     set((state) => ({ forceRefresh: !state.forceRefresh })),
+    
+  setSortBy: (sortBy) => set(() => ({ sortBy })),
+  setOrder: (order) => set(() => ({ order })),
 }));

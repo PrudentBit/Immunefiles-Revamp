@@ -24,17 +24,12 @@ const FileAndFolder = ({ root }: Props) => {
     setFolders,
     forceRefresh,
     toggleForceRefresh,
-    sortFiles,
-    sortFolders,
+    sortBy,
+    order,
   } = useFileAndFolderStore();
   const [loading, setLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = useState<FileWithPath[]>([]);
   const [uploadedFolders, setUploadedFolders] = useState<FileWithPath[]>([]);
-
-  useEffect(() => {
-    sortFiles();
-    sortFolders();
-  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     noClick: true,
@@ -101,8 +96,8 @@ const FileAndFolder = ({ root }: Props) => {
   React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const fileData = await getFiles(root);
-      if (fileData){
+      const fileData = await getFiles(root, sortBy, order);
+      try{
         const decryptedData = decryptData(fileData.ciphertext);
 
         setFolders(decryptedData.children);
@@ -110,10 +105,13 @@ const FileAndFolder = ({ root }: Props) => {
 
         setLoading(false);
       }
+      catch(err){
+        toast.error('Error fetching files');
+      }
     };
 
     fetchData();
-  }, [root, forceRefresh]);
+  }, [root, forceRefresh, sortBy, order]);
 
   return (
     <div
