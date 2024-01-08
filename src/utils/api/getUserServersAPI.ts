@@ -1,7 +1,9 @@
-export default async function getIntegrations() {
+export default async function getUserServers(drive:string) {
   const res = await fetch(
-    `https://api.immunefiles.com/api/api/auth/check_integration?tenant=${
+    `https://api.immunefiles.com/api/api/sync/get_user_servers?tenant=${
     window.location.hostname.split(".")[0]
+    }&storage_platform=${
+      drive
     }`,
     {
       method: "GET",

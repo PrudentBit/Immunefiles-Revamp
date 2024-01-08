@@ -1,9 +1,10 @@
 "use client"
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import getUserServers from '@/utils/api/getUserServersAPI'
+import { toast } from 'sonner'
 
 type Props = {
   image: string
@@ -13,7 +14,24 @@ type Props = {
 
 const DriveCard = ({image, name, gradient}: Props) => {
   const link=name.toLowerCase().replace(/\s/g, '');
-  const [isConnected, setIsConnected] = useState(false)
+  const [servers, setServers] = useState<serverType | []>([])
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+
+  useEffect(() => {
+    const getServer = async () => {
+      const response = await getUserServers(link)
+      if(response.status === 200) {
+        setServers(response.data)
+        if (response.data.length > 0) {
+          setIsConnected(true)
+        }
+      }
+      else{
+        toast.error('Something went wrong')
+      }
+    }
+    getServer()
+  }, [])
 
   return (
     <div 
@@ -53,9 +71,9 @@ const DriveCard = ({image, name, gradient}: Props) => {
           View
         </Link>
       ):(
-        <Button onClick={()=>setIsConnected(!isConnected)} className='bg-white hover:bg-primary_font border-solid border-[1px] border-primary_font text-primary_font hover:text-white text-sm font-medium py-3 px-4 rounded-2xl'>
+        <Link href={`/integrations/${link}`} className='bg-white hover:bg-primary_font border-solid border-[1px] border-primary_font text-primary_font flex justify-center items-center hover:text-white text-sm font-medium py-[0.6rem] px-4 rounded-2xl'>
           Connect
-        </Button>
+        </Link>
       )}
     </div>
   )

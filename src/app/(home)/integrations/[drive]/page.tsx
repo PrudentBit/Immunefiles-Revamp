@@ -15,7 +15,7 @@ const Integrations: React.FC<IntegrationsProps> = ({ params: { drive } }) => {
       <div className='w-full h-full flex flex-col gap-7'>
         <IntegrationHeader drive={drive}/>
 
-        <ServerView/>
+        <ServerView drive={drive}/>
       </div>
     </div>
   )

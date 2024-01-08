@@ -1,5 +1,6 @@
 "use client"
 
+import { use, useState } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,6 +14,10 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import createServer from '@/utils/api/createServerAPI'
+import { UserDetailsStore } from '@/utils/store/userDetailsStore'
+import { selectedServersStore } from '@/utils/store/integrationsStore'
+import { toast } from 'sonner'
 
 type Props = {
   drive: string
@@ -20,6 +25,25 @@ type Props = {
 }
 
 const AddNewServerModal = ({drive, navButton}: Props) => {
+  const [value, setValue] = useState("");
+  const {userDetails} = UserDetailsStore();
+  const {toggleForceRefresh} = selectedServersStore();
+
+  const handleCreate =async () => {
+    if (userDetails) {
+      const response = await createServer(value, drive, userDetails?.name)
+      if (response.status === 200) {
+        setValue('')
+        toast.success('Server created successfully')
+        toggleForceRefresh()
+      }
+      else{
+        toast.error('Something went wrong', {
+          description: response.data.message
+        })
+      }
+    }
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -63,11 +87,22 @@ const AddNewServerModal = ({drive, navButton}: Props) => {
                 </div>
               </div>
             )}
-            <input type="text" className='w-full h-10 rounded-sm bg-bg_hover px-4' placeholder="Enter server name"/>
+            <input 
+              type="text"
+              className='w-full h-10 rounded-sm bg-bg_hover px-4' 
+              placeholder="Enter server name"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
           </div>
         </AlertDialogDescription>
         <AlertDialogFooter className='flex items-end justify-end'>
-          <AlertDialogAction className='rounded-full w-[10rem] text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'>Create</AlertDialogAction>
+          <AlertDialogAction 
+            className='rounded-full w-[10rem] text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'
+            onClick={handleCreate}
+          >
+            Create
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

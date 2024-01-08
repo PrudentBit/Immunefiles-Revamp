@@ -1,21 +1,34 @@
+"use client"
+
 import { useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { selectedServersStore } from '@/utils/store/integrationsStore'
 
-const ServerRow = () => {
-  const [isActive, setIsActive] = useState<boolean>(true);
+type Props = {
+  server: serverType
+}
+
+const ServerRow = ({server}: Props) => {
   const [deleteHovered, setDeleteHovered] = useState<boolean>(false);
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const {selectedServers, setSelectedServers} = selectedServersStore();
 
   const handleCheckboxClick = () => {
-    setIsSelected(!isSelected);
+    if(selectedServers.includes(server.id)) {
+      setSelectedServers(selectedServers.filter(id => id !== server.id))
+    }
+    else {
+      setSelectedServers([...selectedServers, server.id])
+    }
   }
+
+  console.log(server);
 
   return (
     <div className='w-full h-14 bg-[#E5EDFF] rounded-lg flex justify-between items-center p-3 px-5'>
       <div className='flex gap-4 items-center'>
         <button onClick={handleCheckboxClick} className='w-6 h-[1.43rem] bg-[#FFFFFF] rounded-sm'>
-          {isSelected ? (
+          { selectedServers.includes(server.id) ? (
             <Image src="/checked-icon-white.svg" alt='check' width={28} height={28}/>
           ):(
             <Image src="/not-checked-icon-white.svg" alt='uncheck' width={28} height={28}/>
@@ -23,15 +36,15 @@ const ServerRow = () => {
         </button>
 
         <div className='flex gap-2 items-center'>
-          <Image src="/server-icon-2.svg" width={32} height={32} alt='server'/>
-          <p className='text-primary_font text-[1.1rem]'>Server name</p>
+          <Image src="/server-icon-2.svg" width={30} height={30} alt='server'/>
+          <p className='text-primary_font text-[1.1rem] w-[10rem] truncate'>{server.server_name}</p>
         </div>
       </div>
 
-      <div className="flex gap-2 items-center" onClick={()=>setIsActive(!isActive)}>
-        <div className={`h-1 w-1 rounded-full ${isActive? "bg-green-500" : "bg-red-400"} mt-[0.1rem]`}></div>
-        <p className={`${isActive? "text-green-500" : "text-red-400"} text-[0.83rem] font-medium`}>
-          {isActive ? 'Active' : 'Disconnected'}
+      <div className="flex gap-2 items-center">
+        <div className={`h-1 w-1 rounded-full ${server.syncs.length > 0 ? "bg-green-500" : "bg-red-400"} mt-[0.1rem]`}></div>
+        <p className={`${server.syncs.length > 0 ? "text-green-500" : "text-red-400"} text-[0.83rem] font-medium`}>
+          {server.syncs.length > 0 ? 'Active' : 'Disconnected'}
         </p>
       </div>
 

@@ -1,27 +1,42 @@
 "use client"
 
+import {useEffect, useState} from 'react'
 import Image from 'next/image'
 import AddNewServerModal from '../Modals/AddNewServerModal'
 import ServerRow from './ServerRow'
+import getUserServers from '@/utils/api/getUserServersAPI'
+import { toast } from 'sonner'
+import { selectedServersStore } from '@/utils/store/integrationsStore'
 
-const ServerView = () => {
-  const servers = true;
+type Props = {
+  drive: string
+}
+
+const ServerView = ({drive}: Props) => {
+  const [servers, setServers] = useState<serverType[]>([])
+  const {setTotalServers, forceRefresh} = selectedServersStore();
+
+  useEffect(() => {
+    const getServer = async () => {
+      const response = await getUserServers(drive)
+      if(response.status === 200) {
+        setServers(response.data)
+        setTotalServers(response.data.length)
+      }
+      else{
+        toast.error('Something went wrong')
+      }
+    }
+    getServer()
+  }, [forceRefresh])
+
   return (
     <>
-      {servers? (
+      {servers.length > 0 ? (
         <div className='w-full h-[93%] max-h-[75vh] flex flex-col gap-5 pr-6 pt-2 overflow-auto'>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
-          <ServerRow/>
+          {servers.map((server: serverType) => (
+            <ServerRow key={server.id} server={server}/>
+          ))}
         </div>
       ) : (
         <div className='w-full h-[93%] flex justify-center items-center'>
