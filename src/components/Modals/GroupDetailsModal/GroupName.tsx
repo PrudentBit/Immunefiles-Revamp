@@ -20,7 +20,16 @@ const GroupName = ({group}: Props) => {
     setValue(value);
   }
 
-  const formattedDate = new Date(group.created).toLocaleString('en-GB', {
+  const formattedCreated = new Date(group.created).toLocaleString('en-GB', {
+    day: 'numeric',
+    month: 'numeric',
+    year: '2-digit',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
+  const formattedModified = new Date(group.last_modified).toLocaleString('en-GB', {
     day: 'numeric',
     month: 'numeric',
     year: '2-digit',
@@ -50,10 +59,16 @@ const GroupName = ({group}: Props) => {
           <Image src='/groups-icon.svg' width={24} height={24} alt="group"/>
           <p className='text-[#7A7AFF] text-[1.05rem] leading-5'>Group name</p>
         </div >  
-        <div className='flex gap-1 h-5'>
-          <p className="text-gray-800 leading-5">Created on :</p>
-          <p className='text-gray-900 text-base  leading-5'>{formattedDate}</p>
-        </div>  
+        <div className='flex gap-4 text-xs'>
+          <div className='flex gap-1 h-5'>
+            <p className="text-gray-800 leading-4">Created on :</p>
+            <p className='text-gray-900 text-sm  leading-4'>{formattedCreated}</p>
+          </div>  
+          <div className='flex gap-1 h-5'>
+            <p className="text-gray-800 leading-4">Modfied on :</p>
+            <p className='text-gray-900 text-sm  leading-4'>{formattedModified}</p>
+          </div> 
+        </div>
       </div>
 
       {rename ? (

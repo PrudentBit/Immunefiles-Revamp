@@ -12,6 +12,7 @@ type GroupDetailsType = {
   group_hash: string;
   is_admin: boolean;
   is_favorite: boolean;
+  last_modified: string;
   members: MemberType[];
   name: string;
   owner: string;

@@ -24,6 +24,7 @@ const GroupsTab = () => {
         if(response.status === 200) {
           const decryptedGroupData = decryptData(response.data.ciphertext);
           setGroups(decryptedGroupData.groups);
+          console.log(decryptedGroupData.groups);
         }
 
       } catch (error) {

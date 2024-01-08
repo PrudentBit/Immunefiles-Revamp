@@ -13,20 +13,18 @@ import {
   } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
 import { useState, useEffect } from "react"
-import ManageShared from "./ManageSharedModal/ManageSharedModal"
 
 type Props = {
-  file?: FileOrFolderType;
-  groupFile?: groupFileandFolderType ;
+  file: SharedFilesType["files"][0] | SharedFilesType["children"][0];
   type: string;
 }
 
-const FileDetailsModal = ({ file, groupFile, type }: Props) => {
+const SharedFileDetails = ({ file, type }: Props) => {
   const [formattedDate, setFormattedDate] = useState<string | null>(null);
 
   useEffect(() => {
-    if(groupFile?.date_uploaded){
-        const date = new Date(groupFile?.date_uploaded).toLocaleString('en-GB', {
+    if(file?.date_created){
+        const date = new Date(file?.date_created).toLocaleString('en-GB', {
         day: 'numeric',
         month: 'numeric',
         year: '2-digit',
@@ -36,8 +34,8 @@ const FileDetailsModal = ({ file, groupFile, type }: Props) => {
       });
       setFormattedDate(date);
     }
-  }, [groupFile])
-  
+  }, [file])
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -57,58 +55,24 @@ const FileDetailsModal = ({ file, groupFile, type }: Props) => {
           <div className='flex flex-col gap-2 rounded-xl bg-primary_bg px-5 py-3'>
             <div className='flex gap-2'>
               <Image src={`${type ? "/File-icon.svg":"/Folder-icon.svg"}`} width={25} height={25}alt='file icon'/>
-              <p className='text-primary_font text-lg font-semibold w-[20rem] truncate'>{file?.name || groupFile?.name}</p>
+              <p className='text-primary_font text-lg font-semibold w-[20rem] truncate'>{file.name}</p>
             </div>
             <div className='flex flex-row gap-2 pl-1'>
-              <p>{file?.size || groupFile?.size || ""}</p>
+              <p>{file?.size}</p>
               <div className='flex flex-row gap-1'> 
-                {file?.owner ? (
-                  <>
-                    <p>Owned by: </p>
-                    <p>{file?.owner}</p>
-                  </>
-                ) : (
-                  <>
-                    <p>Shared by: </p>
-                    <p>{groupFile?.shared_by}</p>
-                  </>
-                )}
+                <p>Owned by: </p>
+                <p>{file?.owner}</p>
               </div>
             </div>
             <div className='flex gap-2 pl-1'>
-              {file?.owner ? (
-                  <>
-                    <p>Created on: </p>
-                    <p>{file?.owner}</p>
-                  </>
-                ) : (
-                  <>
-                    {groupFile?.date_uploaded && (
-                      <>
-                        <p>Shared on: </p>
-                        <p>{formattedDate}</p>
-                      </>
-                    )}
-                  </>
-                )}
+              <p>Created on: </p>
+              <p>{file?.owner}</p>
             </div>
             
           </div>
         </AlertDialogDescription>
-        {file?.owner && (
-          <AlertDialogFooter className=''>
-            <AlertDialogAction className='rounded-full text-white gap-2 font-normal bg-primary_font hover:text-primary_font border-[1px] border-solid border-primary_font'>
-              Rename
-              <Image src="/rename-icon.svg" width={15} height={15} alt='rename icon'/>
-            </AlertDialogAction>
-            <AlertDialogAction className='rounded-full text-white font-normal bg-primary_font_2 hover:text-primary_font_2 border-[1px] border-solid border-primary_font_2'>
-              <ManageShared file={file} type={type}/>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        )}
       </AlertDialogContent>
     </AlertDialog>
   )
 }
-
-export default FileDetailsModal
+export default SharedFileDetails

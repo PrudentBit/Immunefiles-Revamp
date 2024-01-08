@@ -2,7 +2,7 @@ import downloadResource from '@/utils/api/getDowloadBlob';
 import React from 'react'
 
 type Props = {
-  file: FileOrFolderType | groupFileandFolderType;
+  file: FileOrFolderType | groupFileandFolderType | SharedFilesType["files"][0] | SharedFilesType["children"][0];
 }
 
 const DownloadFile = ({file}: Props) => {
