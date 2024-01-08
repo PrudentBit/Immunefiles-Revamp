@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { selectedServersStore } from '@/utils/store/integrationsStore'
+import deleteServer from '@/utils/api/deleteServerAPI'
+import { toast } from 'sonner'
 
 type Props = {
   server: serverType
@@ -11,7 +13,7 @@ type Props = {
 
 const ServerRow = ({server}: Props) => {
   const [deleteHovered, setDeleteHovered] = useState<boolean>(false);
-  const {selectedServers, setSelectedServers} = selectedServersStore();
+  const {selectedServers, setSelectedServers, toggleForceRefresh} = selectedServersStore();
 
   const handleCheckboxClick = () => {
     if(selectedServers.includes(server.id)) {
@@ -22,7 +24,18 @@ const ServerRow = ({server}: Props) => {
     }
   }
 
-  console.log(server);
+  const handleDelete = async () => {
+    const response = await deleteServer(server.server_name)
+    if (response.status === 200) {
+      toggleForceRefresh()
+      toast.success('Server deleted successfully')
+    }
+    else{
+      toast.error('Something went wrong', {
+        description: response.data.message
+      })
+    }
+  }
 
   return (
     <div className='w-full h-14 bg-[#E5EDFF] rounded-lg flex justify-between items-center p-3 px-5'>
@@ -52,6 +65,7 @@ const ServerRow = ({server}: Props) => {
         <Button
           onMouseEnter={()=>setDeleteHovered(true)}
           onMouseLeave={()=>setDeleteHovered(false)}
+          onClick={handleDelete}
           className='h-6 w-6 p-0 bg-white hover:bg-[#FFEBEC] hover:w-20 hover:scale-[1.1] gap-2 flex items-center justify-center rounded-sm border-[1px] border-solid border-red-400'>
             <Image src="/delete-icon.svg" width={15} height={15} alt='delete' />
             {deleteHovered && <p className='text-red-400 text-[0.82rem]'>Delete</p>}

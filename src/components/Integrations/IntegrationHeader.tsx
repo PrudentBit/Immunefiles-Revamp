@@ -12,7 +12,7 @@ type Props = {
 }
 
 const IntegrationHeader = ({drive}: Props) => {
-  const {selectedServers, totalServers, removeAll} = selectedServersStore();
+  const {selectedServers, totalServers, removeAll, toggleForceRefresh} = selectedServersStore();
 
   return (
     <div className='w-full flex justify-between h-[7%]'>
@@ -59,7 +59,7 @@ const IntegrationHeader = ({drive}: Props) => {
         <div className='flex gap-4'>
           {totalServers > 0 ? (
             <>
-              <Button title="refresh" className='h-10 w-10 p-0 bg-[#D0FFE3] flex justify-center items-center rounded-sm hover:bg-[#ABEDC6]'>
+              <Button title="refresh" onClick={toggleForceRefresh} className='h-10 w-10 p-0 bg-[#D0FFE3] flex justify-center items-center rounded-sm hover:bg-[#ABEDC6]'>
                 <Image src='/refresh-icon-green.svg' width={22} height={22} alt="refresh"/>
               </Button>
 

@@ -1,13 +1,38 @@
-import Link from 'next/link'
+"use client"
+
+import {useEffect, useState} from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import ServerSelectDropDown from '@/components/Modals/DropDowns/ServerSelectDropDown'
 import { Button } from '@/components/ui/button'
+import getUserServers from '@/utils/api/getUserServersAPI'
+import { toast } from 'sonner'
+import { selectedServersStore } from '@/utils/store/integrationsStore'
 
 type Props = {
   drive: string
 }
 
 const SyncServerMain = ({drive}: Props) => {
+  const {setTotalServers, forceRefresh} = selectedServersStore();
+  const [servers, setServers] = useState<serverType[]>([])
+  const [selectedServer, setSelectedServer] = useState<serverType | null>(null)
+
+  useEffect(() => {
+    const getServer = async () => {
+      const response = await getUserServers(drive)
+      if(response.status === 200) {
+        const data = response.data
+        setServers(data.filter((server: serverType) => server.syncs.length == 0))
+        setTotalServers(data.length)
+      }
+      else{
+        toast.error('Something went wrong')
+      }
+    }
+    getServer()
+  }, [forceRefresh])
+
   return (
     <div className='w-full h-full flex flex-col gap-7'>
         <div className='flex gap-4'>
@@ -38,7 +63,7 @@ const SyncServerMain = ({drive}: Props) => {
               <Image src="/server-icon-black.svg" width={20} height={20} alt='choose server'/>
               <p className='font-semibold text-md'>Choose server</p>
             </label>
-            <ServerSelectDropDown/>
+            <ServerSelectDropDown servers={servers} selectedServer={selectedServer} setSelectedServer={setSelectedServer}/>
           </div>
 
           <div className='flex flex-col gap-5'>
