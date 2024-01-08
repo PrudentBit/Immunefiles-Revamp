@@ -14,8 +14,8 @@ import ProfileUpload from './ProfileUpload';
 
 type Props = {
   uploadedFile?: File | undefined;
-  setUploadedFile: (file: File | undefined) => void;
-  setSelectedAvatar?: (avatar: string) => void;
+  setUploadedFile: (_file: File | undefined) => void;
+  setSelectedAvatar?: (_avatar: string) => void;
 };
 
 const UploadUserProfileImage = ({ uploadedFile, setUploadedFile, setSelectedAvatar }: Props) => {
@@ -64,10 +64,12 @@ const UploadUserProfileImage = ({ uploadedFile, setUploadedFile, setSelectedAvat
                     <div className="relative h-[9rem] w-[7.5rem] mt-2">
                       <div className="absolute h-[9rem] w-[7.5rem] flex flex-col justify-center items-center gap-1 rounded-xl">
                         {preview && (
-                          <img
+                          <Image
                             src={preview}
                             alt={uploadedFile.name}
                             className='rounded-xl h-[7.5rem] w-[7.5rem] object-cover'
+                            height={0}
+                            width={0}
                           />
                         )}
                         <p className="text-primary_font font-medium text-sm truncate w-full text-center">

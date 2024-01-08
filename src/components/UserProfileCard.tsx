@@ -28,8 +28,14 @@ const UserProfileCard = ({userDetails}: Props) => {
     <Popover>
       <PopoverTrigger >
         <div className='flex gap-2 cursor-pointer'>
-          <div className="h-12 w-12">
-            <img src={getProfileImage()} alt='profile' className='rounded-lg object-cover h-full w-full'/>
+          <div className="h-12 w-12 overflow-hidden relative">
+            <Image 
+              src={getProfileImage()} 
+              alt='profile' 
+              className='rounded-lg object-cover'
+              fill={true}
+              style={{ objectFit: 'cover' }}
+            />
           </div>
           <div className='text-left'>
             <p className='text-black font-normal text-sm h-4'>Hello</p>
@@ -39,8 +45,14 @@ const UserProfileCard = ({userDetails}: Props) => {
       </PopoverTrigger>
       <PopoverContent className="mr-4 rounded-2xl w-[18.5rem] flex flex-col gap-5 p-5">
         <div className='flex gap-3 cursor-pointer w-full'>
-          <div className="min-w-[6rem] max-w-[6rem] rounded-lg">
-            <img src={getProfileImage()} alt='profile' className='rounded-lg object-cover h-full w-full'/>
+          <div className="min-w-[6rem] max-w-[6rem] rounded-lg overflow-hidden relative">
+            <Image 
+              src={getProfileImage()} 
+              alt='profile' 
+              className='rounded-lg object-cover'
+              fill={true}
+              style={{ objectFit: 'cover' }}
+            />
           </div>
           <div className='text-left h-[5.3rem] w-[9rem] flex flex-col justify-between'>
             <p className='text-lg font-semibold whitespace-nowrap leading-6 truncate'>{userDetails?.name}</p>

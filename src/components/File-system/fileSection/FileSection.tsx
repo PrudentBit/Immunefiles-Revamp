@@ -3,17 +3,16 @@ import Image from "next/image";
 import SelectionArea, {SelectionEvent} from '@viselect/react';
 import File from "@/components/File-system/File";
 import { selectedFilesStore } from '@/utils/store/selectFilesStore';
-import GroupFile from '@/components/Groups/GroupFile';
 
 type FileSectionProps = {
   subFiles: FileOrFolderType[];
   type: string;
-  group_hash?: string;
 }
 
-const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
+const FileSection = ({ subFiles, type }: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
-  const [selected, setSelected] = useState<Set<number>>(() => new Set());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_selected, setSelected] = useState<Set<number>>(() => new Set());
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
     (state) => [
       state.files,
@@ -56,10 +55,6 @@ const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
     });
   };
 
-  const isFileAndFolderType = (file: FileOrFolderType | groupFileandFolderType): file is FileOrFolderType => {
-    return (file as FileOrFolderType).owner !== undefined;
-  };
-
   return (
     <SelectionArea  
       className="flex flex-col" 
@@ -79,16 +74,8 @@ const FileSection = ({ subFiles, type, group_hash}: FileSectionProps) => {
       </div>
       <div className="container flex gap-3 flex-wrap pb-2 pl-2 pt-5">
         {subFiles.map((file, index) => (
-          isFileAndFolderType(file) ? (
             <File dataKey={index} key={index} file={file} type={type} className="selectable"/>
-          ) : (
-            <>
-              {group_hash && (
-                <GroupFile key={index} file={file} type={type} group_hash={group_hash} className="selectable"/>
-              )}
-            </>
-          )
-        ))}
+          ))}
       </div>  
     </SelectionArea>
   );

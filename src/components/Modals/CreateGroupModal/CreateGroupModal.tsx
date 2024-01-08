@@ -73,7 +73,7 @@ const CreateGroupModal = () => {
           </AlertDialogHeader>
 
           <AlertDialogDescription className='flex gap-6 h-[22rem]'>
-            <GroupDetails name={name} setName={setName} description={description} setDescription={setDescription} members={members} setMembers={setMembers}/>
+            <GroupDetails setName={setName} setDescription={setDescription} members={members} setMembers={setMembers}/>
 
             <AddedMembers members={members} setMembers={setMembers}/>
           </AlertDialogDescription>

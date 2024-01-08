@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FileSection from '@/components/File-system/fileSection/FileSection';
 import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
 import getFiles from '@/utils/api/getFilesAPI';

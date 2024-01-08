@@ -8,15 +8,13 @@ import Image from 'next/image';
 import getEmailSearchQuery from '@/utils/api/getEmailSearchQueryAPI';
 
 type Props = {
-  name: string,
   setName: React.Dispatch<React.SetStateAction<string>>,
-  description: string,
   setDescription: React.Dispatch<React.SetStateAction<string>>,
   members: userSearchQueryType[],
   setMembers: React.Dispatch<React.SetStateAction<userSearchQueryType[]>>,
 }
 
-const GroupDetails = ({name, setName, description, setDescription, members, setMembers}: Props) => {
+const GroupDetails = ({setName, setDescription, members, setMembers}: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState<userSearchQueryType[]>([]);
   const [value, setValue] = React.useState('');

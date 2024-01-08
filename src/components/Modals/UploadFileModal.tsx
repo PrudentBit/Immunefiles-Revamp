@@ -47,13 +47,6 @@ const UploadFileModal = () => {
     },
   });
 
-  const [fileProgress, setFileProgress] = useState<{
-    batch: string[];
-    progress: number[];
-  }>({ batch: [], progress: [] });
-  //workaround
-  console.log(fileProgress);
-
   const startUpload = async () => {
     let fileProgress;
     if (uploadedFiles.length > 0) {

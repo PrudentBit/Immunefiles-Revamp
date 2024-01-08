@@ -72,11 +72,11 @@ const RightClickContextMenu = ({children, file}: Props) => {
         </ContextMenuItem>
         <ContextMenuItem className='flex gap-2 text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert multiplefiles={false} type={type}/>
+          <DeleteFileAlert multiplefiles={false}/>
         </ContextMenuItem>
         <ContextMenuItem className="flex gap-2 items-center">
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false} currFile={file} type={type}/>
+          <ShareContentModal multiplefiles={false} currFile={file}/>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>

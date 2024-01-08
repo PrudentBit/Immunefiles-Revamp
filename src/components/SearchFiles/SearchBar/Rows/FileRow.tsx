@@ -1,9 +1,8 @@
 import Image from "next/image"
 import { lowerCaseExtensions } from '../../../../../public/FileIcons/fileExtensions';
 
-type Props = {}
 
-const FileRow = (props: Props) => {
+const FileRow = () => {
 
   const getIcon = (name: string) => {
     const extension = name.split('.').pop() || '';

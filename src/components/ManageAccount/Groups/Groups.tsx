@@ -5,7 +5,8 @@ import GroupsTopNav from './GroupsTopNav';
 import GroupsRow from './GroupsRow';
 
 const Groups = () => {
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedGroups, _setSelectedGroups] = useState<string[]>([]);
   const [allSelected, setAllSelected] = useState(false);
 
   return (

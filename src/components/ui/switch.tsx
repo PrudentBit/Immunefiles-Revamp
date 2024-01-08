@@ -7,7 +7,7 @@ import { cn } from "@/utils"
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & { onClick?: (event: React.MouseEvent) => void }
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & { onClick?: (_event: React.MouseEvent) => void }
 >(({ className, onClick, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(

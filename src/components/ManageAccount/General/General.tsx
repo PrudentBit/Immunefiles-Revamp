@@ -38,8 +38,14 @@ const General = () => {
   return (
     <div className='h-full flex flex-col gap-4 justify-between items-center'>
       <div className='w-full h-[8rem] px-6 flex items-center gap-6 border-2 border-solid border-button_hover rounded-2xl'>
-        <div className='h-[5rem] w-[5rem] rounded-xl'>
-          <img src={getProfileImage()} alt='profile' className='object-cover h-full w-full rounded-xl'/>
+        <div className='h-[5rem] w-[5rem] rounded-xl overflow-hidden relative'>
+          <Image 
+            src={getProfileImage()} 
+            alt='profile' 
+            className='object-cover rounded-xl'
+            fill={true}
+            style={{ objectFit: 'cover' }}
+          />
         </div>
 
         <div className='h-[5.5rem] flex flex-col justify-between'>

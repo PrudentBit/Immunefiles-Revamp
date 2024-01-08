@@ -52,8 +52,13 @@ const CreateFileOrFolder = ({propTab}:Props) => {
   const handleCreateFile = async () => {
     try {
       const result = await createFile(fileName, selectedExtension, 'root');
-      toggleForceRefresh();
-      toast.success('File created successfully');
+      if (result.success){
+        toast.success('File created successfully');
+        toggleForceRefresh();
+      }
+      else{
+        toast.error('File creation failed');
+      }
     } catch (error) {
       console.error(error);
       toast.error('File creation failed');
@@ -63,8 +68,13 @@ const CreateFileOrFolder = ({propTab}:Props) => {
   const handleCreateFolder = async () => {
     try {
       const result = await createFolder(folderName, 'root');
-      toast.success('Folder created successfully');
-      toggleForceRefresh();
+      if (result.success){
+        toast.success('Folder created successfully');
+        toggleForceRefresh();
+      }
+      else{
+        toast.error('Folder creation failed');
+      }
     } catch (error) {
       console.error(error);
       toast.error('Folder creation failed');
@@ -75,8 +85,13 @@ const CreateFileOrFolder = ({propTab}:Props) => {
     if(!(requestType === 'none')) {
       try {
         const result = await requestFiles(request, requestType);
-        toast.success('Request sent successfully');
-        toggleForceRefresh();
+        if (result.success){
+          toast.success('Request sent successfully');
+          toggleForceRefresh();
+        }
+        else{
+          toast.error('Request failed');
+        }
       } catch (error) {
         console.error(error);
         toast.error('Request failed');

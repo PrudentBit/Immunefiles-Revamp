@@ -14,7 +14,7 @@ import Image from 'next/image';
 import deleteRequestedFiles from '@/utils/api/deleteRequestedFilesAPI';
 
 type Props = {
-  setReload: (reload: boolean) => void;
+  setReload: (_reload: boolean) => void;
 };
 
 const IgnoreRequestedAlert = ({setReload}: Props) => {

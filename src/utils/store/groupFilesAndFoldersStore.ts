@@ -4,12 +4,12 @@ type Store = {
   files: groupFileandFolderType[];
   folders: groupFileandFolderType[];
   forceRefresh: boolean;
-  addFile: (file: groupFileandFolderType) => void;
-  addFolder: (folder: groupFileandFolderType) => void;
-  removeFile: (hash: string) => void;
-  removeFolder: (hash: string) => void;
-  setFiles: (files: groupFileandFolderType[]) => void;
-  setFolders: (folders: groupFileandFolderType[]) => void;
+  addFile: (_file: groupFileandFolderType) => void;
+  addFolder: (_folder: groupFileandFolderType) => void;
+  removeFile: (_hash: string) => void;
+  removeFolder: (_hash: string) => void;
+  setFiles: (_files: groupFileandFolderType[]) => void;
+  setFolders: (_folders: groupFileandFolderType[]) => void;
   removeAll(): void;
   toggleForceRefresh(): void;
 };

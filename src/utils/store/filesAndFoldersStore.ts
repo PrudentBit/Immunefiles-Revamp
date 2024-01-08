@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-/* eslint-disable  no-unused-vars */
 
 type sortBy = "name" | "size" | "created" | "modified";
 type order = "asc" | "dsc";
@@ -10,19 +9,19 @@ type Store = {
   forceRefresh: boolean;
   sortBy: sortBy;
   order: order;
-  addFile: (file: FileOrFolderType) => void;
-  addFolder: (folder: FileOrFolderType) => void;
-  removeFile: (hash: string) => void;
-  removeFolder: (hash: string) => void;
-  setFiles: (files: FileOrFolderType[]) => void;
-  setFolders: (folders: FileOrFolderType[]) => void;
+  addFile: (_file: FileOrFolderType) => void;
+  addFolder: (_folder: FileOrFolderType) => void;
+  removeFile: (_hash: string) => void;
+  removeFolder: (_hash: string) => void;
+  setFiles: (_files: FileOrFolderType[]) => void;
+  setFolders: (_folders: FileOrFolderType[]) => void;
   removeAll(): void;
   toggleForceRefresh(): void;
-  setSortBy(sortBy: sortBy): void;
-  setOrder(order: order): void;
+  setSortBy(_sortBy: sortBy): void;
+  setOrder(_order: order): void;
 };
 
-export const useFileAndFolderStore = create<Store>((set, get) => ({
+export const useFileAndFolderStore = create<Store>((set) => ({
   files: [],
   folders: [],
   forceRefresh: false,
@@ -52,7 +51,7 @@ export const useFileAndFolderStore = create<Store>((set, get) => ({
 
   toggleForceRefresh: () =>
     set((state) => ({ forceRefresh: !state.forceRefresh })),
-    
+
   setSortBy: (sortBy) => set(() => ({ sortBy })),
   setOrder: (order) => set(() => ({ order })),
 }));

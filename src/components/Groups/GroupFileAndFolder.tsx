@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useGroupFilesAndFoldersStore } from '@/utils/store/groupFilesAndFoldersStore';
 import getGroupFiles from '@/utils/api/getGroupFilesAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
-import FileSection from '@/components/File-system/fileSection/FileSection';
 import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
+import GroupFileSection from './GroupFileSection';
 
 type Props = {
   group_hash: string,
@@ -47,11 +47,11 @@ const GroupFileAndFolder = ({ group_hash, folder_hash }: Props) => {
         ) : (
           <>
             {folders && folders.length > 0 && (
-              <FileSection subFiles={folders} type='folder' group_hash={group_hash}/>
+              <GroupFileSection subFiles={folders} type='folder' group_hash={group_hash}/>
             )}
 
             {files && files.length > 0 && (
-              <FileSection subFiles={files} type='file' group_hash={group_hash}/>
+              <GroupFileSection subFiles={files} type='file' group_hash={group_hash}/>
             )}
           </>
         )}

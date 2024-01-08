@@ -18,7 +18,7 @@ const FileNavigation = ({root}: Props) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await getFiles(root);
+      const data = await getFiles(root, 'name', 'asc');
       if(data){
         const decryptedData = decryptData(data.ciphertext);
 

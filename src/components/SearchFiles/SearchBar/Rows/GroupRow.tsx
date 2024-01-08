@@ -1,8 +1,6 @@
 import Image from "next/image"
 
-type Props = {}
-
-const GroupRow = (props: Props) => {
+const GroupRow = () => {
   return (
     <div className="flex p-2 px-5 items-center justify-between gap-4 rounded-xl border border-solid border-[#CEDDFF] hover:bg-[#F5F8FF]">
       <Image src="/group-icon-6.svg" height={28} width={28} alt="temp"/>

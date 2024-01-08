@@ -10,7 +10,8 @@ import CreateGroupModal from '../Modals/CreateGroupModal/CreateGroupModal';
 import { decryptData } from '@/utils/helper/decryptFiles';
 
 const GroupsTab = () => {
-  const [ loading, setLoading ] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ _loading, setLoading ] = useState(true);
   const { groups, setGroups, forceRefresh } = GroupStore();
 
   useEffect(() => {

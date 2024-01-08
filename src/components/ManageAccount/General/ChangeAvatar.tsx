@@ -13,7 +13,6 @@ type Props = {
 const ChangeAvatar = ({userDetails}:Props) => {
   const [selectedAvatar, setSelectedAvatar] = useState<string>("")
   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
-  const [isUploaded, setIsUploaded] = useState<boolean>(false);
   const {toggleForceRefresh} = UserDetailsStore();
 
   const getPreview = (file: File) => {
@@ -35,7 +34,6 @@ const ChangeAvatar = ({userDetails}:Props) => {
   ];
 
   useEffect(() => {
-    setIsUploaded(!!uploadedFile);
     if (uploadedFile) {
       setSelectedAvatar("custom");
     }
@@ -46,7 +44,6 @@ const ChangeAvatar = ({userDetails}:Props) => {
       else{
         setSelectedAvatar(`/Avatars/${userDetails?.proile_pic}` || "");
       }
-      setIsUploaded(false);
     }
   }, [userDetails, uploadedFile]);
 
@@ -102,15 +99,18 @@ const ChangeAvatar = ({userDetails}:Props) => {
 
           {uploadedFile && (
             <div 
-              className='max-h-[5.5rem] max-w-[5.5rem] min-h-[5.5rem] min-w-[5.5rem] p-2 relative rounded-lg hover:bg-bg_hover'
+              className='max-h-[5.5rem] max-w-[5.5rem] min-h-[5.5rem] min-w-[5.5rem] p-2 relative overflow-hidden rounded-lg hover:bg-bg_hover'
               onClick={() => setSelectedAvatar("custom")}
             >
               {selectedAvatar === "custom" && (
                 <Image src="/checked-icon-2.svg" alt='checked' width={20} height={20} className='rounded-full absolute z-10 translate-x-[3.2rem]'/>
               )}
-              <img
+              <Image
                 src={getPreview(uploadedFile)}
-                className='rounded-full object-cover h-full w-full'
+                className='rounded-full object-cover p-2'
+                alt='uploaded-preview'
+                fill={true}
+                style={{ objectFit: 'cover'}}
               />
             </div>
           )}
@@ -123,16 +123,24 @@ const ChangeAvatar = ({userDetails}:Props) => {
         <div className='w-[14rem] h-[11rem] rounded-2xl bg-primary_bg flex flex-col justify-center items-center gap-1'>
           <p className='text-gray-500 text-[0.9rem]'>Preview</p>
           {(selectedAvatar === "custom" && uploadedFile) ? (
-            <div className='h-[5.2rem] w-[5.2rem] rounded-xl pb-1'>
-              <img
+            <div className='h-[5.2rem] w-[5.2rem] rounded-xl pb-1 overflow-hidden relative'>
+              <Image
                 src={getPreview(uploadedFile)}
-                className='rounded-xl object-cover h-full w-full'
+                className='rounded-full object-cover'
                 alt='uploaded-preview'
+                fill={true}
+                style={{ objectFit: 'cover' }}
               />
             </div>
           ):(
-            <div className='h-[5.2rem] w-[5.2rem] rounded-xl pb-1'>
-              <img src={selectedAvatar} alt='profile' className='rounded-xl object-cover h-full w-full'/>
+            <div className='h-[5.2rem] w-[5.2rem] rounded-xl pb-1 overflow-hidden relative'>
+              <Image 
+                src={selectedAvatar} 
+                alt='profile' 
+                className='rounded-xl object-cover'
+                fill={true}
+                style={{ objectFit: 'cover' }}
+              />
             </div>
           )}
           <div className='flex flex-col justify-center items-center pt-1'>

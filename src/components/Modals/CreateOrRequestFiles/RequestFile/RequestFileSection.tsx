@@ -13,7 +13,7 @@ type Props = {
   request: Request;
   setRequest: React.Dispatch<React.SetStateAction<Request>>;
   requestType: 'internal' | 'external' | 'none';
-  setRequestType: (value: 'internal' | 'external' | 'none') => void;
+  setRequestType: (_value: 'internal' | 'external' | 'none') => void;
 };
 
 const RequestFileSection = ({

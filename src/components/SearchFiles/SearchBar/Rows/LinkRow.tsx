@@ -1,8 +1,6 @@
 import Image from 'next/image'
 
-type Props = {}
-
-const LinkRow = (props: Props) => {
+const LinkRow = () => {
   return (
     <div className="flex p-2 px-5 items-center justify-between gap-4 rounded-xl border border-solid border-[#CEDDFF] hover:bg-[#F5F8FF]">
       <Image src="/link-icon-5.svg" height={28} width={28} alt="temp"/>

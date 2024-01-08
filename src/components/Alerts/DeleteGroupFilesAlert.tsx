@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,9 +12,8 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
-import { Delete } from 'lucide-react';
 import deleteGroupFiles from '@/utils/api/deleteGroupFilesAPI';
-import { group } from 'console';
+import {toast} from 'sonner';
 
 type Props = {
   type: string;
@@ -23,7 +22,6 @@ type Props = {
 };
 
 const DeleteGroupFilesAlert = ({ type, group_hash, file }: Props) => {
-  const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>();
 
   const deleteSelected = async (e: React.MouseEvent<HTMLButtonElement>) => {
     let response;
@@ -36,9 +34,9 @@ const DeleteGroupFilesAlert = ({ type, group_hash, file }: Props) => {
     }
 
     if (response.status === 200) {
-      setDeletedSuccessfully(true);
+      toast.success('File deleted successfully');
     } else {
-      setDeletedSuccessfully(false);
+      toast.error('File deletion failed');
     }
   }
 

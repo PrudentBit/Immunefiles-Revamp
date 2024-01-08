@@ -5,7 +5,7 @@ import RequestedFileModal from '@/components/Modals/RequestedFileModal';
 
 type Props = {
   request: RequestType
-  setReload: (reload: boolean) => void
+  setReload: (_reload: boolean) => void
 }
 
 const Request = ({request, setReload}: Props) => {

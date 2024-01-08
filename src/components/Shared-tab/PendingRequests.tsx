@@ -3,7 +3,7 @@ import Request from './Request';
 
 type Props = {
   requests: RequestsType
-  setReload: (reload: boolean) => void
+  setReload: (_reload: boolean) => void
 }
 
 const PendingRequests = ({requests, setReload}: Props) => {

@@ -13,7 +13,7 @@ import PendingRequestsSkeleton from './PendingRequestsSkeleton';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 
-const sharedTab = () => {
+const SharedTab = () => {
   const [requests, setRequests] = useState<RequestsType>();
   const [reload, setReload] = useState(false);
   const [sharedFiles, setSharedFiles] = useState<SharedFilesType>();
@@ -138,5 +138,5 @@ const sharedTab = () => {
   );
 }
 
-export default sharedTab
+export default SharedTab
 

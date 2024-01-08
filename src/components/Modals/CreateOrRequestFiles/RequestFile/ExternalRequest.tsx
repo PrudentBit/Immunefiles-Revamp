@@ -11,7 +11,7 @@ type request = {
 type Props = {
   request: request;
   setRequest: React.Dispatch<React.SetStateAction<request>>;
-  setRequestType: (value: 'internal' | 'external' | 'none') => void;
+  setRequestType: (_value: 'internal' | 'external' | 'none') => void;
 };
 
 const ExternalRequest = ({

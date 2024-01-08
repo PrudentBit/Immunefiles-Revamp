@@ -50,7 +50,7 @@ const ThreeDotsMenu = ({file}: Props) => {
             </DropdownMenuItem>
           </>
         )}
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpen}>
           <Image src='/open-icon.svg' width={16} height={16} alt='Open icon'/>
           Open
         </DropdownMenuItem>
@@ -74,11 +74,11 @@ const ThreeDotsMenu = ({file}: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem className='text-[#FF6161] focus:text-[#FF6161]' onClick={(e) => e.stopPropagation()}>
           <Image src='/delete-icon.svg' width={16} height={16} alt='Delete icon'/>
-          <DeleteFileAlert multiplefiles={false} type={type}/>
+          <DeleteFileAlert multiplefiles={false}/>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Image src='/share-icon.svg' width={16} height={16} alt='Rename icon'/>
-          <ShareContentModal multiplefiles={false} currFile={file} type={type}/>
+          <ShareContentModal multiplefiles={false} currFile={file}/>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

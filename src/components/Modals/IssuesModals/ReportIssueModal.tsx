@@ -140,8 +140,10 @@ const ReportIssueModal = () => {
               <div className='flex gap-4 flex-wrap'>
                 {previews.map((preview, index) => (
                   <div key={index} className='relative'>
-                    <img
+                    <Image
                       src={preview}
+                      height={0}
+                      width={0}
                       className='rounded-lg min-h-[6rem] h-[6rem] min-w-[6rem] w-[6rem] object-contain bg-primary_bg border-solid border border-[#CDDCFF]'
                       alt="preview"
                     />

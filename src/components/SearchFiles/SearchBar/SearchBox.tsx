@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import {
   Popover,
   PopoverContent,
@@ -22,8 +22,9 @@ const SearchBox = () => {
   const [internalOnly, setInternalOnly] = useState(false);
   const [value, setValue] = useState("")
 
-  const handleSearch = (e: any) => {
-    setValue(e.target.value)
+  const handleSearch = () => {
+    setValue("")
+    console.log(value)
   }
 
   return (
@@ -35,7 +36,7 @@ const SearchBox = () => {
       </PopoverTrigger>
       <PopoverContent className="w-[55vw] min-w-[38rem] h-[29rem] py-6 px-8 rounded-3xl flex flex-col gap-4">
         <Command className="h-10 min-h-[2rem]">
-          <CommandInput onChangeCapture={(e)=>handleSearch(e)} placeholder="Search framework..." className="h-9" />
+          <CommandInput onChangeCapture={()=>handleSearch} placeholder="Search framework..." className="h-9" />
         </Command>
 
         <div className="flex flex-col gap-4">
