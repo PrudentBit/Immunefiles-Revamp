@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function changeUserPassword(newPass:string, oldPass:string) {
   const data = {
       old_password: oldPass,
@@ -11,7 +13,7 @@ export default async function changeUserPassword(newPass:string, oldPass:string)
           method: "POST",
           headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+              Authorization: `Bearer ${makeCookie('token','get')}`,
           },
           body: JSON.stringify(data),
       }

@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function uploadRequestedFile(file: File, requestHash: string){
   const formData = new FormData();
   formData.append('content', file);
@@ -13,7 +15,7 @@ export default async function uploadRequestedFile(file: File, requestHash: strin
         method: 'POST',
         body: formData,
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+          Authorization: `Bearer ${makeCookie('token','get')}`,
         },
       }
     );

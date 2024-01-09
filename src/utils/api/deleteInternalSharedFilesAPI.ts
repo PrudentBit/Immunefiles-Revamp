@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function deleteSharedFiles(files: string[], folders: string[]) {
   const apiData = {
     files: files,
@@ -10,7 +12,7 @@ export default async function deleteSharedFiles(files: string[], folders: string
     {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: JSON.stringify(apiData),
     }

@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function createFolder(
   name: string,
   currentFolder: string
@@ -24,7 +26,7 @@ export default async function createFolder(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: JSON.stringify(createFolderData),
     }

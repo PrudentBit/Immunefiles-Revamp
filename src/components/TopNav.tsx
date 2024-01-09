@@ -8,7 +8,7 @@ import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
 import SearchBox from './SearchFiles/SearchBar/SearchBox'
 import UserProfileCard from './UserProfileCard'
-import { makeCookie } from '@/utils/helper/makeCookie'
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
 
 
 type Props = {

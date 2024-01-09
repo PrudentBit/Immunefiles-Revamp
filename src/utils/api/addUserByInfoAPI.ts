@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 type UserInfo = {
   name: string;
   email: string;
@@ -14,7 +16,7 @@ export default async function addUser(info: UserInfo) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: JSON.stringify(info),
     }

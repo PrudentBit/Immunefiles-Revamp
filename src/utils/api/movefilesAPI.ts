@@ -1,5 +1,7 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function moveFiles(files: string[], currentFolder: string, toFolder: string) {
-    const token = process.env.NEXT_PUBLIC_TEST_TOKEN;
+    const token = makeCookie('token','get');
     if (token) {
       const data = {
         file_hash: files,

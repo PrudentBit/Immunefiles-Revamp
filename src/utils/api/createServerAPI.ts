@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function createServer(server_name: string, platform: string, user: string) {
   const data = {
 		server_name: server_name,
@@ -13,7 +15,7 @@ export default async function createServer(server_name: string, platform: string
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+				Authorization: `Bearer ${makeCookie('token','get')}`,
 			},
 			body: JSON.stringify(data),
 		}

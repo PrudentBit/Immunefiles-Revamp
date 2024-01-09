@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function getIssues() {
   const res = await fetch(
     `https://api.immunefiles.com/api/api/auth/user/feedback?tenant=${
@@ -6,7 +8,7 @@ export default async function getIssues() {
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
     }
   );

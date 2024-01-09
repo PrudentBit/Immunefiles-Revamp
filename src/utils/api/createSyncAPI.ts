@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function createServer(connection: string, folder_from_id: string, folder_to_id: string, folder_from_name: string, mimeType: string) {
   const data = {
 		connection: connection,
@@ -15,7 +17,7 @@ export default async function createServer(connection: string, folder_from_id: s
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+				Authorization: `Bearer ${makeCookie('token','get')}`,
 			},
 			body: JSON.stringify(data),
 		}

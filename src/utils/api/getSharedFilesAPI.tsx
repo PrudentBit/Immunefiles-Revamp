@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 type sortBy = "name" | "size" | "shared";
 type order = "asc" | "dsc";
 
@@ -14,7 +16,7 @@ export default async function getSharedFiles(hash: string, sortBy: sortBy, order
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
     }
   );

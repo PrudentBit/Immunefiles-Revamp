@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 type sortBy = "name" | "size" | "created" | "modified";
 type order = "asc" | "dsc";
 
@@ -14,7 +16,7 @@ export default async function getFiles(hash: string, sortBy: sortBy, order: orde
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
     }
   );

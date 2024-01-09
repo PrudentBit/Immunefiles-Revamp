@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function deleteFiles(files: string[], folders: string[]) {
     const data = {
         file_hash: files,
@@ -11,7 +13,7 @@ export default async function deleteFiles(files: string[], folders: string[]) {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+                Authorization: `Bearer ${makeCookie('token','get')}`,
             },
             body: JSON.stringify(data),
         }

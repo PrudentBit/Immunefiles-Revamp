@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 type Request = {
   fileName: string[];
   email: string;
@@ -30,7 +32,7 @@ export default async function requestFiles(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.REACT_APP_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: JSON.stringify(requestData),
     }

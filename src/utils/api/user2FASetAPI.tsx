@@ -1,5 +1,7 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function set2FA(usernames: string[]) {
-    const token = process.env.NEXT_PUBLIC_TEST_TOKEN;
+    const token = makeCookie('token','get');
     if (token) {
       const data = {
         usernames: usernames

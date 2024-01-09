@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function csvUser(file: File) {
   const formData = new FormData();
   formData.append("csv_file", file, file.name);
@@ -9,7 +11,7 @@ export default async function csvUser(file: File) {
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: formData,
     }

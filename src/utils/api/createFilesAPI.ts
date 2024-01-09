@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function createFile(fileName: string, fileExtension: string, currentFolder: string) {
   const formData = new FormData();
 
@@ -14,7 +16,7 @@ export default async function createFile(fileName: string, fileExtension: string
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: formData,
     }

@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   AxiosProgressEvent,
 } from 'axios';
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
 
 export default async function uploadFiles(
   fileInput: File[],
@@ -25,7 +26,7 @@ export default async function uploadFiles(
     },
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+      Authorization: `Bearer ${makeCookie('token','get')}`,
     },
   };
 

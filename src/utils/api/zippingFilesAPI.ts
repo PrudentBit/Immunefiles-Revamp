@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export async function zippingFiles(fileUrls: string[], zipName: string, destinationUrl?: string) {
   const data = {
     files: fileUrls,
@@ -13,7 +15,7 @@ export async function zippingFiles(fileUrls: string[], zipName: string, destinat
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: JSON.stringify(data),
     }

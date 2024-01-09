@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function applyUserSOS() {
   const res = await fetch(
     `https://api.immunefiles.com/api/api/content/user/dashboard/details?tenant=${
@@ -7,7 +9,7 @@ export default async function applyUserSOS() {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
     }
   );

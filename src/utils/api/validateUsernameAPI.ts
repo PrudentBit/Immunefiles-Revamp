@@ -1,10 +1,12 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function validateUsername(usernametry: string): Promise<boolean> {
   const regexName = /^[a-zA-Z0-9_]+$/;
   if (!regexName.test(usernametry)) {
     return false;
   }
 
-  const token = process.env.NEXT_PUBLIC_TEST_TOKEN;
+  const token = makeCookie('token','get');
   if (token) {
     const res = await fetch(
       `https://api.immunefiles.com/api/api/auth/check/username/${usernametry}`,

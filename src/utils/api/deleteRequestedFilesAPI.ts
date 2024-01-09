@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function deleteRequestedFiles(requestHash?: string) {
   try {
     const res = await fetch(
@@ -7,7 +9,7 @@ export default async function deleteRequestedFiles(requestHash?: string) {
       {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+          Authorization: `Bearer ${makeCookie('token','get')}`,
         },
       }
     );

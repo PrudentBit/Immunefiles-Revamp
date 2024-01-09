@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function getGroupFiles(groupHash: string, folderHash?: string) {
   const backupHash = "root";
 
@@ -8,7 +10,7 @@ export default async function getGroupFiles(groupHash: string, folderHash?: stri
 		{
 			method: "GET",
 			headers: {
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+				Authorization: `Bearer ${makeCookie('token','get')}`,
 			},
 		}
 	);

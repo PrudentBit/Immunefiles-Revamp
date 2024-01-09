@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function getUserServers(drive:string) {
   const res = await fetch(
     `https://api.immunefiles.com/api/api/sync/get_user_servers?tenant=${
@@ -8,7 +10,7 @@ export default async function getUserServers(drive:string) {
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
     }
   );

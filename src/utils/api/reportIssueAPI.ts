@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function reportIssue(heading: string, explanation: string, issueType: string, images: File[]) {
   const formData = new FormData();
 
@@ -14,7 +16,7 @@ export default async function reportIssue(heading: string, explanation: string, 
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
       },
       body: formData,
     }

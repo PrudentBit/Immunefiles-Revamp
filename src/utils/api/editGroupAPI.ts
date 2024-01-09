@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 type EditGroupParams =
   | {
       action: "rename";
@@ -28,7 +30,7 @@ export default async function editGroup(params: EditGroupParams) {
     {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        Authorization: `Bearer ${makeCookie('token','get')}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(params),

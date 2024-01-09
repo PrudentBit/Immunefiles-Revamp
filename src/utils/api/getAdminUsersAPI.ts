@@ -1,5 +1,7 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function getUsers() {
-  const token = process.env.NEXT_PUBLIC_TEST_TOKEN;
+  const token = makeCookie('token','get');
   if (token) {
     const res = await fetch(
       `https://api.immunefiles.com/api/api/auth/admin/dashboard/users?tenant=${

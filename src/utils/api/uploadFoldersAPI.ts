@@ -4,6 +4,7 @@ import axios, {
   AxiosProgressEvent,
 } from 'axios';
 import { FileWithPath } from 'react-dropzone';
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
 
 export default async function uploadFolders(
   folderInput: FileWithPath[],
@@ -35,7 +36,7 @@ export default async function uploadFolders(
     },
     headers: {
       'Content-Type': 'json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+      Authorization: `Bearer ${makeCookie('token','get')}`,
     },
   };
 

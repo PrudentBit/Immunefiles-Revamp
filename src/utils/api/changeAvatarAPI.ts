@@ -1,6 +1,4 @@
 export default async function changeAvatar(profile_type: string, username: string, profile_image?: string, uploaded_image?: File) {
-  console.log(profile_type, username, profile_image, uploaded_image);
-
   const formData = new FormData();
 
   formData.append("profile_type", profile_type);

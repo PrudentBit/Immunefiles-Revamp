@@ -1,3 +1,5 @@
+import { makeCookie } from '@/utils/helper/makeOrGetCookie'
+
 export default async function deleteGroupFiles(file: string | null, folder: string | null, group_hash:string) {
   const data = {
       file_hash: [file],
@@ -11,7 +13,7 @@ export default async function deleteGroupFiles(file: string | null, folder: stri
           method: "DELETE",
           headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+              Authorization: `Bearer ${makeCookie('token','get')}`,
           },
           body: JSON.stringify(data),
       }
