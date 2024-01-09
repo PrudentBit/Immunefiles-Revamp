@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import FileSection from '@/components/File-system/fileSection/FileSection';
-import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
+import FileSection from '@/components/File-system/FileSection';
+import FileSectionSkeleton from '@/components/Skeletons/FileSectionSkeleton';
 import getFiles from '@/utils/api/getFilesAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import { useFileAndFolderStore } from '@/utils/store/filesAndFoldersStore';

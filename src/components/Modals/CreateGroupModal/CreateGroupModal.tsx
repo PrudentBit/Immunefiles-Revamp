@@ -17,6 +17,7 @@ import GroupDetails from './GroupDetails'
 import AddedMembers from './AddedMembers'
 import createGroup from '@/utils/api/createGroupAPI'
 import { GroupStore } from '@/utils/store/groupDetailsStore'
+import { toast } from 'sonner'
 
 const CreateGroupModal = () => {
   const [name, setName] = useState<string>('')
@@ -29,10 +30,16 @@ const CreateGroupModal = () => {
       const memberEmails = members.map(member => member.email);
       const response = await createGroup(name, description, memberEmails);
       if (response.status === 200) {
-        console.log(response.data);
+        toast.success('Group created successfully');
         toggleForceRefresh();
       }
+      else {
+        toast.error('Something went wrong',{
+          description: response.data.message
+        });
+      }
     } catch (error) {
+      toast.error('Something went wrong');
       console.error('Error creating group:', error);
     }
 

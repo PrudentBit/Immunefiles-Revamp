@@ -8,13 +8,13 @@ import { GroupStore } from '@/utils/store/groupDetailsStore';
 import GroupsSortBy from './GroupsSortBy';
 import CreateGroupModal from '../Modals/CreateGroupModal/CreateGroupModal';
 import { decryptData } from '@/utils/helper/decryptFiles';
+import GroupTabSkeleton from '../Skeletons/GroupTabSkeleton';
 
 type sortBy = "name" | "size" | "modified";
 type order = "asc" | "dsc";
 
 const GroupsTab = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [ _loading, setLoading ] = useState(true);
+  const [ loading, setLoading ] = useState(true);
   const { groups, setGroups, forceRefresh } = GroupStore();
   const [sortBy, setSortBy] = useState<sortBy>('name');
   const [order, setOrder] = useState<order>('asc');
@@ -54,47 +54,53 @@ const GroupsTab = () => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-4'>
-        <div className="flex gap-2">
-          <Image
-            src="/groups-icon-blue.svg"
-            width={24}
-            height={24}
-            alt="groups"
-            className="ml-[2px]"
-          />
-          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As admin</p>
-        </div>
+      {loading ? (
+        <GroupTabSkeleton/>
+      ):(
+        <>
+          <div className='flex flex-col gap-4'>
+            <div className="flex gap-2">
+              <Image
+                src="/groups-icon-blue.svg"
+                width={24}
+                height={24}
+                alt="groups"
+                className="ml-[2px]"
+              />
+              <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As admin</p>
+            </div>
 
-        {groups && (
-          <div className='flex flex-wrap gap-4 p-1'>
-            {groups?.filter(group => group.is_admin).map(group => (
-              <Groups key={group.group_hash} group={group}/>
-            ))}
+            {groups && (
+              <div className='flex flex-wrap gap-4 p-1'>
+                {groups?.filter(group => group.is_admin).map(group => (
+                  <Groups key={group.group_hash} group={group}/>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className='flex flex-col gap-4'>
-        <div className="flex gap-2">
-          <Image
-            src="/admin-icon-2.svg"
-            width={24}
-            height={24}
-            alt="groups"
-            className="ml-[2px]"
-          />
-          <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As member</p>
-        </div>
+          <div className='flex flex-col gap-4'>
+            <div className="flex gap-2">
+              <Image
+                src="/admin-icon-2.svg"
+                width={24}
+                height={24}
+                alt="groups"
+                className="ml-[2px]"
+              />
+              <p className="text-primary_font font-semibold text-xl pb-[0.1rem]">As member</p>
+            </div>
 
-        {groups && (
-          <div className='flex flex-wrap gap-4 p-1'>
-            {groups?.filter(group => !group.is_admin).map(group => (
-              <Groups key={group.group_hash} group={group}/>
-            ))}
+            {groups && (
+              <div className='flex flex-wrap gap-4 p-1'>
+                {groups?.filter(group => !group.is_admin).map(group => (
+                  <Groups key={group.group_hash} group={group}/>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   )
 }

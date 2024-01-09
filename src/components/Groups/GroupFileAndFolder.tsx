@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useGroupFilesAndFoldersStore } from '@/utils/store/groupFilesAndFoldersStore';
 import getGroupFiles from '@/utils/api/getGroupFilesAPI';
 import { decryptData } from '@/utils/helper/decryptFiles';
-import FileSectionSkeleton from '@/components/File-system/fileSection/FileSectionSkeleton';
+import FileSectionSkeleton from '@/components/Skeletons/FileSectionSkeleton';
 import GroupFileSection from './GroupFileSection';
 
 type Props = {

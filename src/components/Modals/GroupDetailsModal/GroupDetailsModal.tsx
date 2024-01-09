@@ -16,11 +16,10 @@ import GroupName from './GroupName';
 import GroupDescription from './GroupDescription';
 import GroupMembers from './GroupMembers';
 import AddMemberGroupsModal from './AddMemberGroupsModal';
-import editGroup from '@/utils/api/editGroupAPI';
-import { decryptData } from '@/utils/helper/decryptFiles';
 import { GroupStore} from '@/utils/store/groupDetailsStore';
 import favouriteGroup from '@/utils/api/favouriteGroupsAPI';
 import { toast } from 'sonner';
+import DeleteGroupAlert from "@/components/Alerts/DeleteGroupAlert";
 
 type Props = {
   group: GroupDetailsType
@@ -28,19 +27,6 @@ type Props = {
 
 const GroupDetailsModal = ({ group }: Props) => {
   const { toggleForceRefresh } = GroupStore();
-
-  const handleDelete = async () => {
-    const response = await editGroup({action: "delete", group_hash: group.group_hash});
-    if (response.status === 200) {
-      toggleForceRefresh();
-      toast.success('Group deleted successfully');
-    }
-    else{
-      toast.error('Something went wrong', {
-        description: decryptData(response.data.ciphertext)
-      });
-    }
-  }
 
   const handleToggleFavorite = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -83,13 +69,9 @@ const GroupDetailsModal = ({ group }: Props) => {
         <AlertDialogFooter className='flex items-center justify-between'>
 
           <div className='flex justify-between w-[60%]'>
-            <AlertDialogAction 
-              className='p-2 h-8 flex items-center gap-1 font-normal bg-transparent rounded-lg text-red-400 hover:bg-[#FFE3E5]'
-              onClick={handleDelete}
-            >
-              <Image src="/delete-icon-2.svg" width={18} height={18} alt='delete'/>
-              Delete Group
-            </AlertDialogAction>
+            <div onClick={(e)=>e.stopPropagation()}>
+              <DeleteGroupAlert type='groupModal' groupHash={group.group_hash}/>
+            </div>
 
             <button className='p-2 h-8 flex items-center gap-1 font-normal bg-transparent rounded-lg text-[#3ABA6E] hover:bg-[#D0FFE3]'>
               <Image src="/logs-icon-2.svg" width={18} height={18} alt='logs'/>

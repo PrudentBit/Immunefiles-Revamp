@@ -1,27 +1,29 @@
-import {useState} from 'react'
 import Image from 'next/image'
+import Link from 'next/link';
+import { toast } from 'sonner';
 
-const LinksRow = () => {
-  const [selected, setSelected] = useState(false);
+type Props = {
+  link: sharedLinksType;
+}
+
+const LinksRow = ({link}: Props) => {
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(link.url);
+    toast.success('Link copied successfully');
+  }
 
   return (
     <div className='h-[3.8rem] w-full rounded-xl flex items-center justify-between p-4 pr-8 gap-7 bg-primary_bg'>
       <div className='flex gap-4 items-center w-[50%]'>
-        <button onClick={()=>setSelected(!selected)} className='w-6 h-[1.43rem] bg-[#DADAFF] rounded-sm'>
-          {selected ? (
-            <Image src="/checked-icon-white.svg" alt='check' width={24} height={24}/>
-          ):(
-            <Image src="/not-checked-icon-white.svg" alt='uncheck' width={24} height={24}/>
-          )}
-        </button>
         <div className='flex gap-2'>
           <Image src="/link-icon.svg" alt='link' width={22} height={22}/>
-          <p className='text-[#7A7AFF] text-lg font-medium leading-5 truncate w-[30rem]'>Link name</p>
+          <Link href={link.url} target='_blank' className='text-primary_font text-lg font-medium leading-5 truncate w-[30rem]'>{link.name}</Link>
         </div>
       </div>
 
       <div className='flex gap-6 items-center'>
-        <button title='Copy link' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
+        <button title='Copy link' onClick={handleCopy} className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
           <Image src='/copy-icon-2.svg' width={17} height={17} alt='copy icon'/>
         </button>
         <button title='Logs' className='flex items-center justify-center rounded-lg h-8 w-8 border border-[#ABC5FF] bg-white hover:bg-[#DEE8FF]'>
