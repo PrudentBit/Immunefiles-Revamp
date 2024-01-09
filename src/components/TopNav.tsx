@@ -8,6 +8,7 @@ import { UserDetailsStore } from '@/utils/store/userDetailsStore'
 import getUserDetails from '@/utils/api/getUserDetailsAPI'
 import SearchBox from './SearchFiles/SearchBar/SearchBox'
 import UserProfileCard from './UserProfileCard'
+import { makeCookie } from '@/utils/helper/makeCookie'
 
 
 type Props = {
@@ -28,6 +29,7 @@ const TopNav = ({currentTab}: Props) => {
 
   const [setTab] = tabStore((state) => [state.changeTab]);
   React.useEffect(() => {
+    makeCookie('token', 'Iamtesting')
     setTab(currentTab);
     fetchUserDetails();
   }, [forceRefresh]);

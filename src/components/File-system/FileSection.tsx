@@ -11,8 +11,10 @@ type FileSectionProps = {
 
 const FileSection = ({ subFiles, type }: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_selected, setSelected] = useState<Set<number>>(() => new Set());
+  const [selected, setSelected] = useState<Set<number>>(() => new Set());
+  // temporary work around
+  console.log(selected);
+  
   const [files, addFile, removeFile, removeDupes] = selectedFilesStore(
     (state) => [
       state.files,

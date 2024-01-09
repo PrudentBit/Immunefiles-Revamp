@@ -5,7 +5,7 @@ import Image from 'next/image';
 import PendingRequests from '@/components/Shared-tab/PendingRequests'
 import IgnoreRequestedAlert from '@/components/Alerts/IgnoreRequestsAlert';
 import getRequests from '@/utils/api/getRequestsAPI';
-import PendingRequestsSkeleton from './PendingRequestsSkeleton';
+import PendingRequestsSkeleton from '../Skeletons/PendingRequestsSkeleton';
 import { decryptData } from '@/utils/helper/decryptFiles';
 import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 import SharedFile from './SharedFile';
