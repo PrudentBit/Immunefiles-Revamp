@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Image from 'next/image';
-import deleteGroupFiles from '@/utils/api/deleteGroupFilesAPI';
+import deleteSharedFiles from '@/utils/api/deleteInternalSharedFilesAPI';
 import {toast} from 'sonner';
 
 type Props = {
@@ -22,16 +22,24 @@ type Props = {
 
 const DeleteSharedFilesAlert = ({ type, file }: Props) => {
 
-  // const deleteSelected = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   let response;
+  const deleteSelected = async () => {
+    let response;
 
+    if (type === 'file') {
+      response = await deleteSharedFiles([file.urlhash], []);
+    }
+    else {
+      response = await deleteSharedFiles([], [file.urlhash]);
+    }
 
-  //   if (response.status === 200) {
-  //     toast.success('File deleted successfully');
-  //   } else {
-  //     toast.error('File deletion failed');
-  //   }
-  // }
+    if (response.status === 200) {
+      toast.success('File deleted successfully');
+    } else {
+      toast.error('File deletion failed',{
+        description: response.data.message
+      });
+    }
+  }
 
   return (
     <>
@@ -62,7 +70,7 @@ const DeleteSharedFilesAlert = ({ type, file }: Props) => {
           <AlertDialogFooter className="flex gap-4">
             <AlertDialogAction
               className="w-[50%] rounded-full bg-[#FF6161] text-white hover:bg-[#FF7F7F]"
-              // onClick={(e) => deleteSelected(e)}
+              onClick={() => deleteSelected()}
             >
               Delete
             </AlertDialogAction>
