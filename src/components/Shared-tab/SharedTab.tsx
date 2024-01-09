@@ -1,12 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import PendingRequests from '@/components/Shared-tab/PendingRequests'
-import { AnimatePresence} from 'framer-motion';
-import { selectedFilesStore } from '@/utils/store/selectFilesStore';
-import FileSelectOptions from '@/components/File-system/menus/FileSelectOptions';
 import IgnoreRequestedAlert from '@/components/Alerts/IgnoreRequestsAlert';
 import getRequests from '@/utils/api/getRequestsAPI';
 import PendingRequestsSkeleton from './PendingRequestsSkeleton';
@@ -14,6 +10,7 @@ import { decryptData } from '@/utils/helper/decryptFiles';
 import getSharedFiles from '@/utils/api/getSharedFilesAPI';
 import SharedFile from './SharedFile';
 import SortSharedBy from './SortSharedBy';
+import RequestFilesModal from '@/components/Modals/RequestModalInShared/RequestFilesModal';
 
 type sortBy = "name" | "size" | "shared";
 type order = "asc" | "dsc";
@@ -54,10 +51,7 @@ const SharedTab = () => {
     <div className='h-full w-full flex flex-col gap-6 pt-4'>
       <div className='flex justify-between'>
         <div className='flex gap-4'>
-          <Button className='rounded-full flex gap-2 h-9 bg-primary_font hover:bg-[#648FED]'>
-            <Image src='/request-icon-white.svg' width={16} height={16} alt='request'/>
-            <p>Request file</p>
-          </Button>
+          <RequestFilesModal/>
 
           <IgnoreRequestedAlert setReload={setReload}/>
         </div>

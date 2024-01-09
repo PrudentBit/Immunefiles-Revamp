@@ -2,11 +2,9 @@
 
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
-    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
@@ -66,9 +64,8 @@ const SharedFileDetails = ({ file, type }: Props) => {
             </div>
             <div className='flex gap-2 pl-1'>
               <p>Created on: </p>
-              <p>{file?.owner}</p>
+              <p>{formattedDate}</p>
             </div>
-            
           </div>
         </AlertDialogDescription>
       </AlertDialogContent>

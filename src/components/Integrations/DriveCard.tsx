@@ -14,14 +14,12 @@ type Props = {
 
 const DriveCard = ({image, name, gradient}: Props) => {
   const link=name.toLowerCase().replace(/\s/g, '');
-  const [servers, setServers] = useState<serverType | []>([])
   const [isConnected, setIsConnected] = useState<boolean>(false)
 
   useEffect(() => {
     const getServer = async () => {
       const response = await getUserServers(link)
       if(response.status === 200) {
-        setServers(response.data)
         if (response.data.length > 0) {
           setIsConnected(true)
         }
