@@ -9,17 +9,22 @@ import GroupsSortBy from './GroupsSortBy';
 import CreateGroupModal from '../Modals/CreateGroupModal/CreateGroupModal';
 import { decryptData } from '@/utils/helper/decryptFiles';
 
+type sortBy = "name" | "size" | "modified";
+type order = "asc" | "dsc";
+
 const GroupsTab = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ _loading, setLoading ] = useState(true);
   const { groups, setGroups, forceRefresh } = GroupStore();
+  const [sortBy, setSortBy] = useState<sortBy>('name');
+  const [order, setOrder] = useState<order>('asc');
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       try {
-        const response = await fetchGroupDetails();
+        const response = await fetchGroupDetails(sortBy, order);
 
         if(response.status === 200) {
           const decryptedGroupData = decryptData(response.data.ciphertext);
@@ -35,7 +40,7 @@ const GroupsTab = () => {
     };
 
     fetchData();
-  }, [forceRefresh]);
+  }, [forceRefresh, order, sortBy]);
 
   return (
     <div className='h-full w-full flex flex-col gap-7'>
@@ -45,7 +50,7 @@ const GroupsTab = () => {
         </div>
 
         <div className='flex gap-4 pt-2'>
-          <GroupsSortBy/>
+          <GroupsSortBy sortBy={sortBy} setSortBy={setSortBy} order={order} setOrder={setOrder}/>
         </div>
       </div>
 
