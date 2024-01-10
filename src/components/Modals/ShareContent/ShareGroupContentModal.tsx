@@ -49,6 +49,7 @@ const ShareGroupContentModal = ({ type, currFile }: Props) => {
     expiryTime: null,
     passwordValue: null,
     accessValue: 0,
+    watermark: false,
   });
 
   const [shareInternalSettings, setShareInternalSettings] =
@@ -114,6 +115,7 @@ const ShareGroupContentModal = ({ type, currFile }: Props) => {
         expiryTime: null,
         passwordValue: null,
         accessValue: 0,
+        watermark: false,
       });
       setSelectedGroups([]);
       setLinkName('');
@@ -247,7 +249,6 @@ const ShareGroupContentModal = ({ type, currFile }: Props) => {
 
               {tab === 'internal' && (
                 <InternalShareSection
-                  shareEmail={shareEmail}
                   setShareEmail={setShareEmail}
                   settings={shareInternalSettings}
                   setSettings={setShareInternalSettings}

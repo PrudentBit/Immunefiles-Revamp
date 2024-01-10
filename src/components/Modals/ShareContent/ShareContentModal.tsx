@@ -31,6 +31,16 @@ type Props = {
   currFile?: FileOrFolderType;
 };
 
+type shareResponse = {
+  status: number;
+  data: {
+    message: string;
+    data: {
+      link: string;
+    };
+  };
+};
+
 const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
   const [tab, setTab] = useState<'link' | 'email' | 'internal' | 'groups'>(
     'link'
@@ -86,7 +96,7 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
       const fileUrls = file.map((item) => item.urlhash);
       const folderUrls = folder.map((item) => item.urlhash);
 
-      let shareResponse;
+      let shareResponse: shareResponse;
       if (tab === 'internal') {
         shareResponse = await internalShare(
           shareInternalSettings,
@@ -137,7 +147,6 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
       setShareEmail('');
 
       if (shareResponse.status === 200) {
-        console.log(shareResponse.data);
         if (tab === 'link'){
           toast.success("Share link generated", {
             description: shareResponse.data.data.link,
