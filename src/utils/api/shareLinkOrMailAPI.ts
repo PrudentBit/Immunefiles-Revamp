@@ -31,6 +31,7 @@ export default async function shareLinkOrMail(
     custom_password: values.password ? values.passwordValue : '',
     is_random_password: false,
     clients_shared_with: inputFields,
+    watermark: values.watermark,
   };
 
   const res = await fetch(

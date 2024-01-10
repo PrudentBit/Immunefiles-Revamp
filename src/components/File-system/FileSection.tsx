@@ -7,9 +7,10 @@ import { selectedFilesStore } from '@/utils/store/selectFilesStore';
 type FileSectionProps = {
   subFiles: FileOrFolderType[];
   type: string;
+  className?:string
 }
 
-const FileSection = ({ subFiles, type }: FileSectionProps) => {
+const FileSection = ({ subFiles, type, className }: FileSectionProps) => {
   const sectionType = type === "folder" ? "Folders" : "Files";
   const [selected, setSelected] = useState<Set<number>>(() => new Set());
   // temporary work around
@@ -59,7 +60,7 @@ const FileSection = ({ subFiles, type }: FileSectionProps) => {
 
   return (
     <SelectionArea  
-      className="flex flex-col" 
+      className={`flex flex-col ${className}`}
       onStart={onStart}
       onMove={onMove}
       selectables=".selectable"

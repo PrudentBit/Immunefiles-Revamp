@@ -51,7 +51,7 @@ const SendInGroupsSection = ({settings, setSettings, selectedGroups, setSelected
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchGroupDetails();
+        const response = await fetchGroupDetails('name','asc');
 
         if(response.status === 200) {
           const decryptedGroupData = decryptData(response.data.ciphertext);

@@ -9,6 +9,7 @@ type ShareSettings = {
   expiryTime: string | null;
   passwordValue: string | null;
   accessValue: number;
+  watermark: boolean;
 };
 
 type InternalShareSettings = {

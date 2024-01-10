@@ -5,18 +5,7 @@ import Image from 'next/image';
 type Props = {
   settings: ShareSettings;
   setSettings: React.Dispatch<
-    React.SetStateAction<{
-      expiry: boolean;
-      password: boolean;
-      accesslimit: boolean;
-      downloadable: boolean;
-      shareable: boolean;
-      proctored: boolean;
-      expiryDate: string | null;
-      expiryTime: string | null;
-      passwordValue: string | null;
-      accessValue: number;
-    }>
+    React.SetStateAction<ShareSettings>
   >;
   linkName: string;
   setLinkName: React.Dispatch<React.SetStateAction<string>>;
@@ -212,6 +201,15 @@ const GenerateLinkSection = ({
             checked={settings.proctored}
             setChecked={(value) =>
               setSettings({ ...settings, proctored: value })
+            }
+          />
+
+          <SwitchFields
+            label="Watermark"
+            svg="/watermark-icon.png"
+            checked={settings.watermark}
+            setChecked={(value) =>
+              setSettings({ ...settings, watermark: value })
             }
           />
         </div>

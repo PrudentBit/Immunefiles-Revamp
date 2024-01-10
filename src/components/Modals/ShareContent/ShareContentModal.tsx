@@ -56,6 +56,7 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
     expiryTime: null,
     passwordValue: null,
     accessValue: 0,
+    watermark: false,
   });
 
   const [shareInternalSettings, setShareInternalSettings] =
@@ -129,6 +130,7 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
         expiryTime: null,
         passwordValue: null,
         accessValue: 0,
+        watermark: false,
       });
       setSelectedGroups([]);
       setLinkName('');
@@ -138,7 +140,17 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
         console.log(shareResponse.data);
         if (tab === 'link'){
           toast.success("Share link generated", {
-            description: shareResponse.data.message,
+            description: shareResponse.data.data.link,
+            descriptionClassName: "pointer-events-auto truncate w-[15rem]",
+            action:{
+              label: "Copy",
+              onClick: (e) => {
+                e.preventDefault();
+                navigator.clipboard.writeText(shareResponse.data.data.link);
+                toast.success("Link copied to clipboard");
+              }
+            },
+            duration:10000
           });
         } else {
           toast.success(shareResponse.data.message);
@@ -253,7 +265,6 @@ const ShareContentModal = ({ multiplefiles, currFile }: Props) => {
 
               {tab === 'internal' && (
                 <InternalShareSection
-                  shareEmail={shareEmail}
                   setShareEmail={setShareEmail}
                   settings={shareInternalSettings}
                   setSettings={setShareInternalSettings}

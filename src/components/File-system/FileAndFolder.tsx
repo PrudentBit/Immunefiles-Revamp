@@ -147,7 +147,7 @@ const FileAndFolder = ({ root }: Props) => {
               )}
 
               {files && files.length > 0 && (
-                <FileSection subFiles={files} type='file' />
+                <FileSection subFiles={files} type='file' className='h-full'/>
               )}
             </>
           )}

@@ -334,18 +334,8 @@ const MoveOrCopyFilesModal = ({
             </div>
           </AlertDialogDescription>
 
-          <AlertDialogFooter className="flex justify-between items-center w-full">
-            <button className="flex gap-2 items-center rounded-full hover:bg-primary_bg px-3 py-2">
-              <Image
-                src="/add_Folder-icon.svg"
-                width={18}
-                height={18}
-                alt="Add folder icon"
-              />
-              <p className=" text-[#7A7AFF] font-medium text-sm">
-                Create Folder
-              </p>
-            </button>
+          <AlertDialogFooter className="flex justify-end items-center w-full">
+            
             {selectedFolder ? (
               <AlertDialogAction
                 onClick={handleMoveClick}
